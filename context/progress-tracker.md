@@ -13,6 +13,7 @@ Update this file whenever the current phase, active feature, or implementation s
 ## Completed
 
 - Feature 01: Design System — shadcn/ui configured (New York style, Tailwind v4, CSS variables), 7 components installed (Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea), lucide-react installed, libs/utils.ts with cn() helper created.
+- Feature 02: Editor chrome — `components/editor/editor-navbar.tsx` (fixed navbar, sidebar toggle with PanelLeftOpen/Close), `components/editor/project-sidebar.tsx` (floating overlay, Tabs, New Project button), dialog updated to project tokens (rounded-3xl, bg-bg-elevated, backdrop-blur overlay, text-text-muted description).
 
 ## In Progress
 
@@ -20,7 +21,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Next Up
 
-- Feature 02 (TBD): Next planned feature unit from the feature spec queue.
+- Feature 03 (TBD): Next planned feature unit from the feature spec queue.
 
 ## Open Questions
 
