@@ -1,9 +1,11 @@
-import { Button } from "@/components/ui/button"
+import { EditorShell } from "@/components/editor/editor-shell"
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      ghost ai
-    </div>
+    <EditorShell>
+      <div className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center text-text-muted">
+        ghost ai
+      </div>
+    </EditorShell>
   )
 }
