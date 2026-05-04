@@ -2,7 +2,7 @@ We need the base chrome components that frame editor screen - the top navbar and
 
 ### Editor Navbar
 
-Create `components/editor/edtior-navbar.tsx`
+Create `components/editor/editor-navbar.tsx`
 
 Requirements:
 
