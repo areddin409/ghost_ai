@@ -46,8 +46,10 @@
   --color-accent-primary-dim: var(--accent-primary-dim);
   --color-accent-ai: var(--accent-ai);
   --color-accent-ai-text: var(--accent-ai-text);
+  --color-accent-ai-dim: var(--accent-ai-dim);
   --color-state-error: var(--state-error);
   --color-state-success: var(--state-success);
+  --color-state-success-dim: var(--state-success-dim);
   --color-state-warning: var(--state-warning);
 
   /* Border radius scale */
@@ -114,7 +116,9 @@ body {
   --accent-primary-dim: rgba(0, 200, 212, 0.12);
   --accent-ai: #6457f9;
   --accent-ai-text: #8b82ff;
+  --accent-ai-dim: rgba(100, 87, 249, 0.12);
   --state-error: #ff4d4f;
   --state-success: #34d399;
+  --state-success-dim: rgba(52, 211, 153, 0.12);
   --state-warning: #fbbf24;
 }
