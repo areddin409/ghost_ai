@@ -14,14 +14,15 @@ Update this file whenever the current phase, active feature, or implementation s
 
 - Feature 01: Design System — shadcn/ui configured (New York style, Tailwind v4, CSS variables), 7 components installed (Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea), lucide-react installed, libs/utils.ts with cn() helper created.
 - Feature 02: Editor chrome — `components/editor/editor-navbar.tsx` (fixed navbar, sidebar toggle with PanelLeftOpen/Close), `components/editor/project-sidebar.tsx` (floating overlay, Tabs, New Project button), dialog updated to project tokens (rounded-3xl, bg-bg-elevated, backdrop-blur overlay, text-text-muted description).
+- Feature 03: Auth — `proxy.ts` (Clerk route protection, all routes protected except sign-in/sign-up), `ClerkProvider` in root layout with `@clerk/ui` dark theme + CSS variable overrides, `app/(auth)/layout.tsx` (two-panel layout: brand left, form right; form-only on mobile), `app/(auth)/sign-in/[[...sign-in]]/page.tsx`, `app/(auth)/sign-up/[[...sign-up]]/page.tsx`, `app/editor/page.tsx` (editor moved from `/` to `/editor`), `app/page.tsx` updated to redirect auth→`/editor` unauth→`/sign-in`, `UserButton` added to editor navbar right section.
 
 ## In Progress
 
-- None yet.
+- None.
 
 ## Next Up
 
-- Feature 03 (TBD): Next planned feature unit from the feature spec queue.
+- Feature 04 (TBD): Next planned feature unit from the feature spec queue.
 
 ## Open Questions
 

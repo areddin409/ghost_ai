@@ -40,4 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# AI agent skills (dev tooling, installed locally via npx skills)
+.agents/
+.claude/
+skills-lock.json
+
 context/.obsidian
