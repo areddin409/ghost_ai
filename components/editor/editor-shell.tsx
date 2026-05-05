@@ -7,7 +7,7 @@ import { ProjectDialogsContext } from "@/components/editor/project-dialogs-conte
 import {
   CreateProjectDialog,
   RenameProjectDialog,
-  DeleteProjectDialog,
+  DeleteProjectDialog
 } from "@/components/editor/project-dialogs"
 import { useProjectDialogs } from "@/hooks/use-project-dialogs"
 

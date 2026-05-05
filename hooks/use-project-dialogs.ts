@@ -16,22 +16,22 @@ const INITIAL_PROJECTS: MockProject[] = [
     name: "My App Architecture",
     slug: "my-app-architecture",
     isOwned: true,
-    starred: false,
+    starred: false
   },
   {
     id: "2",
     name: "Cloud Infrastructure",
     slug: "cloud-infrastructure",
     isOwned: true,
-    starred: true,
+    starred: true
   },
   {
     id: "3",
     name: "Shared Design System",
     slug: "shared-design-system",
     isOwned: false,
-    starred: false,
-  },
+    starred: false
+  }
 ]
 
 function toSlug(name: string): string {
@@ -98,7 +98,13 @@ export function useProjectDialogs(): ProjectDialogsState {
         const name = createName.trim()
         setProjects((prev) => [
           ...prev,
-          { id: crypto.randomUUID(), name, slug: toSlug(name), isOwned: true, starred: false },
+          {
+            id: crypto.randomUUID(),
+            name,
+            slug: toSlug(name),
+            isOwned: true,
+            starred: false
+          }
         ])
       } else if (snapshot.type === "rename") {
         const { project } = snapshot
