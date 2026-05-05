@@ -3,7 +3,9 @@
 import { createContext, useContext } from "react"
 import type { ProjectDialogsState } from "@/hooks/use-project-dialogs"
 
-export const ProjectDialogsContext = createContext<ProjectDialogsState | null>(null)
+export const ProjectDialogsContext = createContext<ProjectDialogsState | null>(
+  null
+)
 
 export function useProjectDialogsContext(): ProjectDialogsState {
   const ctx = useContext(ProjectDialogsContext)

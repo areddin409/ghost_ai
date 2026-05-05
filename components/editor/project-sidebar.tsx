@@ -22,7 +22,9 @@ function ProjectItem({ project }: { project: MockProject }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <span className="truncate text-sm text-text-secondary">{project.name}</span>
+      <span className="truncate text-sm text-text-secondary">
+        {project.name}
+      </span>
       {project.isOwned && (
         <div
           className={`flex shrink-0 items-center gap-1 transition-opacity ${
@@ -73,7 +75,9 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
       }`}
     >
       <div className="flex items-center justify-between border-b border-border-default px-4 py-3">
-        <span className="text-sm font-semibold text-text-primary">Projects</span>
+        <span className="text-sm font-semibold text-text-primary">
+          Projects
+        </span>
         <Button
           variant="ghost"
           size="icon-sm"
@@ -84,7 +88,10 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
         </Button>
       </div>
 
-      <Tabs defaultValue="my-projects" className="flex flex-1 flex-col overflow-hidden">
+      <Tabs
+        defaultValue="my-projects"
+        className="flex flex-1 flex-col overflow-hidden"
+      >
         <div className="px-4 pt-3">
           <TabsList className="w-full">
             <TabsTrigger value="my-projects" className="flex-1">
