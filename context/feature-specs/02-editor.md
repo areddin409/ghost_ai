@@ -1,3 +1,22 @@
+---
+type: feature-spec
+feature: "02 — Editor Chrome"
+status: shipped
+updated: 2026-05-06
+---
+
+# Feature 02 — Editor Chrome
+
+> [!abstract] Goal
+> Build the editor navbar and floating project sidebar shell that frames the editor workspace.
+
+> [!success] Shipped
+> Navbar and sidebar compile without errors. Sidebar floats without pushing content. Dialog pattern ready.
+
+**References:** [[ui-context]] · [[code-standards]]
+
+---
+
 We need the base chrome components that frame editor screen - the top navbar and the left sidebar shell. These will be reused and extended in every chapter that follows.
 
 ### Editor Navbar
@@ -47,3 +66,7 @@ do not build actual dialogs yet.
 - [ ] new components compile without TypeScript errors
 - [ ] no lint warnings or errors
 - [ ] dialog pattern is ready for future use
+
+---
+
+*Tracked in [[progress-tracker]]*
