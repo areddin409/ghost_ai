@@ -1,6 +1,7 @@
 "use client"
 
 import { Plus, X, Pencil, Trash2 } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useProjectDialogsContext } from "@/components/editor/project-dialogs-context"
@@ -12,10 +13,17 @@ interface ProjectSidebarProps {
 }
 
 function OwnedProjectItem({ project }: { project: Project }) {
+  const router = useRouter()
   const { openRename, openDelete } = useProjectDialogsContext()
 
   return (
-    <div className="group flex items-center justify-between rounded-xl px-3 py-2 hover:bg-bg-subtle cursor-pointer">
+    <div
+      className="group flex items-center justify-between rounded-xl px-3 py-2 hover:bg-bg-subtle cursor-pointer"
+      onClick={() => router.push(`/editor/${project.id}`)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && router.push(`/editor/${project.id}`)}
+    >
       <span className="truncate text-sm text-text-secondary">
         {project.name}
       </span>
@@ -48,8 +56,16 @@ function OwnedProjectItem({ project }: { project: Project }) {
 }
 
 function SharedProjectItem({ project }: { project: Project }) {
+  const router = useRouter()
+
   return (
-    <div className="flex items-center rounded-xl px-3 py-2 hover:bg-bg-subtle cursor-pointer">
+    <div
+      className="flex items-center rounded-xl px-3 py-2 hover:bg-bg-subtle cursor-pointer"
+      onClick={() => router.push(`/editor/${project.id}`)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && router.push(`/editor/${project.id}`)}
+    >
       <span className="truncate text-sm text-text-secondary">
         {project.name}
       </span>

@@ -33,14 +33,35 @@ export async function POST(request: Request) {
       ? parsed.name.trim() || "Untitled Project"
       : "Untitled Project"
 
-  const customId =
-    typeof parsed.id === "string" && parsed.id.trim()
-      ? parsed.id.trim()
-      : undefined
+  const rawId =
+    typeof parsed.id === "string" ? parsed.id.trim() : undefined
 
-  const project = await prisma.project.create({
-    data: { ...(customId ? { id: customId } : {}), ownerId: userId, name }
-  })
+  if (rawId !== undefined) {
+    if (rawId.length < 2 || rawId.length > 100) {
+      return NextResponse.json({ error: "Invalid project id" }, { status: 400 })
+    }
+    if (!/^[a-z0-9][a-z0-9-_]*[a-z0-9]$/.test(rawId)) {
+      return NextResponse.json({ error: "Invalid project id" }, { status: 400 })
+    }
+  }
 
-  return NextResponse.json(project, { status: 201 })
+  try {
+    const project = await prisma.project.create({
+      data: { ...(rawId ? { id: rawId } : {}), ownerId: userId, name }
+    })
+    return NextResponse.json(project, { status: 201 })
+  } catch (err) {
+    if (
+      typeof err === "object" &&
+      err !== null &&
+      "code" in err &&
+      (err as { code: string }).code === "P2002"
+    ) {
+      return NextResponse.json(
+        { error: "A project with this id already exists" },
+        { status: 409 }
+      )
+    }
+    throw err
+  }
 }
