@@ -33,8 +33,7 @@ export async function POST(request: Request) {
       ? parsed.name.trim() || "Untitled Project"
       : "Untitled Project"
 
-  const rawId =
-    typeof parsed.id === "string" ? parsed.id.trim() : undefined
+  const rawId = typeof parsed.id === "string" ? parsed.id.trim() : undefined
 
   if (rawId !== undefined) {
     if (rawId.length < 2 || rawId.length > 100) {
