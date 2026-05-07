@@ -9,14 +9,25 @@ import {
   RenameProjectDialog,
   DeleteProjectDialog
 } from "@/components/editor/project-dialogs"
-import { useProjectDialogs } from "@/hooks/use-project-dialogs"
+import { useProjectActions } from "@/hooks/use-project-actions"
+import type { Project } from "@/hooks/use-project-actions"
 
-export function EditorShell({ children }: { children?: React.ReactNode }) {
+interface EditorShellProps {
+  children?: React.ReactNode
+  initialOwned: Project[]
+  initialShared: Project[]
+}
+
+export function EditorShell({
+  children,
+  initialOwned,
+  initialShared
+}: EditorShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const dialogsState = useProjectDialogs()
+  const actionsState = useProjectActions({ initialOwned, initialShared })
 
   return (
-    <ProjectDialogsContext.Provider value={dialogsState}>
+    <ProjectDialogsContext.Provider value={actionsState}>
       <EditorNavbar
         isSidebarOpen={sidebarOpen}
         onToggleSidebar={() => setSidebarOpen((o) => !o)}

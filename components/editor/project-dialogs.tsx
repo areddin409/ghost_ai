@@ -13,17 +13,16 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useProjectDialogsContext } from "@/components/editor/project-dialogs-context"
 
-function toSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "")
-}
-
 export function CreateProjectDialog() {
-  const { dialog, isLoading, createName, setCreateName, close, handleSubmit } =
-    useProjectDialogsContext()
+  const {
+    dialog,
+    isLoading,
+    createName,
+    setCreateName,
+    roomIdPreview,
+    close,
+    handleSubmit
+  } = useProjectDialogsContext()
   const isOpen = dialog.type === "create"
 
   return (
@@ -42,9 +41,9 @@ export function CreateProjectDialog() {
             onChange={(e) => setCreateName(e.target.value)}
             autoFocus
           />
-          {createName.trim() && (
+          {roomIdPreview && (
             <p className="font-mono text-xs text-text-muted">
-              /{toSlug(createName)}
+              room: {roomIdPreview}
             </p>
           )}
         </div>
@@ -53,8 +52,8 @@ export function CreateProjectDialog() {
             Cancel
           </Button>
           <Button
-            onClick={handleSubmit}
-            disabled={!createName.trim() || !toSlug(createName) || isLoading}
+            onClick={() => void handleSubmit()}
+            disabled={!createName.trim() || isLoading}
           >
             {isLoading ? "Creating…" : "Create project"}
           </Button>
@@ -73,7 +72,7 @@ export function RenameProjectDialog() {
   function onKeyDown(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key !== "Enter" || !renameName.trim() || isLoading) return
     e.preventDefault()
-    handleSubmit()
+    void handleSubmit()
   }
 
   return (
@@ -102,7 +101,7 @@ export function RenameProjectDialog() {
             Cancel
           </Button>
           <Button
-            onClick={handleSubmit}
+            onClick={() => void handleSubmit()}
             disabled={!renameName.trim() || isLoading}
           >
             {isLoading ? "Saving…" : "Save"}
@@ -137,7 +136,7 @@ export function DeleteProjectDialog() {
           </Button>
           <Button
             variant="destructive"
-            onClick={handleSubmit}
+            onClick={() => void handleSubmit()}
             disabled={isLoading}
           >
             {isLoading ? "Deleting…" : "Delete project"}
