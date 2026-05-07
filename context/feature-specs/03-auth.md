@@ -1,3 +1,22 @@
+---
+type: feature-spec
+feature: "03 — Auth"
+status: shipped
+updated: 2026-05-06
+---
+
+# Feature 03 — Auth
+
+> [!abstract] Goal
+> Wire Clerk authentication into Next.js — provider, route protection, auth pages, and user menu.
+
+> [!success] Shipped
+> All routes protected via `proxy.ts`. Auth pages use CSS variables. `ClerkProvider` wraps root layout. Build passes.
+
+**References:** [[architecture-context]] · [[ui-context]] · [[code-standards]]
+
+---
+
 Clerk is already installed and connected. wire it into the next.js app: provider, auth pages, redirects, route protection, and user menu.
 
 ## Design
@@ -51,3 +70,7 @@ install: @clerk/ui.
 - auth pages use CSS variables with no hardcoded colors
 - `ClerkProvider` wraps the root layout
 - `npm run build` completes without errors
+
+---
+
+*Tracked in [[progress-tracker]]*
