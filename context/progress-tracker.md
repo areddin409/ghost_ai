@@ -24,6 +24,7 @@ updated: 2026-05-06
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {
   'background': '#0d0d12',
+  'mainBkg': '#1a1a2e',
   'primaryColor': '#1a1a2e',
   'primaryBorderColor': '#6457f9',
   'primaryTextColor': '#e8e8f0',
@@ -31,28 +32,22 @@ updated: 2026-05-06
   'secondaryColor': '#1a1a2e',
   'tertiaryColor': '#0d0d12',
   'edgeLabelBackground': '#1a1a2e',
-  'transitionColor': '#3a3a42',
-  'stateBkg': '#1a1a2e',
-  'stateBorder': '#6457f9',
-  'stateTextColor': '#e8e8f0'
+  'clusterBkg': '#0d0d12'
 }}}%%
-stateDiagram-v2
-    [*] --> planned
-    planned --> in_progress : implementation starts
-    in_progress --> shipped : works end-to-end
-    shipped --> [*]
-    shipped --> new_spec : if reverted
-    new_spec --> [*]
+flowchart TD
+    planned["planned"]
+    in_progress["in_progress"]
+    shipped["shipped"]
+    new_spec["new spec"]
 
-    classDef muted fill:#1a1a2e,stroke:#808090,color:#e8e8f0
-    classDef active fill:#1a1a2e,stroke:#fbbf24,color:#e8e8f0
-    classDef done fill:#1a1a2e,stroke:#34d399,color:#e8e8f0
-    classDef new fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
+    planned -->|implementation starts| in_progress
+    in_progress -->|works end-to-end| shipped
+    shipped -->|if reverted| new_spec
 
-    class planned muted
-    class in_progress active
-    class shipped done
-    class new_spec new
+    style planned fill:#1a1a2e,stroke:#808090,color:#e8e8f0
+    style in_progress fill:#1a1a2e,stroke:#fbbf24,color:#e8e8f0
+    style shipped fill:#1a1a2e,stroke:#34d399,color:#e8e8f0
+    style new_spec fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
 ```
 
 ---

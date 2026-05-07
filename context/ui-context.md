@@ -118,6 +118,7 @@ Lucide React. Stroke-based icons only — no filled variants. Icon sizes: `h-4 w
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {
   'background': '#0d0d12',
+  'mainBkg': '#1a1a2e',
   'primaryColor': '#1a1a2e',
   'primaryBorderColor': '#6457f9',
   'primaryTextColor': '#e8e8f0',
