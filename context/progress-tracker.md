@@ -69,12 +69,15 @@ path includes feature-specs
 
 ## Next Up
 
-> [!todo] Feature 05 (TBD)
+> [!todo] Feature 06 (TBD)
 > Next planned feature unit from the feature spec queue.
 
 ---
 
 ## Completed
+
+> [!success] Feature 05 — [[05-prima|Database Setup]]
+> Prisma 7 schema with `Project` and `ProjectCollaborator` models, migration `20260507015439_init` applied to Prisma Postgres, `lib/prisma.ts` singleton branching on `prisma+postgres://` (Accelerate) vs direct `@prisma/adapter-pg`. Build passes.
 
 > [!success] Feature 04 — [[04-project-dialogs|Project Dialogs]]
 > Editor home screen, create/rename/delete dialogs, sidebar actions with hover-reveal for owned projects, mobile backdrop scrim. Mock data only — no persistence.

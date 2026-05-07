@@ -1,0 +1,68 @@
+<h2>Mermaid diagrams — what goes where</h2>
+<p class="subtitle">These would render inline in Obsidian reading mode. Which set feels most useful?</p>
+
+<div class="options" data-multiselect>
+
+  <div class="option" data-choice="arch" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>System architecture → <code>architecture-context.md</code></h3>
+      <p>A flowchart showing the full stack: Browser → Next.js App Router → Clerk auth → Vercel Blob / Database / AI. Makes the tech boundaries visual at a glance.</p>
+      <div style="margin-top:0.75rem;background:#0d0d12;border-radius:6px;padding:0.75rem;font-family:monospace;font-size:0.72rem;color:#808090;line-height:1.5">
+        flowchart TD<br>
+        &nbsp;&nbsp;Browser --> NextJS["Next.js App Router"]<br>
+        &nbsp;&nbsp;NextJS --> Clerk["Clerk Auth"]<br>
+        &nbsp;&nbsp;NextJS --> DB["Database (metadata)"]<br>
+        &nbsp;&nbsp;NextJS --> Blob["Vercel Blob (artifacts)"]<br>
+        &nbsp;&nbsp;NextJS --> AI["AI Generation (background)"]
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="auth" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Auth flow → <code>03-auth.md</code></h3>
+      <p>A sequence diagram showing the Clerk sign-in flow: browser → Next.js middleware → Clerk → redirect. Documents the actual implemented behavior, not just the config.</p>
+      <div style="margin-top:0.75rem;background:#0d0d12;border-radius:6px;padding:0.75rem;font-family:monospace;font-size:0.72rem;color:#808090;line-height:1.5">
+        sequenceDiagram<br>
+        &nbsp;&nbsp;Browser->>Middleware: Request /editor<br>
+        &nbsp;&nbsp;Middleware->>Clerk: Check session<br>
+        &nbsp;&nbsp;Clerk-->>Middleware: Unauthenticated<br>
+        &nbsp;&nbsp;Middleware-->>Browser: Redirect /sign-in
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="status" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Feature status flow → <code>progress-tracker.md</code></h3>
+      <p>A state diagram showing planned → in-progress → shipped transitions and the "revert creates a new spec" rule. Makes the vault's own conventions self-documenting.</p>
+      <div style="margin-top:0.75rem;background:#0d0d12;border-radius:6px;padding:0.75rem;font-family:monospace;font-size:0.72rem;color:#808090;line-height:1.5">
+        stateDiagram-v2<br>
+        &nbsp;&nbsp;[*] --> planned<br>
+        &nbsp;&nbsp;planned --> in_progress<br>
+        &nbsp;&nbsp;in_progress --> shipped<br>
+        &nbsp;&nbsp;shipped --> [new spec]: if reverted
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="ui" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>UI component tree → <code>ui-context.md</code></h3>
+      <p>A hierarchy showing EditorShell → EditorNavbar / ProjectSidebar → dialogs. Documents the component structure so AI agents understand the layout before touching code.</p>
+      <div style="margin-top:0.75rem;background:#0d0d12;border-radius:6px;padding:0.75rem;font-family:monospace;font-size:0.72rem;color:#808090;line-height:1.5">
+        flowchart TD<br>
+        &nbsp;&nbsp;Shell["EditorShell"] --> Navbar<br>
+        &nbsp;&nbsp;Shell --> Sidebar["ProjectSidebar"]<br>
+        &nbsp;&nbsp;Sidebar --> Dialogs["Create / Rename / Delete"]
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:1.5rem">Multi-select — pick all that should be included</p>
