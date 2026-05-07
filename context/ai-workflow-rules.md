@@ -1,4 +1,13 @@
+---
+type: context
+status: active
+updated: 2026-05-06
+---
+
 # Development Workflow
+
+> [!info] Purpose
+> Spec-driven workflow rules, scoping guidelines, and delivery standards for all Ghost AI implementation.
 
 ## Approach
 
@@ -58,3 +67,5 @@ Progress state must reflect the actual state of the implementation, not the inte
 1. The current unit works end to end within its defined scope.
 2. No invariant defined in `architecture-context.md` was violated.
 3. `progress-tracker.md` reflects the completed work.
+
+*Part of [[README|Ghost AI Vault]]*

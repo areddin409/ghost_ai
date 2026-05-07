@@ -1,4 +1,13 @@
+---
+type: context
+status: active
+updated: 2026-05-06
+---
+
 # UI Context
+
+> [!info] Purpose
+> Theme, colors, typography, canvas design, component conventions, and layout patterns for Ghost AI.
 
 ## Theme
 
@@ -103,3 +112,5 @@ shadcn/ui on top of Tailwind. No custom design system. Components live in `compo
 ## Icons
 
 Lucide React. Stroke-based icons only — no filled variants. Icon sizes: `h-4 w-4` for inline, `h-5 w-5` for buttons, `h-8 w-8` for feature icons in empty states.
+
+*Part of [[README|Ghost AI Vault]]*

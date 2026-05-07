@@ -1,4 +1,13 @@
+---
+type: context
+status: active
+updated: 2026-05-06
+---
+
 # Ghost AI
+
+> [!info] Purpose
+> Product definition — goals, features, core user flow, and scope for Ghost AI.
 
 ## Overview
 
@@ -89,3 +98,5 @@ Ghost AI is a real-time collaborative system design workspace. Users describe a 
 4. AI can generate an architecture into the shared room from a prompt.
 5. The graph can be converted into a persisted Markdown spec.
 6. Project metadata and generated artifacts are stored in the correct layers.
+
+*Part of [[README|Ghost AI Vault]]*
