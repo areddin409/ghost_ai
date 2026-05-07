@@ -31,6 +31,7 @@ function OwnedProjectItem({ project }: { project: Project }) {
         <Button
           variant="ghost"
           size="icon-sm"
+          tabIndex={-1}
           onClick={(e) => {
             e.stopPropagation()
             openRename(project)
@@ -42,6 +43,7 @@ function OwnedProjectItem({ project }: { project: Project }) {
         <Button
           variant="ghost"
           size="icon-sm"
+          tabIndex={-1}
           onClick={(e) => {
             e.stopPropagation()
             openDelete(project)
