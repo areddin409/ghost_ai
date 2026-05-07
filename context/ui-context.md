@@ -116,18 +116,7 @@ Lucide React. Stroke-based icons only — no filled variants. Icon sizes: `h-4 w
 ## Component Tree
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {
-  'background': '#0d0d12',
-  'mainBkg': '#1a1a2e',
-  'primaryColor': '#1a1a2e',
-  'primaryBorderColor': '#6457f9',
-  'primaryTextColor': '#e8e8f0',
-  'lineColor': '#3a3a42',
-  'secondaryColor': '#1a1a2e',
-  'tertiaryColor': '#0d0d12',
-  'edgeLabelBackground': '#1a1a2e',
-  'clusterBkg': '#0d0d12'
-}}}%%
+%%{init: {'theme': 'dark', 'themeVariables': {'lineColor': '#7c6ef9', 'edgeLabelBackground': '#16122a'}}}%%
 flowchart TD
     Shell["EditorShell (context provider)"]
     Navbar["EditorNavbar"]
@@ -140,19 +129,23 @@ flowchart TD
     Shell --> Navbar
     Shell --> Sidebar
     Shell --> Home
-    Sidebar --> Create
-    Sidebar --> Rename
-    Sidebar --> Delete
+    Shell --> Create
+    Shell --> Rename
+    Shell --> Delete
 
-    style Shell fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
-    style Navbar fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
-    style Sidebar fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
-    style Home fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
-    style Create fill:#1a1a2e,stroke:#808090,color:#e8e8f0
-    style Rename fill:#1a1a2e,stroke:#808090,color:#e8e8f0
-    style Delete fill:#1a1a2e,stroke:#ff4d4f,color:#e8e8f0
+    classDef root fill:#2d1f63,stroke:#7c6ef9,color:#fff,stroke-width:2px
+    classDef component fill:#0d2e2e,stroke:#00c8d4,color:#fff,stroke-width:2px
+    classDef dialog fill:#1e1e2e,stroke:#9ca3af,color:#d1d5db,stroke-width:2px
+    classDef danger fill:#2a0a0a,stroke:#ef4444,color:#fff,stroke-width:2px
+
+    class Shell root
+    class Navbar,Sidebar,Home component
+    class Create,Rename dialog
+    class Delete danger
+
+    linkStyle default stroke:#7c6ef9,stroke-width:2px
 ```
 
 ---
 
-*Part of [[README|Ghost AI Vault]]*
+_Part of [[README|Ghost AI Vault]]_

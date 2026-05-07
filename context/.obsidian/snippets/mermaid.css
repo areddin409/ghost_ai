@@ -1,0 +1,10 @@
+.mermaid {
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.mermaid svg {
+  max-width: none;
+  height: auto;
+}

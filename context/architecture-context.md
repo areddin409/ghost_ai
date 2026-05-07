@@ -10,18 +10,7 @@ updated: 2026-05-06
 > Stack, system boundaries, storage model, auth model, AI generation model, and invariants for Ghost AI.
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {
-  'background': '#0d0d12',
-  'mainBkg': '#1a1a2e',
-  'primaryColor': '#1a1a2e',
-  'primaryBorderColor': '#6457f9',
-  'primaryTextColor': '#e8e8f0',
-  'lineColor': '#3a3a42',
-  'secondaryColor': '#1a1a2e',
-  'tertiaryColor': '#0d0d12',
-  'edgeLabelBackground': '#1a1a2e',
-  'clusterBkg': '#0d0d12'
-}}}%%
+%%{init: {'theme': 'dark', 'themeVariables': {'lineColor': '#7c6ef9', 'edgeLabelBackground': '#16122a'}}}%%
 flowchart TD
     Browser(["Browser"])
     Next["Next.js App Router"]
@@ -36,12 +25,13 @@ flowchart TD
     Next --> Blob
     Next --> AI
 
-    style Browser fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
-    style Next fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
-    style Clerk fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
-    style DB fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
-    style Blob fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
-    style AI fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
+    classDef entry fill:#2d1f63,stroke:#7c6ef9,color:#fff,stroke-width:2px
+    classDef service fill:#0d2e2e,stroke:#00c8d4,color:#fff,stroke-width:2px
+
+    class Browser,Next entry
+    class Clerk,DB,Blob,AI service
+
+    linkStyle default stroke:#7c6ef9,stroke-width:2px
 ```
 
 ## Stack
@@ -120,4 +110,4 @@ flowchart TD
 > [!warning] Canvas schema is shared
 > User-created canvas content and imported templates must use the same node/edge schema. Never diverge them.
 
-*Part of [[README|Ghost AI Vault]]*
+_Part of [[README|Ghost AI Vault]]_

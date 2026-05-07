@@ -26,30 +26,20 @@ Use Clerk's `dark` theme from `@clerk/ui/themes` as the base.
 Override Clerk appearance variables using the app's existing CSS variables. Do not hardcode colors.
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {
-  'background': '#0d0d12',
-  'mainBkg': '#1a1a2e',
-  'primaryColor': '#1a1a2e',
-  'primaryBorderColor': '#6457f9',
-  'primaryTextColor': '#e8e8f0',
-  'lineColor': '#3a3a42',
-  'secondaryColor': '#1a1a2e',
-  'tertiaryColor': '#0d0d12',
-  'actorBkg': '#1a1a2e',
-  'actorBorder': '#6457f9',
-  'actorTextColor': '#e8e8f0',
-  'actorLineColor': '#3a3a42',
-  'signalColor': '#00c8d4',
-  'signalTextColor': '#e8e8f0',
-  'labelBoxBkgColor': '#1a1a2e',
-  'labelBoxBorderColor': '#3a3a42',
-  'labelTextColor': '#e8e8f0',
-  'noteBkgColor': '#1a1a2e',
-  'noteTextColor': '#e8e8f0',
-  'activationBorderColor': '#6457f9',
-  'activationBkgColor': '#1a1a2e',
-  'edgeLabelBackground': '#1a1a2e',
-  'clusterBkg': '#0d0d12'
+%%{init: {'theme': 'dark', 'themeVariables': {
+  'actorBkg': '#2d1f63',
+  'actorBorder': '#7c6ef9',
+  'actorTextColor': '#ffffff',
+  'actorLineColor': '#7c6ef9',
+  'signalColor': '#00e5ff',
+  'signalTextColor': '#ffffff',
+  'activationBkgColor': '#0d2e2e',
+  'activationBorderColor': '#00c8d4',
+  'noteBkgColor': '#1e1e2e',
+  'noteTextColor': '#ffffff',
+  'labelBoxBkgColor': '#1e1e2e',
+  'labelBoxBorderColor': '#7c6ef9',
+  'labelTextColor': '#ffffff'
 }}}%%
 sequenceDiagram
     participant B as Browser
@@ -120,4 +110,4 @@ install: @clerk/ui.
 
 ---
 
-*Tracked in [[progress-tracker]]*
+_Tracked in [[progress-tracker]]_
