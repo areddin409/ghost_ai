@@ -21,7 +21,7 @@ Clerk is already installed and connected. wire it into the next.js app: provider
 
 ## Design
 
-Use Clerk's `dark` theme form `@clerk/ui/themes` as the base.
+Use Clerk's `dark` theme from `@clerk/ui/themes` as the base.
 
 Override Clerk appearance variables using the app's existing CSS variables. Do not hardcode colors.
 
