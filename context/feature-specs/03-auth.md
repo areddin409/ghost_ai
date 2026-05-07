@@ -33,7 +33,18 @@ Override Clerk appearance variables using the app's existing CSS variables. Do n
   'primaryTextColor': '#e8e8f0',
   'lineColor': '#3a3a42',
   'secondaryColor': '#1a1a2e',
-  'tertiaryColor': '#0d0d12'
+  'tertiaryColor': '#0d0d12',
+  'actorBkg': '#1a1a2e',
+  'actorBorder': '#6457f9',
+  'actorTextColor': '#e8e8f0',
+  'actorLineColor': '#3a3a42',
+  'signalColor': '#00c8d4',
+  'signalTextColor': '#e8e8f0',
+  'labelBoxBkgColor': '#1a1a2e',
+  'labelBoxBorderColor': '#3a3a42',
+  'labelTextColor': '#e8e8f0',
+  'noteBkgColor': '#1a1a2e',
+  'noteTextColor': '#e8e8f0'
 }}}%%
 sequenceDiagram
     participant B as Browser
@@ -58,14 +69,14 @@ sequenceDiagram
 
 ### Sign-in and Sign-up Pages
 
-- [ ] large screens: simple two-panel layout
-- [ ] left: compact logo, tagline, short text-only feature list
-- [ ] right: centered Clerk form
-- [ ] small screens: form only
-- [ ] no gradients
-- [ ] no oversized hero sections
-- [ ] no feature cards
-- [ ] no scroll heavy layouts
+- [x] large screens: simple two-panel layout ✅ 2026-05-06
+- [x] left: compact logo, tagline, short text-only feature list ✅ 2026-05-06
+- [x] right: centered Clerk form ✅ 2026-05-06
+- [x] small screens: form only ✅ 2026-05-06
+- [x] no gradients ✅ 2026-05-06
+- [x] no oversized hero sections ✅ 2026-05-06
+- [x] no feature cards ✅ 2026-05-06
+- [x] no scroll heavy layouts ✅ 2026-05-06
 
 Keep the layout minimal and professional
 
@@ -81,8 +92,8 @@ define public routes using the existing sign-in and sign-up env vars. Protect ev
 
 update `/`:
 
-- [ ] authenticated users redirect to `/editor`
-- [ ] unauthenticated users redirect to `/sign-in`
+- [x] authenticated users redirect to `/editor` ✅ 2026-05-06
+- [x] unauthenticated users redirect to `/sign-in` ✅ 2026-05-06
 
 Add Clerk's built-in `UserButton` to the editor navbar's right section for profile settings and logout.
 

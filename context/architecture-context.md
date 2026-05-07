@@ -17,7 +17,11 @@ updated: 2026-05-06
   'primaryTextColor': '#e8e8f0',
   'lineColor': '#3a3a42',
   'secondaryColor': '#1a1a2e',
-  'tertiaryColor': '#0d0d12'
+  'tertiaryColor': '#0d0d12',
+  'nodeBkg': '#1a1a2e',
+  'nodeBorder': '#6457f9',
+  'nodeTextColor': '#e8e8f0',
+  'edgeLabelBackground': {'color': '#0d0d12'}
 }}}%%
 flowchart TD
     Browser(["Browser"])
@@ -35,10 +39,10 @@ flowchart TD
 
     style Browser fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
     style Next fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
-    style Clerk fill:#1a1a2e,stroke:#00c8d4,color:#00c8d4
-    style DB fill:#1a1a2e,stroke:#00c8d4,color:#00c8d4
-    style Blob fill:#1a1a2e,stroke:#00c8d4,color:#00c8d4
-    style AI fill:#1a1a2e,stroke:#6457f9,color:#6457f9
+    style Clerk fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
+    style DB fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
+    style Blob fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
+    style AI fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
 ```
 
 ## Stack
