@@ -17,10 +17,6 @@ updated: 2026-05-06
 
 ---
 
-## Goal
-
-Build the `editor` home screen and add project dialog/sidebar actions. NO API calls or persistence yet.
-
 ## Editor Home
 
 Reuse the existing editor layout. Do not modify the navbar or sidebar behavior.

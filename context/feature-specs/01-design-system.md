@@ -21,7 +21,7 @@ We're adding the design system and UI primitives components.
 
 Install and configure `shadcn/ui`.
 
-Add these shadcn compnents:
+Add these shadcn components:
 
 - [ ] Button
 - [ ] Card
@@ -39,7 +39,7 @@ Create `libs/utils.ts` with a reusable `cn()` helper for merging Tailwind classe
 
 Ensure all components match the existing dark theme in the `global.css` file.
 
-### Check when done
+## Check when done
 
 - [ ] All components import without errors
 - [ ] `cn()` helper correctly merges classes
