@@ -1,15 +1,61 @@
 "use client"
 
-import { Plus, X } from "lucide-react"
+import { Plus, X, Pencil, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useProjectDialogsContext } from "@/components/editor/project-dialogs-context"
+import type { MockProject } from "@/hooks/use-project-dialogs"
 
 interface ProjectSidebarProps {
   isOpen: boolean
   onClose: () => void
 }
 
+function ProjectItem({ project }: { project: MockProject }) {
+  const { openRename, openDelete } = useProjectDialogsContext()
+
+  return (
+    <div
+      className="group flex items-center justify-between rounded-xl px-3 py-2 hover:bg-bg-subtle cursor-pointer"
+    >
+      <span className="truncate text-sm text-text-secondary">
+        {project.name}
+      </span>
+      {project.isOwned && (
+        <div className="action flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={(e) => {
+              e.stopPropagation()
+              openRename(project)
+            }}
+            aria-label={`Rename ${project.name}`}
+          >
+            <Pencil className="h-3.5 w-3.5" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={(e) => {
+              e.stopPropagation()
+              openDelete(project)
+            }}
+            aria-label={`Delete ${project.name}`}
+          >
+            <Trash2 className="h-3.5 w-3.5 text-state-error" />
+          </Button>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
+  const { openCreate, projects } = useProjectDialogsContext()
+  const myProjects = projects.filter((p) => p.isOwned)
+  const starredProjects = projects.filter((p) => p.starred)
+
   return (
     <aside
       aria-hidden={!isOpen}
@@ -19,7 +65,9 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
       }`}
     >
       <div className="flex items-center justify-between border-b border-border-default px-4 py-3">
-        <span className="text-sm font-semibold text-text-primary">Projects</span>
+        <span className="text-sm font-semibold text-text-primary">
+          Projects
+        </span>
         <Button
           variant="ghost"
           size="icon-sm"
@@ -30,7 +78,10 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
         </Button>
       </div>
 
-      <Tabs defaultValue="my-projects" className="flex flex-1 flex-col overflow-hidden">
+      <Tabs
+        defaultValue="my-projects"
+        className="flex flex-1 flex-col overflow-hidden"
+      >
         <div className="px-4 pt-3">
           <TabsList className="w-full">
             <TabsTrigger value="my-projects" className="flex-1">
@@ -43,20 +94,40 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
         </div>
         <TabsContent
           value="my-projects"
-          className="flex flex-1 items-center justify-center"
+          className="flex-1 overflow-y-auto px-2 py-2"
         >
-          <p className="text-sm text-text-muted">No projects yet</p>
+          {myProjects.length === 0 ? (
+            <div className="flex h-full items-center justify-center">
+              <p className="text-sm text-text-muted">No projects yet</p>
+            </div>
+          ) : (
+            <div className="space-y-0.5">
+              {myProjects.map((project) => (
+                <ProjectItem key={project.id} project={project} />
+              ))}
+            </div>
+          )}
         </TabsContent>
         <TabsContent
           value="starred"
-          className="flex flex-1 items-center justify-center"
+          className="flex-1 overflow-y-auto px-2 py-2"
         >
-          <p className="text-sm text-text-muted">No starred projects</p>
+          {starredProjects.length === 0 ? (
+            <div className="flex h-full items-center justify-center">
+              <p className="text-sm text-text-muted">No starred projects</p>
+            </div>
+          ) : (
+            <div className="space-y-0.5">
+              {starredProjects.map((project) => (
+                <ProjectItem key={project.id} project={project} />
+              ))}
+            </div>
+          )}
         </TabsContent>
       </Tabs>
 
       <div className="border-t border-border-default p-4">
-        <Button variant="outline" className="w-full">
+        <Button variant="outline" className="w-full" onClick={openCreate}>
           <Plus className="h-4 w-4" />
           New Project
         </Button>
