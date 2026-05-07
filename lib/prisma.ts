@@ -18,7 +18,9 @@ function makeClient(): PrismaClient {
       withAccelerate()
     ) as unknown as PrismaClient
   }
-  const adapter = new PrismaPg(new Pool({ connectionString: normalizeDbUrl(url) }))
+  const adapter = new PrismaPg(
+    new Pool({ connectionString: normalizeDbUrl(url) })
+  )
   return new PrismaClient({ adapter })
 }
 
