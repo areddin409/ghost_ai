@@ -71,9 +71,9 @@ export function RenameProjectDialog() {
   const project = dialog.type === "rename" ? dialog.project : null
 
   function onKeyDown(e: KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter" && renameName.trim()) {
-      handleSubmit()
-    }
+    if (e.key !== "Enter" || !renameName.trim() || isLoading) return
+    e.preventDefault()
+    handleSubmit()
   }
 
   return (
