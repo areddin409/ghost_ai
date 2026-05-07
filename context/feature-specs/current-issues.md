@@ -36,4 +36,4 @@ updated: 2026-05-06
 
 ---
 
-*Part of [[README|Ghost AI Vault]]*
+_Part of [[README|Ghost AI Vault]]_
