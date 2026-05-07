@@ -1,13 +1,13 @@
 "use client"
 
 import { createContext, useContext } from "react"
-import type { ProjectActionsState } from "@/hooks/use-project-actions"
+import type { ProjectDialogsState } from "@/hooks/use-project-dialogs"
 
-export const ProjectDialogsContext = createContext<ProjectActionsState | null>(
+export const ProjectDialogsContext = createContext<ProjectDialogsState | null>(
   null
 )
 
-export function useProjectDialogsContext(): ProjectActionsState {
+export function useProjectDialogsContext(): ProjectDialogsState {
   const ctx = useContext(ProjectDialogsContext)
   if (!ctx) {
     throw new Error(

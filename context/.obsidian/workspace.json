@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "feature-specs/current-issues.md",
+                "file": "progress-tracker.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "current-issues"
+              "title": "progress-tracker"
             }
           },
           {
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "feature-specs/current-issues.md",
+                "file": "progress-tracker.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +118,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for current-issues"
+              "title": "Backlinks for progress-tracker"
             }
           },
           {
@@ -127,12 +127,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "feature-specs/current-issues.md",
+                "file": "progress-tracker.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from current-issues"
+              "title": "Outgoing links from progress-tracker"
             }
           },
           {
@@ -170,13 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "feature-specs/current-issues.md",
+                "file": "progress-tracker.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of current-issues"
+              "title": "Outline of progress-tracker"
             }
           }
         ]
@@ -200,14 +200,11 @@
   },
   "active": "6370462bae3b669c",
   "lastOpenFiles": [
-    "feature-specs/07-wire-editor-home.md",
-    "feature-specs/06-project-apis.md",
-    "progress-tracker.md",
-    "feature-specs/current-issues.md",
-    "feature-specs/05-prima.md",
-    "README.md",
     "project-overview.md",
+    "progress-tracker.md",
+    "feature-specs/05-prima.md",
     "progress-tracker.md.tmp.39908.d451dc3b01cf",
+    "README.md",
     "ai-workflow-rules.md",
     "feature-specs/04-project-dialogs.md",
     "ui-context.md",
@@ -225,6 +222,7 @@
     "progress-tracker.md.tmp.34432.640a36ef9ba9",
     "architecture-context.md.tmp.34432.d9443807c09a",
     "feature-specs/01-design-system.md",
-    "2026-05-06.md"
+    "2026-05-06.md",
+    "feature-specs/current-issues.md"
   ]
 }
