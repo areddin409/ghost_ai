@@ -19,6 +19,39 @@ updated: 2026-05-06
 
 ---
 
+## Feature Status Flow
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {
+  'background': '#0d0d12',
+  'primaryColor': '#1a1a2e',
+  'primaryBorderColor': '#6457f9',
+  'primaryTextColor': '#e8e8f0',
+  'lineColor': '#3a3a42',
+  'secondaryColor': '#1a1a2e',
+  'tertiaryColor': '#0d0d12'
+}}}%%
+stateDiagram-v2
+    [*] --> planned
+    planned --> in_progress : implementation starts
+    in_progress --> shipped : works end-to-end
+    shipped --> [*]
+    shipped --> new_spec : if reverted
+    new_spec --> [*]
+
+    classDef muted fill:#1a1a2e,stroke:#808090,color:#808090
+    classDef active fill:#1a1a2e,stroke:#fbbf24,color:#fbbf24
+    classDef done fill:#1a1a2e,stroke:#34d399,color:#34d399
+    classDef new fill:#1a1a2e,stroke:#6457f9,color:#6457f9
+
+    class planned muted
+    class in_progress active
+    class shipped done
+    class new_spec new
+```
+
+---
+
 ## Open Tasks
 
 ```tasks
