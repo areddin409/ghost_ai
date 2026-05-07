@@ -25,6 +25,37 @@ Use Clerk's `dark` theme from `@clerk/ui/themes` as the base.
 
 Override Clerk appearance variables using the app's existing CSS variables. Do not hardcode colors.
 
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {
+  'background': '#0d0d12',
+  'primaryColor': '#1a1a2e',
+  'primaryBorderColor': '#6457f9',
+  'primaryTextColor': '#e8e8f0',
+  'lineColor': '#3a3a42',
+  'secondaryColor': '#1a1a2e',
+  'tertiaryColor': '#0d0d12'
+}}}%%
+sequenceDiagram
+    participant B as Browser
+    participant M as Middleware (proxy.ts)
+    participant C as Clerk
+
+    B->>M: GET /editor (no session)
+    M->>C: Verify session token
+    C-->>M: Unauthenticated
+    M-->>B: 302 → /sign-in
+
+    B->>M: POST /sign-in (credentials)
+    M->>C: Authenticate
+    C-->>M: Session token
+    M-->>B: 302 → /editor
+
+    B->>M: GET /editor (with session)
+    M->>C: Verify session token
+    C-->>M: Valid
+    M-->>B: 200 /editor
+```
+
 ### Sign-in and Sign-up Pages
 
 - [ ] large screens: simple two-panel layout
