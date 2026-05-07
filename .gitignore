@@ -45,7 +45,6 @@ next-env.d.ts
 .claude/
 skills-lock.json
 
-context/.obsidian
 context/current-issues.md
 context/feature-specs/current-issues.md
 
