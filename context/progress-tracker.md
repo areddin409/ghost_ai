@@ -29,7 +29,10 @@ updated: 2026-05-06
   'primaryTextColor': '#e8e8f0',
   'lineColor': '#3a3a42',
   'secondaryColor': '#1a1a2e',
-  'tertiaryColor': '#0d0d12'
+  'tertiaryColor': '#0d0d12',
+  'stateBkg': '#1a1a2e',
+  'stateBorder': '#6457f9',
+  'stateTextColor': '#e8e8f0'
 }}}%%
 stateDiagram-v2
     [*] --> planned
@@ -39,10 +42,10 @@ stateDiagram-v2
     shipped --> new_spec : if reverted
     new_spec --> [*]
 
-    classDef muted fill:#1a1a2e,stroke:#808090,color:#808090
-    classDef active fill:#1a1a2e,stroke:#fbbf24,color:#fbbf24
-    classDef done fill:#1a1a2e,stroke:#34d399,color:#34d399
-    classDef new fill:#1a1a2e,stroke:#6457f9,color:#6457f9
+    classDef muted fill:#1a1a2e,stroke:#808090,color:#e8e8f0
+    classDef active fill:#1a1a2e,stroke:#fbbf24,color:#e8e8f0
+    classDef done fill:#1a1a2e,stroke:#34d399,color:#e8e8f0
+    classDef new fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
 
     class planned muted
     class in_progress active
