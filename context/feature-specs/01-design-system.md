@@ -23,13 +23,13 @@ Install and configure `shadcn/ui`.
 
 Add these shadcn components:
 
-- [ ] Button
-- [ ] Card
-- [ ] Dialog
-- [ ] Input
-- [ ] Tabs
-- [ ] Textarea
-- [ ] ScrollArea
+- [x] Button ✅ 2026-05-06
+- [x] Card ✅ 2026-05-06
+- [x] Dialog ✅ 2026-05-06
+- [x] Input ✅ 2026-05-06
+- [x] Tabs ✅ 2026-05-06
+- [x] Textarea ✅ 2026-05-06
+- [x] ScrollArea ✅ 2026-05-06
 
 Do not modify the generated `components/ui/*` files after installation.
 
@@ -41,9 +41,9 @@ Ensure all components match the existing dark theme in the `global.css` file.
 
 ## Check when done
 
-- [ ] All components import without errors
-- [ ] `cn()` helper correctly merges classes
-- [ ] No default light styling appears
+- [x] All components import without errors ✅ 2026-05-06
+- [x] `cn()` helper correctly merges classes ✅ 2026-05-06
+- [x] No default light styling appears ✅ 2026-05-06
 
 ---
 

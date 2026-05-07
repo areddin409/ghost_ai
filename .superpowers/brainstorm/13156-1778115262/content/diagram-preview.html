@@ -1,0 +1,103 @@
+<h2>Ghost AI — styled diagram preview</h2>
+<p class="subtitle">How diagrams will look in Obsidian reading mode with the design token theme applied</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1rem">
+
+  <!-- Architecture -->
+  <div style="background:#0d0d12;border:1px solid #2a2a38;border-radius:10px;padding:1.25rem">
+    <div style="font-size:0.7rem;color:#00c8d4;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem">architecture-context.md</div>
+    <svg viewBox="0 0 280 200" style="width:100%">
+      <!-- edges -->
+      <line x1="140" y1="38" x2="50" y2="82" stroke="#3a3a42" stroke-width="1.5"/>
+      <line x1="140" y1="38" x2="140" y2="82" stroke="#3a3a42" stroke-width="1.5"/>
+      <line x1="140" y1="38" x2="230" y2="82" stroke="#3a3a42" stroke-width="1.5"/>
+      <line x1="50" y1="106" x2="50" y2="152" stroke="#3a3a42" stroke-width="1.5"/>
+      <line x1="140" y1="106" x2="140" y2="152" stroke="#3a3a42" stroke-width="1.5"/>
+      <!-- Browser -->
+      <rect x="90" y="10" width="100" height="28" rx="5" fill="#1a1a2e" stroke="#6457f9" stroke-width="1.5"/>
+      <text x="140" y="28" text-anchor="middle" fill="#e8e8f0" font-size="11" font-family="monospace">Browser</text>
+      <!-- Next.js -->
+      <rect x="90" y="82" width="100" height="24" rx="5" fill="#1a1a2e" stroke="#6457f9" stroke-width="1.5"/>
+      <text x="140" y="98" text-anchor="middle" fill="#e8e8f0" font-size="10" font-family="monospace">Next.js App Router</text>
+      <!-- Clerk -->
+      <rect x="4" y="152" width="72" height="24" rx="5" fill="#1a1a2e" stroke="#00c8d4" stroke-width="1.5"/>
+      <text x="40" y="168" text-anchor="middle" fill="#00c8d4" font-size="10" font-family="monospace">Clerk Auth</text>
+      <!-- DB -->
+      <rect x="90" y="152" width="72" height="24" rx="5" fill="#1a1a2e" stroke="#00c8d4" stroke-width="1.5"/>
+      <text x="126" y="168" text-anchor="middle" fill="#00c8d4" font-size="10" font-family="monospace">Database</text>
+      <!-- Blob -->
+      <rect x="204" y="82" width="72" height="24" rx="5" fill="#1a1a2e" stroke="#00c8d4" stroke-width="1.5"/>
+      <text x="240" y="98" text-anchor="middle" fill="#00c8d4" font-size="10" font-family="monospace">Vercel Blob</text>
+      <!-- AI -->
+      <rect x="4" y="82" width="72" height="24" rx="5" fill="#1a1a2e" stroke="#6457f9" stroke-width="1.5"/>
+      <text x="40" y="98" text-anchor="middle" fill="#6457f9" font-size="10" font-family="monospace">AI (bg task)</text>
+      <!-- arrowheads -->
+      <line x1="140" y1="38" x2="136" y2="80" stroke="#3a3a42" stroke-width="1.5" marker-end="url(#arr)"/>
+    </svg>
+    <div style="font-size:0.65rem;color:#808090;margin-top:0.5rem">flowchart — purple border = app layer · cyan border = external/storage</div>
+  </div>
+
+  <!-- Auth sequence -->
+  <div style="background:#0d0d12;border:1px solid #2a2a38;border-radius:10px;padding:1.25rem">
+    <div style="font-size:0.7rem;color:#00c8d4;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem">03-auth.md</div>
+    <div style="font-family:monospace;font-size:0.75rem;color:#808090">
+      <div style="display:flex;gap:3rem;justify-content:center;margin-bottom:0.75rem">
+        <span style="color:#e8e8f0;border-bottom:2px solid #6457f9;padding-bottom:2px">Browser</span>
+        <span style="color:#e8e8f0;border-bottom:2px solid #6457f9;padding-bottom:2px">Middleware</span>
+        <span style="color:#e8e8f0;border-bottom:2px solid #00c8d4;padding-bottom:2px">Clerk</span>
+      </div>
+      <div style="color:#3a3a42;display:flex;gap:3rem;justify-content:center;font-size:0.6rem;line-height:2.2">
+        <span>│</span><span>│</span><span>│</span>
+      </div>
+      <div style="color:#00c8d4;font-size:0.68rem;padding:0.3rem 0">─── GET /editor ──────────────►</div>
+      <div style="color:#808090;font-size:0.68rem;padding:0.2rem 0;padding-left:4rem">─── verify session ──────────►</div>
+      <div style="color:#ff4d4f;font-size:0.68rem;padding:0.2rem 0;padding-left:4rem">◄── unauthenticated ─────────</div>
+      <div style="color:#34d399;font-size:0.68rem;padding:0.2rem 0">◄── redirect /sign-in ────────</div>
+    </div>
+    <div style="font-size:0.65rem;color:#808090;margin-top:0.75rem">sequence — cyan = request · red = rejection · green = redirect</div>
+  </div>
+
+  <!-- Status state machine -->
+  <div style="background:#0d0d12;border:1px solid #2a2a38;border-radius:10px;padding:1.25rem">
+    <div style="font-size:0.7rem;color:#00c8d4;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem">progress-tracker.md</div>
+    <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;font-family:monospace;font-size:0.72rem">
+      <div style="background:#1a1a2e;border:1px solid #808090;border-radius:4px;padding:0.3rem 0.6rem;color:#808090">planned</div>
+      <div style="color:#3a3a42">──►</div>
+      <div style="background:#1a1a2e;border:1px solid #fbbf24;border-radius:4px;padding:0.3rem 0.6rem;color:#fbbf24">in-progress</div>
+      <div style="color:#3a3a42">──►</div>
+      <div style="background:#1a1a2e;border:1px solid #34d399;border-radius:4px;padding:0.3rem 0.6rem;color:#34d399">shipped</div>
+      <div style="color:#3a3a42;margin-left:0.25rem">──►</div>
+      <div style="background:#1a1a2e;border:1px solid #6457f9;border-radius:4px;padding:0.3rem 0.6rem;color:#6457f9;font-size:0.65rem">new spec<br><span style="color:#808090">if reverted</span></div>
+    </div>
+    <div style="font-size:0.65rem;color:#808090;margin-top:0.75rem">stateDiagram — grey=planned · amber=in-progress · green=shipped · purple=new spec</div>
+  </div>
+
+  <!-- UI tree -->
+  <div style="background:#0d0d12;border:1px solid #2a2a38;border-radius:10px;padding:1.25rem">
+    <div style="font-size:0.7rem;color:#00c8d4;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem">ui-context.md</div>
+    <svg viewBox="0 0 260 160" style="width:100%">
+      <line x1="130" y1="30" x2="50" y2="70" stroke="#3a3a42" stroke-width="1.5"/>
+      <line x1="130" y1="30" x2="130" y2="70" stroke="#3a3a42" stroke-width="1.5"/>
+      <line x1="130" y1="94" x2="80" y2="124" stroke="#3a3a42" stroke-width="1.5"/>
+      <line x1="130" y1="94" x2="180" y2="124" stroke="#3a3a42" stroke-width="1.5"/>
+      <!-- EditorShell -->
+      <rect x="75" y="10" width="110" height="22" rx="4" fill="#1a1a2e" stroke="#6457f9" stroke-width="1.5"/>
+      <text x="130" y="25" text-anchor="middle" fill="#6457f9" font-size="10" font-family="monospace">EditorShell</text>
+      <!-- Navbar -->
+      <rect x="10" y="70" width="90" height="22" rx="4" fill="#1a1a2e" stroke="#00c8d4" stroke-width="1.5"/>
+      <text x="55" y="85" text-anchor="middle" fill="#00c8d4" font-size="9" font-family="monospace">EditorNavbar</text>
+      <!-- Sidebar -->
+      <rect x="85" y="70" width="90" height="22" rx="4" fill="#1a1a2e" stroke="#00c8d4" stroke-width="1.5"/>
+      <text x="130" y="85" text-anchor="middle" fill="#00c8d4" font-size="9" font-family="monospace">ProjectSidebar</text>
+      <!-- Dialogs -->
+      <rect x="40" y="124" width="76" height="22" rx="4" fill="#1a1a2e" stroke="#808090" stroke-width="1.5"/>
+      <text x="78" y="139" text-anchor="middle" fill="#808090" font-size="9" font-family="monospace">Create/Rename</text>
+      <rect x="126" y="124" width="66" height="22" rx="4" fill="#1a1a2e" stroke="#ff4d4f" stroke-width="1.5"/>
+      <text x="159" y="139" text-anchor="middle" fill="#ff4d4f" font-size="9" font-family="monospace">Delete</text>
+    </svg>
+    <div style="font-size:0.65rem;color:#808090;margin-top:0.25rem">flowchart — purple=shell · cyan=layout · grey=neutral actions · red=destructive</div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:1.5rem">Does this color system work? Reply in terminal.</p>
