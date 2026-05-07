@@ -13,6 +13,7 @@ No client-side fetching for initial load.
 Create a hook in `hooks/` that manages dialog state and project mutations.
 
 **Create**
+
 - [x] manage create dialog state
 - [x] manage project name input
 - [x] generate a short unique suffix
@@ -23,11 +24,13 @@ Create a hook in `hooks/` that manages dialog state and project mutations.
 the project ID and liveblocks room id should stay aligned.
 
 **Rename**
+
 - [x] store target project id + current name
 - [x] call `PATCH /api/projects/[id]`
 - [x] refresh on success
 
 **Delete**
+
 - [x] store target project
 - [x] call `DELETE /api/projects/[id]`
 - [x] redirect to `/editor` if deleting the active workspace
