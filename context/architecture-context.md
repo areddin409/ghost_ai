@@ -1,4 +1,48 @@
+---
+type: context
+status: active
+updated: 2026-05-06
+---
+
 # Architecture Context
+
+> [!info] Purpose
+> Stack, system boundaries, storage model, auth model, AI generation model, and invariants for Ghost AI.
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {
+  'background': '#0d0d12',
+  'mainBkg': '#1a1a2e',
+  'primaryColor': '#1a1a2e',
+  'primaryBorderColor': '#6457f9',
+  'primaryTextColor': '#e8e8f0',
+  'lineColor': '#3a3a42',
+  'secondaryColor': '#1a1a2e',
+  'tertiaryColor': '#0d0d12',
+  'edgeLabelBackground': '#1a1a2e',
+  'clusterBkg': '#0d0d12'
+}}}%%
+flowchart TD
+    Browser(["Browser"])
+    Next["Next.js App Router"]
+    Clerk["Clerk Auth"]
+    DB["Database (metadata)"]
+    Blob["Vercel Blob (artifacts)"]
+    AI["AI Generation (background task)"]
+
+    Browser --> Next
+    Next --> Clerk
+    Next --> DB
+    Next --> Blob
+    Next --> AI
+
+    style Browser fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
+    style Next fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
+    style Clerk fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
+    style DB fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
+    style Blob fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
+    style AI fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
+```
 
 ## Stack
 
@@ -61,8 +105,19 @@
 
 ## Invariants
 
-1. Request handlers do not run long-lived AI work — that belongs in background tasks.
-2. Metadata and large generated artifacts are stored in separate layers.
-3. Auth and ownership are enforced at every mutation boundary.
-4. Client components are used only where browser interactivity or real-time state requires them.
-5. The canvas schema must remain consistent between user-created content and imported templates.
+> [!warning] Request handlers stay thin
+> Long-lived AI work belongs in background tasks, not in request handlers.
+
+> [!warning] Storage layers are separate
+> Metadata and large generated artifacts must not be stored in the same layer. Database for metadata; Vercel Blob for artifacts.
+
+> [!warning] Auth and ownership are always enforced
+> Every mutation boundary must verify auth and project ownership before proceeding.
+
+> [!warning] Client components are the exception
+> Default to React Server Components. Add `"use client"` only when the component needs browser interactivity, hooks, or real-time state.
+
+> [!warning] Canvas schema is shared
+> User-created canvas content and imported templates must use the same node/edge schema. Never diverge them.
+
+*Part of [[README|Ghost AI Vault]]*

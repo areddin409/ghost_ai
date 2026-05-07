@@ -1,18 +1,35 @@
-Read `AGENTS.md` before starting.
+---
+type: feature-spec
+feature: "01 — Design System"
+status: shipped
+updated: 2026-05-06
+---
+
+# Feature 01 — Design System
+
+> [!abstract] Goal
+> Configure shadcn/ui, install the seven core UI primitives, and establish the `cn()` utility.
+
+> [!success] Shipped
+> All components installed and verified. `cn()` helper in `libs/utils.ts`. No default light styling.
+
+**References:** [[ui-context]] · [[code-standards]]
+
+---
 
 We're adding the design system and UI primitives components.
 
 Install and configure `shadcn/ui`.
 
-Add these shadcn compnents:
+Add these shadcn components:
 
-- [ ] Button
-- [ ] Card
-- [ ] Dialog
-- [ ] Input
-- [ ] Tabs
-- [ ] Textarea
-- [ ] ScrollArea
+- [x] Button ✅ 2026-05-06
+- [x] Card ✅ 2026-05-06
+- [x] Dialog ✅ 2026-05-06
+- [x] Input ✅ 2026-05-06
+- [x] Tabs ✅ 2026-05-06
+- [x] Textarea ✅ 2026-05-06
+- [x] ScrollArea ✅ 2026-05-06
 
 Do not modify the generated `components/ui/*` files after installation.
 
@@ -22,8 +39,12 @@ Create `libs/utils.ts` with a reusable `cn()` helper for merging Tailwind classe
 
 Ensure all components match the existing dark theme in the `global.css` file.
 
-### Check when done
+## Check when done
 
-- [ ] All components import without errors
-- [ ] `cn()` helper correctly merges classes
-- [ ] No default light styling appears
+- [x] All components import without errors ✅ 2026-05-06
+- [x] `cn()` helper correctly merges classes ✅ 2026-05-06
+- [x] No default light styling appears ✅ 2026-05-06
+
+---
+
+*Tracked in [[progress-tracker]]*

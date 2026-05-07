@@ -1,4 +1,15 @@
+---
+type: context
+status: active
+updated: 2026-05-06
+---
+
 # Code Standards
+
+> [!info] Purpose
+> TypeScript, Next.js, styling, API, storage, and file organization conventions for Ghost AI.
+
+**References:** [[architecture-context]]
 
 ## General
 
@@ -48,3 +59,5 @@
 - `components/` — UI composition only; no business logic.
 - `app/api/` — route handlers for auth, triggering, and persistence.
 - Name files after the responsibility they contain, not the technology.
+
+*Part of [[README|Ghost AI Vault]]*
