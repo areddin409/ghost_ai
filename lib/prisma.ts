@@ -3,14 +3,6 @@ import { PrismaPg } from "@prisma/adapter-pg"
 import { withAccelerate } from "@prisma/extension-accelerate"
 import { Pool } from "pg"
 
-/** Normalize deprecated sslmode aliases to avoid pg-connection-string warnings. */
-function normalizeDbUrl(url: string): string {
-  return url.replace(
-    /sslmode=(require|prefer|verify-ca)/g,
-    "sslmode=verify-full"
-  )
-}
-
 function makeClient(): PrismaClient {
   const url = process.env.DATABASE_URL ?? ""
   if (url.startsWith("prisma+postgres://")) {
@@ -18,9 +10,7 @@ function makeClient(): PrismaClient {
       withAccelerate()
     ) as unknown as PrismaClient
   }
-  const adapter = new PrismaPg(
-    new Pool({ connectionString: normalizeDbUrl(url) })
-  )
+  const adapter = new PrismaPg(new Pool({ connectionString: url }))
   return new PrismaClient({ adapter })
 }
 

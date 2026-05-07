@@ -68,10 +68,9 @@ export function useProjectActions({
   const [createName, setCreateName] = useState("")
   const [renameName, setRenameName] = useState("")
 
+  const slug = createName.trim() ? slugify(createName) : ""
   const roomIdPreview =
-    dialog.type === "create" && createName.trim()
-      ? `${slugify(createName)}-${dialog.suffix}`
-      : ""
+    dialog.type === "create" && slug ? `${slug}-${dialog.suffix}` : ""
 
   function openCreate() {
     setCreateName("")
@@ -99,7 +98,8 @@ export function useProjectActions({
     try {
       if (snapshot.type === "create") {
         const name = createName.trim() || "Untitled Project"
-        const roomId = `${slugify(name)}-${snapshot.suffix}`
+        const baseSlug = slugify(name) || "untitled"
+        const roomId = `${baseSlug}-${snapshot.suffix}`
         const res = await fetch("/api/projects", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -137,7 +137,8 @@ export function useProjectActions({
         if (!res.ok) throw new Error("Failed to delete project")
         setOwnedProjects((prev) => prev.filter((p) => p.id !== project.id))
         setDialog({ type: "none" })
-        if (pathname.includes(project.id)) {
+        const projectPath = `/editor/${project.id}`
+        if (pathname === projectPath || pathname.startsWith(`${projectPath}/`)) {
           router.push("/editor")
         } else {
           router.refresh()

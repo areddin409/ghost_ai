@@ -53,7 +53,7 @@ export function CreateProjectDialog() {
           </Button>
           <Button
             onClick={() => void handleSubmit()}
-            disabled={!createName.trim() || isLoading}
+            disabled={!roomIdPreview || isLoading}
           >
             {isLoading ? "Creating…" : "Create project"}
           </Button>
