@@ -44,7 +44,10 @@ Override Clerk appearance variables using the app's existing CSS variables. Do n
   'labelBoxBorderColor': '#3a3a42',
   'labelTextColor': '#e8e8f0',
   'noteBkgColor': '#1a1a2e',
-  'noteTextColor': '#e8e8f0'
+  'noteTextColor': '#e8e8f0',
+  'activationBorderColor': '#6457f9',
+  'activationBkgColor': '#1a1a2e',
+  'edgeLabelBackground': '#1a1a2e'
 }}}%%
 sequenceDiagram
     participant B as Browser
