@@ -1,6 +1,21 @@
-## Goal
+---
+type: feature-spec
+feature: "04 — Project Dialogs"
+status: shipped
+updated: 2026-05-06
+---
 
-Build the `editor` home screen and add project dialog/sidebar actions. NO API calls or persistence yet.
+# Feature 04 — Project Dialogs
+
+> [!abstract] Goal
+> Build the editor home screen and project dialog actions (create, rename, delete) using mock data only.
+
+> [!success] Shipped
+> All dialogs wired. Slug preview works. Sidebar actions show for owned projects only. No TS or lint errors.
+
+**References:** [[architecture-context]] · [[ui-context]] · [[code-standards]]
+
+---
 
 ## Editor Home
 
@@ -76,3 +91,7 @@ Use mock project data only. Do not add API calls or persistence.
 - slug preview works
 - no TS errors
 - no lint errors
+
+---
+
+*Tracked in [[progress-tracker]]*
