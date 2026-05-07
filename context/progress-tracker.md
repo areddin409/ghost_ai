@@ -30,6 +30,8 @@ updated: 2026-05-06
   'lineColor': '#3a3a42',
   'secondaryColor': '#1a1a2e',
   'tertiaryColor': '#0d0d12',
+  'edgeLabelBackground': '#1a1a2e',
+  'transitionColor': '#3a3a42',
   'stateBkg': '#1a1a2e',
   'stateBorder': '#6457f9',
   'stateTextColor': '#e8e8f0'

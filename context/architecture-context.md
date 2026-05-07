@@ -21,7 +21,8 @@ updated: 2026-05-06
   'nodeBkg': '#1a1a2e',
   'nodeBorder': '#6457f9',
   'nodeTextColor': '#e8e8f0',
-  'edgeLabelBackground': {'color': '#0d0d12'}
+  'edgeLabelBackground': '#1a1a2e',
+  'clusterBkg': '#0d0d12'
 }}}%%
 flowchart TD
     Browser(["Browser"])
