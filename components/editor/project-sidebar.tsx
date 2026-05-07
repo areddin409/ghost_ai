@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { Plus, X, Pencil, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -14,27 +13,19 @@ interface ProjectSidebarProps {
 
 function ProjectItem({ project }: { project: MockProject }) {
   const { openRename, openDelete } = useProjectDialogsContext()
-  const [hovered, setHovered] = useState(false)
 
   return (
     <div
-      className="flex items-center justify-between rounded-xl px-3 py-2 hover:bg-bg-subtle cursor-pointer"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className="group flex items-center justify-between rounded-xl px-3 py-2 hover:bg-bg-subtle cursor-pointer"
     >
       <span className="truncate text-sm text-text-secondary">
         {project.name}
       </span>
       {project.isOwned && (
-        <div
-          className={`flex shrink-0 items-center gap-1 transition-opacity ${
-            hovered ? "opacity-100" : "opacity-0"
-          }`}
-        >
+        <div className="action flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
           <Button
             variant="ghost"
             size="icon-sm"
-            tabIndex={hovered ? 0 : -1}
             onClick={(e) => {
               e.stopPropagation()
               openRename(project)
@@ -46,7 +37,6 @@ function ProjectItem({ project }: { project: MockProject }) {
           <Button
             variant="ghost"
             size="icon-sm"
-            tabIndex={hovered ? 0 : -1}
             onClick={(e) => {
               e.stopPropagation()
               openDelete(project)
