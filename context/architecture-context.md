@@ -9,6 +9,38 @@ updated: 2026-05-06
 > [!info] Purpose
 > Stack, system boundaries, storage model, auth model, AI generation model, and invariants for Ghost AI.
 
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {
+  'background': '#0d0d12',
+  'primaryColor': '#1a1a2e',
+  'primaryBorderColor': '#6457f9',
+  'primaryTextColor': '#e8e8f0',
+  'lineColor': '#3a3a42',
+  'secondaryColor': '#1a1a2e',
+  'tertiaryColor': '#0d0d12'
+}}}%%
+flowchart TD
+    Browser(["Browser"])
+    Next["Next.js App Router"]
+    Clerk["Clerk Auth"]
+    DB["Database (metadata)"]
+    Blob["Vercel Blob (artifacts)"]
+    AI["AI Generation (background task)"]
+
+    Browser --> Next
+    Next --> Clerk
+    Next --> DB
+    Next --> Blob
+    Next --> AI
+
+    style Browser fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
+    style Next fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
+    style Clerk fill:#1a1a2e,stroke:#00c8d4,color:#00c8d4
+    style DB fill:#1a1a2e,stroke:#00c8d4,color:#00c8d4
+    style Blob fill:#1a1a2e,stroke:#00c8d4,color:#00c8d4
+    style AI fill:#1a1a2e,stroke:#6457f9,color:#6457f9
+```
+
 ## Stack
 
 | Layer            | Technology              | Role                                                           |
