@@ -113,4 +113,45 @@ shadcn/ui on top of Tailwind. No custom design system. Components live in `compo
 
 Lucide React. Stroke-based icons only — no filled variants. Icon sizes: `h-4 w-4` for inline, `h-5 w-5` for buttons, `h-8 w-8` for feature icons in empty states.
 
+## Component Tree
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {
+  'background': '#0d0d12',
+  'primaryColor': '#1a1a2e',
+  'primaryBorderColor': '#6457f9',
+  'primaryTextColor': '#e8e8f0',
+  'lineColor': '#3a3a42',
+  'secondaryColor': '#1a1a2e',
+  'tertiaryColor': '#0d0d12',
+  'edgeLabelBackground': '#1a1a2e',
+  'clusterBkg': '#0d0d12'
+}}}%%
+flowchart TD
+    Shell["EditorShell (context provider)"]
+    Navbar["EditorNavbar"]
+    Sidebar["ProjectSidebar"]
+    Home["EditorHome"]
+    Create["CreateProjectDialog"]
+    Rename["RenameProjectDialog"]
+    Delete["DeleteProjectDialog"]
+
+    Shell --> Navbar
+    Shell --> Sidebar
+    Shell --> Home
+    Sidebar --> Create
+    Sidebar --> Rename
+    Sidebar --> Delete
+
+    style Shell fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
+    style Navbar fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
+    style Sidebar fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
+    style Home fill:#1a1a2e,stroke:#00c8d4,color:#e8e8f0
+    style Create fill:#1a1a2e,stroke:#808090,color:#e8e8f0
+    style Rename fill:#1a1a2e,stroke:#808090,color:#e8e8f0
+    style Delete fill:#1a1a2e,stroke:#ff4d4f,color:#e8e8f0
+```
+
+---
+
 *Part of [[README|Ghost AI Vault]]*
