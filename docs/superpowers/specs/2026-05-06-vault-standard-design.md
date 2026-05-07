@@ -263,7 +263,7 @@ updated: YYYY-MM-DD
 
 ```tasks
 not done
-path includes context/feature-specs
+path includes feature-specs
 \```
 
 ---
@@ -315,7 +315,7 @@ updated: YYYY-MM-DD
 
 ```dataview
 TABLE status, updated AS "Updated"
-FROM "context"
+FROM ""
 WHERE type = "context"
 SORT file.name ASC
 ```
@@ -326,7 +326,7 @@ SORT file.name ASC
 
 ```dataview
 TABLE feature AS "Feature", status, updated AS "Updated"
-FROM "context/feature-specs"
+FROM "feature-specs"
 WHERE type = "feature-spec"
 SORT feature ASC
 ```
@@ -355,7 +355,7 @@ A single CSS snippet enables via Style Settings. Maps Ghost AI's design tokens o
 | `[!question]` | `--text-muted` | `#808090` |
 | `[!note]` | `--border-subtle` | `#3a3a42` |
 
-The snippet file lives at `.obsidian/snippets/ghost-ai-callouts.css` inside the vault directory.
+The snippet file lives at `context/.obsidian/snippets/ghost-ai-callouts.css` (vault root is `context/`, so `.obsidian/` lives there).
 
 ---
 
@@ -377,5 +377,5 @@ Files to update:
 - `context/feature-specs/current-issues.md`
 
 Files to create:
-- `context/README.md` (MOC)
-- `.obsidian/snippets/ghost-ai-callouts.css` (CSS snippet)
+- `context/README.md` (MOC — vault root index)
+- `context/.obsidian/snippets/ghost-ai-callouts.css` (CSS snippet)
