@@ -1,4 +1,13 @@
+---
+type: context
+status: active
+updated: 2026-05-06
+---
+
 # Architecture Context
+
+> [!info] Purpose
+> Stack, system boundaries, storage model, auth model, AI generation model, and invariants for Ghost AI.
 
 ## Stack
 
@@ -61,8 +70,19 @@
 
 ## Invariants
 
-1. Request handlers do not run long-lived AI work — that belongs in background tasks.
-2. Metadata and large generated artifacts are stored in separate layers.
-3. Auth and ownership are enforced at every mutation boundary.
-4. Client components are used only where browser interactivity or real-time state requires them.
-5. The canvas schema must remain consistent between user-created content and imported templates.
+> [!warning] Request handlers stay thin
+> Long-lived AI work belongs in background tasks, not in request handlers.
+
+> [!warning] Storage layers are separate
+> Metadata and large generated artifacts must not be stored in the same layer. Database for metadata; Vercel Blob for artifacts.
+
+> [!warning] Auth and ownership are always enforced
+> Every mutation boundary must verify auth and project ownership before proceeding.
+
+> [!warning] Client components are the exception
+> Default to React Server Components. Add `"use client"` only when the component needs browser interactivity, hooks, or real-time state.
+
+> [!warning] Canvas schema is shared
+> User-created canvas content and imported templates must use the same node/edge schema. Never diverge them.
+
+*Part of [[README|Ghost AI Vault]]*
