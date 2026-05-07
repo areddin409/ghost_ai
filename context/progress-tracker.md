@@ -23,32 +23,24 @@ updated: 2026-05-06
 ## Feature Status Flow
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {
-  'background': '#0d0d12',
-  'mainBkg': '#1a1a2e',
-  'primaryColor': '#1a1a2e',
-  'primaryBorderColor': '#6457f9',
-  'primaryTextColor': '#e8e8f0',
-  'lineColor': '#3a3a42',
-  'secondaryColor': '#1a1a2e',
-  'tertiaryColor': '#0d0d12',
-  'edgeLabelBackground': '#1a1a2e',
-  'clusterBkg': '#0d0d12'
-}}}%%
-flowchart TD
-    planned["planned"]
-    in_progress["in_progress"]
-    shipped["shipped"]
-    new_spec["new spec"]
+%%{init: {'theme': 'dark', 'themeVariables': {'transitionColor': '#7c6ef9', 'lineColor': '#7c6ef9', 'edgeLabelBackground': '#16122a'}}}%%
+stateDiagram-v2
+    direction LR
 
-    planned -->|implementation starts| in_progress
-    in_progress -->|works end-to-end| shipped
-    shipped -->|if reverted| new_spec
+    state "planned" as planned
+    state "in progress" as in_progress
+    state "shipped" as shipped
+    state "new spec" as new_spec
 
-    style planned fill:#1a1a2e,stroke:#808090,color:#e8e8f0
-    style in_progress fill:#1a1a2e,stroke:#fbbf24,color:#e8e8f0
-    style shipped fill:#1a1a2e,stroke:#34d399,color:#e8e8f0
-    style new_spec fill:#1a1a2e,stroke:#6457f9,color:#e8e8f0
+    [*] --> planned
+    planned --> in_progress : implementation starts
+    in_progress --> shipped : works end-to-end
+    shipped --> [*]
+    shipped --> new_spec : if reverted
+    new_spec --> planned : re-scoped
+
+    classDef state fill:#1e1e30,stroke:#7c6ef9,color:#e8e8f0,stroke-width:2px
+    class planned,in_progress,shipped,new_spec state
 ```
 
 ---

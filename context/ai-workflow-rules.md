@@ -68,4 +68,94 @@ Progress state must reflect the actual state of the implementation, not the inte
 2. No invariant defined in `architecture-context.md` was violated.
 3. `progress-tracker.md` reflects the completed work.
 
-*Part of [[README|Ghost AI Vault]]*
+---
+
+## Diagram Standards
+
+All diagrams in this vault use Mermaid. Follow these rules whenever adding or updating a diagram.
+
+### Theme
+
+Always use `%%{init: {'theme': 'dark'}}%%` as the init block. Never use `theme: base` with raw `themeVariables` overrides — they produce invisible edges and unreadable nodes in most renderers.
+
+```
+%%{init: {'theme': 'dark'}}%%
+```
+
+For sequence diagrams only, extend the init block to override actor/signal colors using the named `themeVariables` keys that apply to `sequenceDiagram`. Do not set `lineColor`, `background`, `mainBkg`, or other flowchart-specific variables.
+
+### Color Coding with classDef
+
+Use `classDef` for semantic color groups rather than inline `style` on every node. Define classes once and apply them. Keep fills dark with clearly contrasting strokes and white text.
+
+Recommended palette:
+
+| Role                 | Fill      | Stroke    |
+| -------------------- | --------- | --------- |
+| Entry / root         | `#2d1f63` | `#7c6ef9` |
+| Service / external   | `#0d2e2e` | `#00c8d4` |
+| In-progress / WIP    | `#2d1a00` | `#f59e0b` |
+| Shipped / done       | `#0a2a15` | `#10b981` |
+| Neutral / planned    | `#1e1e2e` | `#9ca3af` |
+| Danger / destructive | `#2a0a0a` | `#ef4444` |
+
+### Diagram Type Selection
+
+Choose the diagram type that matches the content:
+
+| Content                                                 | Type                 |
+| ------------------------------------------------------- | -------------------- |
+| System topology, component tree, data flow              | `flowchart TD`       |
+| Auth flows, request/response sequences                  | `sequenceDiagram`    |
+| Feature lifecycle, state transitions                    | `stateDiagram-v2`    |
+| Requirements and their relationships to system elements | `requirementDiagram` |
+
+For `stateDiagram-v2`: use `direction LR` for readability, declare states explicitly with `state "label" as id` for consistent box sizing, and apply a single `classDef state` to all nodes for unified styling.
+
+### Requirement Diagrams
+
+Use `requirementDiagram` when documenting feature requirements and their connections to implementation elements. Structure:
+
+- Define requirements with `requirement`, `functionalRequirement`, `performanceRequirement`, `interfaceRequirement`, `physicalRequirement`, or `designConstraint`.
+- Each requirement must have `id`, `text`, `risk` (`Low`/`Medium`/`High`), and `verifymethod` (`Analysis`/`Inspection`/`Test`/`Demonstration`).
+- Define `element` nodes for implementation artifacts (components, APIs, services) that satisfy requirements.
+- Link them with relationship types: `satisfies`, `verifies`, `traces`, `contains`, `derives`, `refines`, `copies`.
+- Use `direction LR` for wide requirement trees.
+- Apply `style` or `classDef` to color-code by risk level.
+
+Risk color convention:
+
+```
+style req_high fill:#2a0a0a,stroke:#ef4444,color:#fff
+style req_medium fill:#2d1a00,stroke:#f59e0b,color:#fff
+style req_low fill:#0a2a15,stroke:#10b981,color:#fff
+```
+
+### What to Avoid
+
+- Do not use `theme: base` with `themeVariables` — edges become invisible.
+- Do not apply `style` inline on every node when a `classDef` would do.
+- Do not embed diagrams without an `%%{init}%%` block — theme defaults vary by renderer.
+- Do not use light fills (e.g. `#fff`, `#ffa`) — diagrams render on dark backgrounds in this vault.
+- Do not mix multiple semantic colors across status nodes in the same diagram — use one unified `classDef` unless the color difference carries specific meaning.
+
+### Obsidian Rendering
+
+Diagrams are centered and scroll horizontally when wider than the pane via the CSS snippet at `.obsidian/snippets/mermaid.css`. If a diagram is clipped, check that the snippet is enabled in **Settings → Appearance → CSS Snippets**.
+
+The snippet applies:
+
+- `display: flex; justify-content: center` on `.mermaid` — centers diagrams
+- `overflow-x: auto` — wide diagrams scroll rather than clip
+- `max-width: none` on the SVG — prevents Obsidian's width constraint from squashing the diagram
+
+### Reference
+
+- Flowchart syntax: https://mermaid.js.org/syntax/flowchart.html
+- Sequence diagram syntax + styling: https://mermaid.js.org/syntax/sequenceDiagram.html
+- State diagram syntax + classDefs: https://mermaid.js.org/syntax/stateDiagram.html
+- Requirement diagram syntax: https://mermaid.js.org/syntax/requirementDiagram.html
+- Theme variables reference: https://mermaid.js.org/config/theming.html
+- Live editor: https://mermaid.live
+
+_Part of [[README|Ghost AI Vault]]_
