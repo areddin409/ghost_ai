@@ -19,9 +19,6 @@ updated: 2026-05-06
   'lineColor': '#3a3a42',
   'secondaryColor': '#1a1a2e',
   'tertiaryColor': '#0d0d12',
-  'nodeBkg': '#1a1a2e',
-  'nodeBorder': '#6457f9',
-  'nodeTextColor': '#e8e8f0',
   'edgeLabelBackground': '#1a1a2e',
   'clusterBkg': '#0d0d12'
 }}}%%
