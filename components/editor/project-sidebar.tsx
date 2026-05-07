@@ -22,7 +22,9 @@ function OwnedProjectItem({ project }: { project: Project }) {
       onClick={() => router.push(`/editor/${project.id}`)}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === "Enter" && router.push(`/editor/${project.id}`)}
+      onKeyDown={(e) =>
+        e.key === "Enter" && router.push(`/editor/${project.id}`)
+      }
     >
       <span className="truncate text-sm text-text-secondary">
         {project.name}
@@ -66,7 +68,9 @@ function SharedProjectItem({ project }: { project: Project }) {
       onClick={() => router.push(`/editor/${project.id}`)}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === "Enter" && router.push(`/editor/${project.id}`)}
+      onKeyDown={(e) =>
+        e.key === "Enter" && router.push(`/editor/${project.id}`)
+      }
     >
       <span className="truncate text-sm text-text-secondary">
         {project.name}
