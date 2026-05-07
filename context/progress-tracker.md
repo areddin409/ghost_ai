@@ -8,6 +8,7 @@ updated: 2026-05-06
 # Progress Tracker
 
 > Update this file after each meaningful implementation change.
+> Update the `TODO's` in the feature spec after it has been completed.
 
 ---
 
@@ -69,12 +70,18 @@ path includes feature-specs
 
 ## Next Up
 
-> [!todo] Feature 06 (TBD)
+> [!todo] Feature 08 (TBD)
 > Next planned feature unit from the feature spec queue.
 
 ---
 
 ## Completed
+
+> [!success] Feature 07 — [[07-wire-editor-home|Wire Editor Home]]
+> Server-side fetch of owned and shared projects via `lib/projects.ts`. `hooks/use-project-actions.ts` replaces mock hook — handles create (slugify + short suffix → room ID, `POST /api/projects`, navigate), rename (`PATCH`, optimistic + refresh), delete (`DELETE`, redirect if active). `POST /api/projects` accepts optional `id` to align project ID with room ID. Sidebar consumes real data. Create dialog shows room ID preview. SSL sslmode warning silenced by normalizing URL in `lib/prisma.ts`. Build passes.
+
+> [!success] Feature 06 — [[06-project-apis|Project APIs]]
+> `GET /api/projects`, `POST /api/projects`, `PATCH /api/projects/[projectId]`, `DELETE /api/projects/[projectId]`. Owner-only mutations enforced with `401`/`403`. `lib/prisma.ts` typed as `PrismaClient` to resolve Accelerate union type. Build passes on branch `feature/06-project-apis`.
 
 > [!success] Feature 05 — [[05-prima|Database Setup]]
 > Prisma 7 schema with `Project` and `ProjectCollaborator` models, migration `20260507015439_init` applied to Prisma Postgres, `lib/prisma.ts` singleton branching on `prisma+postgres://` (Accelerate) vs direct `@prisma/adapter-pg`. Build passes.
@@ -110,4 +117,4 @@ path includes feature-specs
 
 ---
 
-*Part of [[README|Ghost AI Vault]]*
+_Part of [[README|Ghost AI Vault]]_

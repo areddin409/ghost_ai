@@ -34,6 +34,10 @@ updated: 2026-05-06
 >
 > `toSlug()` returns an empty string for names containing only special characters (e.g. `!!!`). The submit button only checks `createName.trim()`, not the slug result. Update the disabled condition to: `disabled={!createName.trim() || !toSlug(createName) || isLoading}`.
 
+
+
+
+
 ---
 
 *Part of [[README|Ghost AI Vault]]*
