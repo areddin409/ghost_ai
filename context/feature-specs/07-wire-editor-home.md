@@ -1,3 +1,22 @@
+---
+type: feature-spec
+feature: "07 — Wire Editor Home"
+status: shipped
+updated: 2026-05-06
+---
+
+# Feature 07 — Wire Editor Home
+
+> [!abstract] Goal
+> Connect the editor home sidebar and dialogs to the real project API with server-side data fetching.
+
+> [!success] Shipped
+> Sidebar uses real project data. Create navigates to workspace. Rename and delete work. Build passes.
+
+**References:** [[architecture-context]] · [[ui-context]] · [[code-standards]]
+
+---
+
 Wire the editor home sidebar and dialogs to the real project API.
 
 ### Data Fetching
@@ -51,3 +70,7 @@ Connect the hook to the sidebar and dialogs
 - [x] rename updates correctly
 - [x] delete refreshes or redirects correctly
 - [x] `npm run build` passes
+
+---
+
+*Tracked in [[progress-tracker]]*

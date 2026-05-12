@@ -47,4 +47,4 @@ Ensure all components match the existing dark theme in the `global.css` file.
 
 ---
 
-*Tracked in [[progress-tracker]]*
+_Tracked in [[progress-tracker]]_
