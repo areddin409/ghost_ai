@@ -48,3 +48,60 @@ Do not add real canvas logic, Liveblocks, AI chat or sharing behavior yet.
 - [x] `AccessDenied` is used for missing or unauthorized projects
 - [x] workspace layout renders with current project context
 - [x] no TS errors
+
+```mermaid
+sequenceDiagram
+  participant User
+  participant EditorPage as EditorPage<br/>(Server)
+  participant ProjectAccess as lib/project-access
+  participant Database
+  participant ClerkAPI as Clerk API
+  participant WorkspaceShell as WorkspaceShell<br/>(Client)
+  participant ShareDialog as ShareDialog
+
+  User->>EditorPage: GET /editor/[roomId]
+  EditorPage->>ProjectAccess: getCurrentIdentity()
+  ProjectAccess->>ClerkAPI: auth() + currentUser()
+  ClerkAPI-->>ProjectAccess: { userId, email }
+  
+  alt Unauthenticated
+    ProjectAccess-->>EditorPage: null
+    EditorPage-->>User: redirect /sign-in
+  else Authenticated
+    EditorPage->>ProjectAccess: getProjectWithAccess(roomId, identity)
+    ProjectAccess->>Database: fetch project
+    alt Owner or Collaborator
+      Database-->>ProjectAccess: project (serialized)
+      ProjectAccess-->>EditorPage: project
+    else Denied
+      ProjectAccess-->>EditorPage: null
+      EditorPage-->>User: render AccessDenied
+    end
+    
+    alt Project Found & Authorized
+      EditorPage->>Database: fetch user projects (owned + shared)
+      Database-->>EditorPage: initialOwned[], initialShared[]
+      EditorPage->>WorkspaceShell: render (project, isOwner, initial lists)
+      User->>ShareDialog: click Share button
+      ShareDialog->>Database: GET /api/projects/[id]/collaborators
+      Database-->>ShareDialog: { owner, collaborators[] }
+      ShareDialog-->>User: display owner + collaborator list
+      
+      alt Invite (Owner only)
+        User->>ShareDialog: enter email + click Invite
+        ShareDialog->>Database: POST /api/projects/[id]/collaborators (email)
+        Database->>ClerkAPI: fetch user by email
+        ClerkAPI-->>Database: { displayName, image } or null
+        Database-->>ShareDialog: created collaborator (enriched)
+        ShareDialog-->>User: add to collaborators list
+      end
+      
+      alt Remove (Owner only)
+        User->>ShareDialog: click remove on collaborator
+        ShareDialog->>Database: DELETE /api/projects/[id]/collaborators/[id]
+        Database-->>ShareDialog: 204 No Content
+        ShareDialog-->>User: remove from list
+      end
+    end
+  end
+```
