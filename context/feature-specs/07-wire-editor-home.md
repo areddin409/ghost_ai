@@ -73,4 +73,4 @@ Connect the hook to the sidebar and dialogs
 
 ---
 
-*Tracked in [[progress-tracker]]*
+_Tracked in [[progress-tracker]]_
