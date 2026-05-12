@@ -74,23 +74,34 @@ export function ShareDialog({
   const [copied, setCopied] = React.useState(false)
 
   React.useEffect(() => {
-    if (open) {
-      setLoading(true)
-      fetch(`/api/projects/${projectId}/collaborators`)
-        .then((res) => res.json())
-        .then((data: CollaboratorsResponse) => {
-          setOwnerInfo(data.owner)
-          setCollaborators(data.collaborators)
-        })
-        .catch(() => {
-          setOwnerInfo(null)
-          setCollaborators([])
-        })
-        .finally(() => setLoading(false))
-    } else {
+    if (!open) {
       setInviteEmail("")
       setInviteError(null)
+      return
     }
+
+    const controller = new AbortController()
+    setLoading(true)
+
+    fetch(`/api/projects/${projectId}/collaborators`, { signal: controller.signal })
+      .then((res) => {
+        if (!res.ok) throw new Error("fetch failed")
+        return res.json() as Promise<CollaboratorsResponse>
+      })
+      .then((data) => {
+        setOwnerInfo(data.owner)
+        setCollaborators(data.collaborators)
+      })
+      .catch((err: unknown) => {
+        if (err instanceof Error && err.name === "AbortError") return
+        setOwnerInfo(null)
+        setCollaborators([])
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setLoading(false)
+      })
+
+    return () => controller.abort()
   }, [open, projectId])
 
   async function handleInvite() {
