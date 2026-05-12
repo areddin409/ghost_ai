@@ -14,6 +14,12 @@ interface EnrichedCollaborator {
   imageUrl: string | null
 }
 
+interface OwnerInfo {
+  displayName: string
+  imageUrl: string | null
+  email: string
+}
+
 async function enrichCollaborators(
   records: Array<{ id: string; email: string }>
 ): Promise<EnrichedCollaborator[]> {
@@ -59,8 +65,9 @@ export async function GET(_request: Request, context: RouteContext) {
     return NextResponse.json({ error: "Not found" }, { status: 404 })
   }
 
+  const clerk = await clerkClient()
+
   if (project.ownerId !== userId) {
-    const clerk = await clerkClient()
     const callerUser = await clerk.users.getUser(userId)
     const callerEmail = callerUser.emailAddresses[0]?.emailAddress
     if (!callerEmail) {
@@ -74,15 +81,28 @@ export async function GET(_request: Request, context: RouteContext) {
     }
   }
 
-  const records = await prisma.projectCollaborator.findMany({
-    where: { projectId },
-    orderBy: { createdAt: "asc" },
-    select: { id: true, email: true }
-  })
+  const [ownerUser, records] = await Promise.all([
+    clerk.users.getUser(project.ownerId),
+    prisma.projectCollaborator.findMany({
+      where: { projectId },
+      orderBy: { createdAt: "asc" },
+      select: { id: true, email: true }
+    })
+  ])
+
+  const owner: OwnerInfo = {
+    displayName:
+      ownerUser.fullName ??
+      ownerUser.firstName ??
+      ownerUser.emailAddresses[0]?.emailAddress ??
+      "Owner",
+    imageUrl: ownerUser.imageUrl,
+    email: ownerUser.emailAddresses[0]?.emailAddress ?? ""
+  }
 
   const collaborators = await enrichCollaborators(records)
 
-  return NextResponse.json(collaborators)
+  return NextResponse.json({ owner, collaborators })
 }
 
 export async function POST(request: Request, context: RouteContext) {
