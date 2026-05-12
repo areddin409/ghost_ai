@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ui-context.md",
-                "mode": "preview",
+                "file": "feature-specs/01-design-system.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ui-context"
+              "title": "01-design-system"
             }
           }
         ],
@@ -199,22 +199,25 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "5099fbe5b12a63b4",
+  "active": "b8b2c83cb454a94f",
   "lastOpenFiles": [
-    "ai-workflow-rules.md",
+    "feature-specs/07-wire-editor-home.md",
+    "feature-specs/01-design-system.md",
+    "feature-specs/02-editor.md",
+    "feature-specs/03-auth.md",
+    "feature-specs/04-project-dialogs.md",
+    "feature-specs/05-prima.md",
+    "feature-specs/06-project-apis.md",
     "ui-context.md",
     "README.md",
+    "Untitled.md",
+    "ai-workflow-rules.md",
     "progress-tracker.md",
     "project-overview.md",
     "feature-specs/current-issues.md",
-    "feature-specs/07-wire-editor-home.md",
     "architecture-context.md",
-    "feature-specs/03-auth.md",
-    "feature-specs/05-prima.md",
     "code-standards.md",
-    "feature-specs/06-project-apis.md",
     "progress-tracker.md.tmp.39908.d451dc3b01cf",
-    "feature-specs/04-project-dialogs.md",
     "architecture-context.md.tmp.34432.d6c9ca1d7a13",
     "ui-context.md.tmp.34432.9aea2fccbd07",
     "progress-tracker.md.tmp.34432.a126568ffa61",
@@ -222,10 +225,8 @@
     "architecture-context.md.tmp.34432.dc22d3f073f0",
     "progress-tracker.md.tmp.34432.d996ca032711",
     "ui-context.md.tmp.34432.2235129caf68",
-    "feature-specs/02-editor.md",
     "progress-tracker.md.tmp.34432.640a36ef9ba9",
     "architecture-context.md.tmp.34432.d9443807c09a",
-    "feature-specs/01-design-system.md",
     "2026-05-06.md"
   ]
 }

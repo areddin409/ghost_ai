@@ -8,3 +8,16 @@
   max-width: none;
   height: auto;
 }
+
+/* Force white text on all mermaid diagram elements — overrides Obsidian Nord */
+.mermaid svg text,
+.mermaid svg .messageText,
+.mermaid svg .noteText,
+.mermaid svg .labelText,
+.mermaid svg .loopText,
+.mermaid svg .loopText > tspan,
+.mermaid svg .entityLabel,
+.mermaid svg .actor > text,
+.mermaid svg tspan {
+  fill: #ffffff !important;
+}

@@ -145,6 +145,9 @@ export function useProjectActions({
         }
         return
       }
+    } catch {
+      // Leave the dialog open so the user can retry or dismiss manually.
+      // isLoading is reset in finally regardless.
     } finally {
       setIsLoading(false)
     }

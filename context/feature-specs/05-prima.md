@@ -1,4 +1,23 @@
-Primsa is already install add the project data models, primsa client singleton, and first migration
+---
+type: feature-spec
+feature: "05 — Prisma Setup"
+status: shipped
+updated: 2026-05-06
+---
+
+# Feature 05 — Prisma Setup
+
+> [!abstract] Goal
+> Add the project data models, Prisma client singleton, and run the first migration.
+
+> [!success] Shipped
+> Both models with correct relations and indexes. Singleton in `lib/prisma.ts` with Accelerate and direct adapter branches. Migration runs. Build passes.
+
+**References:** [[architecture-context]] · [[code-standards]]
+
+---
+
+Prisma is already installed. Add the project data models, Prisma client singleton, and first migration.
 
 ## Models
 
@@ -50,3 +69,7 @@ Already installed:
 - [x] `lib/prisma.ts` exports one cached Prisma instance
 - [x] migration runs successfully
 - [x] `npm run build` passes
+
+---
+
+*Tracked in [[progress-tracker]]*
