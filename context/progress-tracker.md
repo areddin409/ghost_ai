@@ -62,12 +62,18 @@ path includes feature-specs
 
 ## Next Up
 
-> [!todo] Feature 08 (TBD)
+> [!todo] Feature 10 (TBD)
 > Next planned feature unit from the feature spec queue.
 
 ---
 
 ## Completed
+
+> [!success] Feature 09 — [[09-share-dialog|Share Dialog]]
+> Three API routes under `/api/projects/[projectId]/collaborators` handle listing, inviting, and removing collaborators with owner-only enforcement. `ShareDialog` client component fetches collaborators on open, enriches them with Clerk display name + avatar via backend API, and renders owner (invite + remove) vs. collaborator (read-only) views. Copy-link button with `Copied!` feedback. `WorkspaceShell` receives `isOwner` from the server page and manages dialog state. Build passes.
+
+> [!success] Feature 08 — [[08-editor-workspace-shell|Editor Workspace Shell]]
+> `lib/project-access.ts` provides `getCurrentIdentity()` and `getProjectWithAccess()` for server-side auth + ownership checks. `AccessDenied` component shown for missing or unauthorized projects. `/editor/[roomId]` is a server component that redirects unauthenticated users and renders the workspace. `WorkspaceShell` client component wraps `WorkspaceNavbar` (project name, share button, AI toggle), `ProjectSidebar` (with active room highlighted), canvas placeholder, and collapsible AI sidebar placeholder. Build passes.
 
 > [!success] Feature 07 — [[07-wire-editor-home|Wire Editor Home]]
 > Server-side fetch of owned and shared projects via `lib/projects.ts`. `hooks/use-project-actions.ts` replaces mock hook — handles create (slugify + short suffix → room ID, `POST /api/projects`, navigate), rename (`PATCH`, optimistic + refresh), delete (`DELETE`, redirect if active). `POST /api/projects` accepts optional `id` to align project ID with room ID. Sidebar consumes real data. Create dialog shows room ID preview. SSL sslmode warning silenced by normalizing URL in `lib/prisma.ts`. Build passes.

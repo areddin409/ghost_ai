@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "feature-specs/01-design-system.md",
+                "file": "feature-specs/08-editor-workspace-shell.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "01-design-system"
+              "title": "08-editor-workspace-shell"
             }
           }
         ],
@@ -93,7 +93,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "23ffdc7592b3d800",
@@ -201,8 +202,15 @@
   },
   "active": "b8b2c83cb454a94f",
   "lastOpenFiles": [
-    "feature-specs/07-wire-editor-home.md",
+    "progress-tracker.md",
+    "progress-tracker.md.tmp.31964.8bef88d33808",
+    "progress-tracker.md.tmp.31964.06513fbf112a",
+    "feature-specs/09-share-dialog.md.md",
+    "progress-tracker.md.tmp.31324.2a34fdd26989",
+    "progress-tracker.md.tmp.31324.176c620ec620",
+    "feature-specs/08-editor-workspace-shell.md",
     "feature-specs/01-design-system.md",
+    "feature-specs/07-wire-editor-home.md",
     "feature-specs/02-editor.md",
     "feature-specs/03-auth.md",
     "feature-specs/04-project-dialogs.md",
@@ -212,7 +220,6 @@
     "README.md",
     "Untitled.md",
     "ai-workflow-rules.md",
-    "progress-tracker.md",
     "project-overview.md",
     "feature-specs/current-issues.md",
     "architecture-context.md",
@@ -223,10 +230,6 @@
     "progress-tracker.md.tmp.34432.a126568ffa61",
     "feature-specs/03-auth.md.tmp.34432.8d21dbaab5dc",
     "architecture-context.md.tmp.34432.dc22d3f073f0",
-    "progress-tracker.md.tmp.34432.d996ca032711",
-    "ui-context.md.tmp.34432.2235129caf68",
-    "progress-tracker.md.tmp.34432.640a36ef9ba9",
-    "architecture-context.md.tmp.34432.d9443807c09a",
     "2026-05-06.md"
   ]
 }
