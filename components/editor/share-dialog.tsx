@@ -149,10 +149,33 @@ export function ShareDialog({
       typeof window !== "undefined"
         ? `${window.location.origin}/editor/${projectId}`
         : `/editor/${projectId}`
-    void navigator.clipboard.writeText(url).then(() => {
+
+    function onSuccess() {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    })
+    }
+
+    function fallbackCopy() {
+      const el = document.createElement("input")
+      el.value = url
+      el.style.cssText = "position:fixed;opacity:0"
+      document.body.appendChild(el)
+      el.select()
+      try {
+        document.execCommand("copy")
+        onSuccess()
+      } catch (err) {
+        console.error("Copy failed:", err)
+      } finally {
+        document.body.removeChild(el)
+      }
+    }
+
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(url).then(onSuccess).catch(fallbackCopy)
+    } else {
+      fallbackCopy()
+    }
   }
 
   const totalCount = (ownerInfo ? 1 : 0) + collaborators.length
