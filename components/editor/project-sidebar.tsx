@@ -10,15 +10,26 @@ import type { Project } from "@/hooks/use-project-actions"
 interface ProjectSidebarProps {
   isOpen: boolean
   onClose: () => void
+  activeProjectId?: string
 }
 
-function OwnedProjectItem({ project }: { project: Project }) {
+function OwnedProjectItem({
+  project,
+  activeProjectId
+}: {
+  project: Project
+  activeProjectId?: string
+}) {
   const router = useRouter()
   const { openRename, openDelete } = useProjectDialogsContext()
 
   return (
     <div
-      className="group flex items-center justify-between rounded-xl px-3 py-2 hover:bg-bg-subtle cursor-pointer"
+      className={`group flex items-center justify-between rounded-xl px-3 py-2 cursor-pointer transition-colors ${
+        activeProjectId === project.id
+          ? "bg-accent-primary-dim hover:bg-accent-primary-dim"
+          : "hover:bg-bg-subtle"
+      }`}
       onClick={() => router.push(`/editor/${project.id}`)}
       role="button"
       tabIndex={0}
@@ -26,9 +37,14 @@ function OwnedProjectItem({ project }: { project: Project }) {
         e.key === "Enter" && router.push(`/editor/${project.id}`)
       }
     >
-      <span className="truncate text-sm text-text-secondary">
-        {project.name}
-      </span>
+      <div className="flex min-w-0 items-center gap-2">
+        {activeProjectId === project.id && (
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent-primary" />
+        )}
+        <span className={`truncate text-sm ${activeProjectId === project.id ? "text-text-primary" : "text-text-secondary"}`}>
+          {project.name}
+        </span>
+      </div>
       <div className="action flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
         <Button
           variant="ghost"
@@ -59,12 +75,22 @@ function OwnedProjectItem({ project }: { project: Project }) {
   )
 }
 
-function SharedProjectItem({ project }: { project: Project }) {
+function SharedProjectItem({
+  project,
+  activeProjectId
+}: {
+  project: Project
+  activeProjectId?: string
+}) {
   const router = useRouter()
 
   return (
     <div
-      className="flex items-center rounded-xl px-3 py-2 hover:bg-bg-subtle cursor-pointer"
+      className={`flex items-center rounded-xl px-3 py-2 cursor-pointer transition-colors ${
+        activeProjectId === project.id
+          ? "bg-accent-primary-dim hover:bg-accent-primary-dim"
+          : "hover:bg-bg-subtle"
+      }`}
       onClick={() => router.push(`/editor/${project.id}`)}
       role="button"
       tabIndex={0}
@@ -72,14 +98,19 @@ function SharedProjectItem({ project }: { project: Project }) {
         e.key === "Enter" && router.push(`/editor/${project.id}`)
       }
     >
-      <span className="truncate text-sm text-text-secondary">
-        {project.name}
-      </span>
+      <div className="flex min-w-0 items-center gap-2">
+        {activeProjectId === project.id && (
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent-primary" />
+        )}
+        <span className={`truncate text-sm ${activeProjectId === project.id ? "text-text-primary" : "text-text-secondary"}`}>
+          {project.name}
+        </span>
+      </div>
     </div>
   )
 }
 
-export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
+export function ProjectSidebar({ isOpen, onClose, activeProjectId }: ProjectSidebarProps) {
   const { openCreate, ownedProjects, sharedProjects } =
     useProjectDialogsContext()
 
@@ -130,7 +161,7 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
           ) : (
             <div className="space-y-0.5">
               {ownedProjects.map((project) => (
-                <OwnedProjectItem key={project.id} project={project} />
+                <OwnedProjectItem key={project.id} project={project} activeProjectId={activeProjectId} />
               ))}
             </div>
           )}
@@ -146,7 +177,7 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
           ) : (
             <div className="space-y-0.5">
               {sharedProjects.map((project) => (
-                <SharedProjectItem key={project.id} project={project} />
+                <SharedProjectItem key={project.id} project={project} activeProjectId={activeProjectId} />
               ))}
             </div>
           )}
