@@ -138,7 +138,10 @@ export function useProjectActions({
         setOwnedProjects((prev) => prev.filter((p) => p.id !== project.id))
         setDialog({ type: "none" })
         const projectPath = `/editor/${project.id}`
-        if (pathname === projectPath || pathname.startsWith(`${projectPath}/`)) {
+        if (
+          pathname === projectPath ||
+          pathname.startsWith(`${projectPath}/`)
+        ) {
           router.push("/editor")
         } else {
           router.refresh()

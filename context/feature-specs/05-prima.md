@@ -24,6 +24,7 @@ Prisma is already installed. Add the project data models, Prisma client singleto
 Create `primsa/models/project.primsa`
 
 Add `Project`:
+
 - [x] owner id mapped to clerk user
 - [x] name
 - [x] optional description
@@ -33,6 +34,7 @@ Add `Project`:
 - [x] indexes on owner ID and creation date
 
 Add `ProjectCollaborator`:
+
 - [x] project relation with cascade delete
 - [x] collaborator email
 - [x] creation timestamp
@@ -46,18 +48,20 @@ Do not add extra fields unless required by prisma
 Create `lib/prims.ts` as a cached singleton.
 
 Branch by `DATABASE_URL`:
+
 - [x] If it starts with `prisma+postgres://`, use Accelerate
 - [x] otherwise use direct `@prisma/adapter-pg`
 
 Cache the client on `global` in development for hot reloads.
 
-##  Migration
+## Migration
 
 Run the migration and generate the client.
 
 ## Dependencies
 
 Already installed:
+
 - `prisma`
 - `@prisma/client`
 - `@prisma/adapter-pg`
@@ -72,4 +76,4 @@ Already installed:
 
 ---
 
-*Tracked in [[progress-tracker]]*
+_Tracked in [[progress-tracker]]_
