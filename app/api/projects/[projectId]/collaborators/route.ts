@@ -24,7 +24,7 @@ async function enrichCollaborators(
   records: Array<{ id: string; email: string }>
 ): Promise<EnrichedCollaborator[]> {
   if (records.length === 0) return []
-  let clerkMap: Record<string, { displayName: string; imageUrl: string }> = {}
+  const clerkMap: Record<string, { displayName: string; imageUrl: string }> = {}
   try {
     const clerk = await clerkClient()
     const { data: users } = await clerk.users.getUserList({
