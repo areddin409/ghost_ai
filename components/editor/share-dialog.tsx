@@ -140,7 +140,7 @@ export function ShareDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md overflow-hidden">
+      <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Share &ldquo;{projectName}&rdquo;</DialogTitle>
           <DialogDescription>
@@ -150,7 +150,7 @@ export function ShareDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex items-center gap-2 rounded-xl border border-border-default bg-bg-subtle px-3 py-2">
+        <div className="flex min-w-0 items-center gap-2 overflow-hidden rounded-xl border border-border-default bg-bg-subtle px-3 py-2">
           <span className="min-w-0 flex-1 truncate font-mono text-sm text-text-muted">
             {projectUrl}
           </span>
@@ -170,7 +170,7 @@ export function ShareDialog({
 
         {isOwner && (
           <div className="space-y-1">
-            <div className="flex gap-2">
+            <div className="flex min-w-0 gap-2">
               <Input
                 className="flex-1"
                 type="email"
