@@ -140,7 +140,7 @@ export function ShareDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md overflow-hidden">
         <DialogHeader>
           <DialogTitle>Share &ldquo;{projectName}&rdquo;</DialogTitle>
           <DialogDescription>
@@ -151,7 +151,7 @@ export function ShareDialog({
         </DialogHeader>
 
         <div className="flex items-center gap-2 rounded-xl border border-border-default bg-bg-subtle px-3 py-2">
-          <span className="flex-1 truncate font-mono text-sm text-text-muted">
+          <span className="min-w-0 flex-1 truncate font-mono text-sm text-text-muted">
             {projectUrl}
           </span>
           <Button
@@ -206,7 +206,7 @@ export function ShareDialog({
           {loading ? (
             <p className="py-2 text-center text-xs text-text-faint">Loading…</p>
           ) : (
-            <ul className="space-y-1">
+            <ul className="max-h-48 space-y-1 overflow-y-auto">
               {collaborators.map((collab) => (
                 <li
                   key={collab.id}
