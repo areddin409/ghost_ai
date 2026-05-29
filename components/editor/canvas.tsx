@@ -34,63 +34,21 @@ function ShapeRenderer({
   shape,
   w,
   h,
-  fill
+  fill,
+  stroke = STROKE,
 }: {
   shape: NodeShape
   w: number
   h: number
   fill: string
+  stroke?: string
 }) {
   switch (shape) {
-    case "rectangle":
-      return (
-        <svg width={w} height={h} style={{ display: "block" }}>
-          <rect
-            x={H}
-            y={H}
-            width={w - SW}
-            height={h - SW}
-            rx={8}
-            fill={fill}
-            stroke={STROKE}
-            strokeWidth={SW}
-          />
-        </svg>
-      )
-    case "pill":
-      return (
-        <svg width={w} height={h} style={{ display: "block" }}>
-          <rect
-            x={H}
-            y={H}
-            width={w - SW}
-            height={h - SW}
-            rx={(h - SW) / 2}
-            fill={fill}
-            stroke={STROKE}
-            strokeWidth={SW}
-          />
-        </svg>
-      )
-    case "circle":
-      return (
-        <svg width={w} height={h} style={{ display: "block" }}>
-          <ellipse
-            cx={w / 2}
-            cy={h / 2}
-            rx={w / 2 - H}
-            ry={h / 2 - H}
-            fill={fill}
-            stroke={STROKE}
-            strokeWidth={SW}
-          />
-        </svg>
-      )
     case "diamond": {
       const pts = `${w / 2},${H} ${w - H},${h / 2} ${w / 2},${h - H} ${H},${h / 2}`
       return (
         <svg width={w} height={h} style={{ display: "block" }}>
-          <polygon points={pts} fill={fill} stroke={STROKE} strokeWidth={SW} />
+          <polygon points={pts} fill={fill} stroke={stroke} strokeWidth={SW} />
         </svg>
       )
     }
@@ -105,7 +63,7 @@ function ShapeRenderer({
       }).join(" ")
       return (
         <svg width={w} height={h} style={{ display: "block" }}>
-          <polygon points={pts} fill={fill} stroke={STROKE} strokeWidth={SW} />
+          <polygon points={pts} fill={fill} stroke={stroke} strokeWidth={SW} />
         </svg>
       )
     }
@@ -121,20 +79,13 @@ function ShapeRenderer({
             fill={fill}
             stroke="none"
           />
-          <line
-            x1={H}
-            y1={eRy}
-            x2={H}
-            y2={h - eRy}
-            stroke={STROKE}
-            strokeWidth={SW}
-          />
+          <line x1={H} y1={eRy} x2={H} y2={h - eRy} stroke={stroke} strokeWidth={SW} />
           <line
             x1={w - H}
             y1={eRy}
             x2={w - H}
             y2={h - eRy}
-            stroke={STROKE}
+            stroke={stroke}
             strokeWidth={SW}
           />
           <ellipse
@@ -143,7 +94,7 @@ function ShapeRenderer({
             rx={w / 2 - H}
             ry={eRy}
             fill={fill}
-            stroke={STROKE}
+            stroke={stroke}
             strokeWidth={SW}
           />
           <ellipse
@@ -152,41 +103,75 @@ function ShapeRenderer({
             rx={w / 2 - H}
             ry={eRy}
             fill={fill}
-            stroke={STROKE}
+            stroke={stroke}
             strokeWidth={SW}
           />
         </svg>
       )
     }
+    default:
+      return null
   }
 }
 
-function CanvasNodeRenderer({ data }: NodeProps<CanvasNode>) {
-  const { label, color, shape } = data as CanvasNodeData
-  const nodeShape: NodeShape = (shape as NodeShape) ?? "rectangle"
+function CanvasNodeRenderer({
+  data,
+  selected,
+  width: nodeW,
+  height: nodeH,
+}: NodeProps<CanvasNode>) {
+  const { label, color, shape } = data
+  const nodeShape: NodeShape = shape ?? "rectangle"
   const bg = color ?? DEFAULT_NODE_COLOR.fill
-  const { width: w, height: h } = DEFAULT_NODE_SIZES[nodeShape]
+  const w = nodeW ?? DEFAULT_NODE_SIZES[nodeShape].width
+  const h = nodeH ?? DEFAULT_NODE_SIZES[nodeShape].height
+  const stroke = selected ? "#00c8d4" : STROKE
+
+  const labelEl = label ? (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "0.875rem",
+        color: DEFAULT_NODE_COLOR.text,
+        padding: "8px",
+        pointerEvents: "none",
+      }}
+    >
+      {label}
+    </div>
+  ) : null
+
+  if (nodeShape === "rectangle" || nodeShape === "pill" || nodeShape === "circle") {
+    const borderRadius =
+      nodeShape === "circle"
+        ? "50%"
+        : nodeShape === "pill"
+          ? `${h / 2}px`
+          : "8px"
+    return (
+      <div
+        style={{
+          width: w,
+          height: h,
+          position: "relative",
+          backgroundColor: bg,
+          borderRadius,
+          border: `${SW}px solid ${stroke}`,
+        }}
+      >
+        {labelEl}
+      </div>
+    )
+  }
 
   return (
     <div style={{ width: w, height: h, position: "relative" }}>
-      <ShapeRenderer shape={nodeShape} w={w} h={h} fill={bg} />
-      {label ? (
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "0.875rem",
-            color: DEFAULT_NODE_COLOR.text,
-            padding: "8px",
-            pointerEvents: "none"
-          }}
-        >
-          {label}
-        </div>
-      ) : null}
+      <ShapeRenderer shape={nodeShape} w={w} h={h} fill={bg} stroke={stroke} />
+      {labelEl}
     </div>
   )
 }
