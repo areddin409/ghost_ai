@@ -1,4 +1,21 @@
-Build the `/editor/[roomId]` workspace shell with server-side access checks. No canvas logic yet.
+---
+type: feature-spec
+feature: "08 — Editor Workspace Shell"
+status: shipped
+updated: 2026-05-16
+---
+
+# Feature 08 — Editor Workspace Shell
+
+> [!abstract] Goal
+> Build the `/editor/[roomId]` workspace shell with server-side access checks. No canvas logic yet.
+
+> [!success] Shipped
+> Access guard, `AccessDenied` component, and full workspace layout working. Build passes.
+
+**References:** [[architecture-context]] · [[ui-context]] · [[code-standards]]
+
+---
 
 ## Access
 
@@ -35,7 +52,7 @@ Build a full-viewport workspace layout with:
 - [x] central canvas placeholder with dark background and centered message
 - [x] right sidebar placeholder for future AI chat
 
-the canvas area should fill the remaining space.
+The canvas area should fill the remaining space.
 
 ## Scope
 
@@ -48,6 +65,8 @@ Do not add real canvas logic, Liveblocks, AI chat or sharing behavior yet.
 - [x] `AccessDenied` is used for missing or unauthorized projects
 - [x] workspace layout renders with current project context
 - [x] no TS errors
+
+## Sequence Diagram
 
 ```mermaid
 sequenceDiagram
@@ -105,3 +124,7 @@ sequenceDiagram
     end
   end
 ```
+
+---
+
+_Tracked in [[progress-tracker]]_

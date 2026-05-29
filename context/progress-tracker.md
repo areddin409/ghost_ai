@@ -62,12 +62,35 @@ path includes feature-specs
 
 ## Next Up
 
-> [!todo] Feature 10 (TBD)
+```meta-bind-button
+id: new-feature-spec
+style: primary
+label: "＋ New Feature Spec"
+icon: file-plus
+tooltip: Creates a new spec from the standard template
+action:
+  type: templaterCreateNote
+  templateFile: "templates/feature-spec.md"
+  folderPath: "feature-specs"
+  fileName: "_new-spec"
+  openNote: true
+```
+
+> [!todo] Feature 13 (TBD)
 > Next planned feature unit from the feature spec queue.
 
 ---
 
 ## Completed
+
+> [!success] Feature 12 — [[12-shape-panel|Shape Panel]]
+> `components/editor/shape-panel.tsx` renders a floating pill-shaped toolbar at the bottom-center with six draggable shape buttons (rectangle, diamond, circle, pill, cylinder, hexagon), each with inline SVG icons. Drag payload (`application/ghost-shape`) carries the shape name and default dimensions. `canvas.tsx` handles `onDragOver`/`onDrop` (passed directly as props to `<ReactFlow>`, not to a wrapper div — required so React Flow wires them onto its internal pane before its own `stopPropagation` fires), converts screen coords to flow position via `useReactFlow`, generates IDs from shape + timestamp + counter, and writes new `LiveObject` nodes to the Liveblocks storage map. `ReactFlowProvider` added in `canvas-wrapper.tsx` so `useReactFlow` is in context. `CanvasNodeRenderer` renders all shapes as a bordered rectangle with centered label. `types/canvas.ts` adds `NODE_COLORS`, `DEFAULT_NODE_COLOR`, `NodeShape`, `NODE_SHAPES`, and `DEFAULT_NODE_SIZES`. Build passes.
+
+> [!success] Feature 11 — [[11-base-canvas|Base Canvas]]
+> `components/editor/canvas-wrapper.tsx` sets up `LiveblocksProvider` + `RoomProvider` (with `cursor: null` initial presence) and a class-based error boundary + `ClientSideSuspense` loading state. `components/editor/canvas.tsx` uses `useLiveblocksFlow` (suspense mode, empty initial nodes/edges) wired into `ReactFlow` with loose connection mode, `fitView`, `MiniMap`, and dot-pattern `Background`. `types/canvas.ts` declares `CanvasNodeData` (label, color, shape), `CanvasNode`, and `CanvasEdge`. `WorkspaceShell` now renders `CanvasWrapper` in place of the placeholder. Build passes.
+
+> [!success] Feature 10 — [[10-liveblocks-setup|Liveblocks Setup]]
+> `liveblocks.config.ts` declares typed `Presence` (cursor + `isThinking`) and `UserMeta` (name, avatar, color). `lib/liveblocks.ts` exports a `globalThis`-cached `Liveblocks` node client and a deterministic `userIdToColor` helper (10-color palette, djb2 hash). `POST /api/liveblocks-auth` requires Clerk auth, verifies project membership via `getProjectWithAccess`, calls `getOrCreateRoom` with private defaults, and returns a signed access-token session with user name, avatar, and cursor color. `@liveblocks/node` installed. Build passes.
 
 > [!success] Feature 09 — [[09-share-dialog|Share Dialog]]
 > Three API routes under `/api/projects/[projectId]/collaborators` handle listing, inviting, and removing collaborators with owner-only enforcement. `ShareDialog` client component fetches collaborators on open, enriches them with Clerk display name + avatar via backend API, and renders owner (invite + remove) vs. collaborator (read-only) views. Copy-link button with `Copied!` feedback. `WorkspaceShell` receives `isOwner` from the server page and manages dialog state. Build passes.

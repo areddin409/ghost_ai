@@ -87,10 +87,10 @@ Use mock project data only. Do not add API calls or persistence.
 
 ## Check when done
 
-- sidebar actions are wired
-- slug preview works
-- no TS errors
-- no lint errors
+- [x] sidebar actions are wired
+- [x] slug preview works
+- [x] no TS errors
+- [x] no lint errors
 
 ---
 
