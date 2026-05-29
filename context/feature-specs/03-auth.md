@@ -102,11 +102,11 @@ install: @clerk/ui.
 
 ## Check when done
 
-- `proxy.ts` exists at the root
-- all routes are protected except public auth paths
-- auth pages use CSS variables with no hardcoded colors
-- `ClerkProvider` wraps the root layout
-- `npm run build` completes without errors
+- [x] `proxy.ts` exists at the root
+- [x] all routes are protected except public auth paths
+- [x] auth pages use CSS variables with no hardcoded colors
+- [x] `ClerkProvider` wraps the root layout
+- [x] `npm run build` completes without errors
 
 ---
 

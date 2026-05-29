@@ -62,6 +62,46 @@ Update the relevant context file whenever implementation changes:
 
 Progress state must reflect the actual state of the implementation, not the intended state.
 
+## Issue Lifecycle
+
+Issues are tracked in `context/templates/current-issues.md`. Follow these rules exactly.
+
+### States
+
+`Open` → `Fix Implemented (Pending Verification)` → `Resolved`
+
+### Moving Open → Fix Implemented
+
+An agent may do this only after:
+
+1. Running the app and observing the fix working with their own eyes
+2. Adding a row to the issue's **Verification Log** with: date, what was run, what was observed
+3. Checking off the relevant investigation checklist items with the date
+
+Do not move an issue to Fix Implemented just because code was written.
+
+### Moving Fix Implemented → Resolved
+
+- **Only the user may do this.** The agent must wait for explicit user confirmation.
+- Once confirmed, the agent updates the Status field to `Resolved`, adds the resolution date, and moves the entry under `## Resolved`.
+
+### If Verification Fails
+
+Move the issue back to `Open` and add a `Verification failed: <reason>` row to the Verification Log with the date.
+
+### Issue Entry Format
+
+Each issue must include:
+
+- Status, Opened date, Updated date
+- Description of the problem
+- Investigation checklist with completion dates on each item
+- Root Cause (once identified)
+- Fix Applied note with date (once implemented)
+- Verification Log table (Date / By / Result / Evidence)
+
+---
+
 ## Before Moving To The Next Unit
 
 1. The current unit works end to end within its defined scope.
