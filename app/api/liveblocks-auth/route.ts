@@ -6,11 +6,11 @@ import {
 } from "@/lib/project-access";
 
 export async function POST(request: Request) {
-  const body = (await request.json()) as { room?: string };
-  const room = body.room;
+  const body = await request.json().catch(() => ({}));
+  const room = (body as Record<string, unknown>).room;
 
-  if (!room) {
-    return new Response("Missing room", { status: 400 });
+  if (typeof room !== "string" || room.trim().length === 0) {
+    return new Response("Missing or invalid room", { status: 400 });
   }
 
   const identity = await getCurrentIdentity();

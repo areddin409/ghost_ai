@@ -17,11 +17,21 @@ function ShapeButton({ shape }: ShapeButtonProps) {
     e.dataTransfer.effectAllowed = "copy";
   }
 
+  function handleClick() {
+    const size = DEFAULT_NODE_SIZES[shape];
+    window.dispatchEvent(
+      new CustomEvent("ghost:insert-shape", {
+        detail: { shape, width: size.width, height: size.height },
+      })
+    );
+  }
+
   return (
     <button
       draggable
       onDragStart={handleDragStart}
-      title={shape}
+      onClick={handleClick}
+      aria-label={`Insert ${shape}`}
       className="flex h-9 w-9 cursor-grab items-center justify-center rounded-xl text-text-secondary transition-colors hover:bg-bg-elevated hover:text-text-primary active:cursor-grabbing"
     >
       <ShapeIcon shape={shape} />
