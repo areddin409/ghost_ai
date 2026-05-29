@@ -1,7 +1,7 @@
 ---
 type: feature-spec
 feature: "13-node-shape — node-shape"
-status: planned
+status: shipped
 updated: 2026-05-29
 ---
 
@@ -21,13 +21,13 @@ updated: 2026-05-29
 	- [x] diamond, hexagon, and cylinder should render with SVG shapes.
 	- [x] SVG shapes should scale with node size.
 	- [x] keep borders subtle at rest and brighter when selected.
-- [ ] Add a shape drag preview.
-	- [ ] when dragging a shape from the shape panel, show a ghost preview of that shape.
-	- [ ] keep the preview attached to the cursor while dragging
-	- [ ] use the same shape type and default size that will be used on drop
-	- [ ] hide the preview after the shape is dropped or the drag is cancelled
-	- [ ] keep this limited to drag preview behavior only
-- [ ] keep node rendering connected to the existing collaborative canvas state.
+- [x] Add a shape drag preview.
+	- [x] when dragging a shape from the shape panel, show a ghost preview of that shape.
+	- [x] keep the preview attached to the cursor while dragging
+	- [x] use the same shape type and default size that will be used on drop
+	- [x] hide the preview after the shape is dropped or the drag is cancelled
+	- [x] keep this limited to drag preview behavior only
+- [x] keep node rendering connected to the existing collaborative canvas state.
 
 ## Scope
 
@@ -41,8 +41,8 @@ updated: 2026-05-29
 - [x] Nodes render the correct shape variant for each type
 - [x] CSS shapes render correctly for rectangle, pill and circle
 - [x] SVG shapes render and scale correctly for diamond, hexagon, and cylinder
-- [ ] Shape dragging shows a ghost preview matching the dragged shape.
-- [ ] `npm run build` passes
+- [x] Shape dragging shows a ghost preview matching the dragged shape.
+- [x] `npm run build` passes
 
 ---
 
