@@ -322,8 +322,6 @@ const nodeTypes: NodeTypes = {
   canvasNode: CanvasNodeRenderer
 }
 
-let nodeCounter = 0
-
 export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, onDelete } =
     useLiveblocksFlow<CanvasNode, CanvasEdge>({
@@ -337,9 +335,13 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
 
   // Stable refs so the native event listeners never go stale
   const screenToFlowPositionRef = useRef(screenToFlowPosition)
-  screenToFlowPositionRef.current = screenToFlowPosition
+  useEffect(() => {
+    screenToFlowPositionRef.current = screenToFlowPosition
+  }, [screenToFlowPosition])
   const onNodesChangeRef = useRef(onNodesChange)
-  onNodesChangeRef.current = onNodesChange
+  useEffect(() => {
+    onNodesChangeRef.current = onNodesChange
+  }, [onNodesChange])
 
   useEffect(() => {
     if (!domNode) return
@@ -357,18 +359,33 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
       const raw = e.dataTransfer?.getData("application/ghost-shape")
       if (!raw) return
 
-      let payload: { shape: string; width: number; height: number }
+      let parsed: unknown
       try {
-        payload = JSON.parse(raw)
+        parsed = JSON.parse(raw)
       } catch {
         return
       }
 
+      if (!parsed || typeof parsed !== "object") return
+      const { shape, width, height } = parsed as Record<string, unknown>
+
+      if (typeof shape !== "string" || !(shape in DEFAULT_NODE_SIZES)) return
+      const nodeShape = shape as NodeShape
+      const defaults = DEFAULT_NODE_SIZES[nodeShape]
+      const w =
+        Number.isFinite(width) && (width as number) > 0
+          ? (width as number)
+          : defaults.width
+      const h =
+        Number.isFinite(height) && (height as number) > 0
+          ? (height as number)
+          : defaults.height
+
       const position = screenToFlowPositionRef.current({
-        x: e.clientX - payload.width / 2,
-        y: e.clientY - payload.height / 2
+        x: e.clientX - w / 2,
+        y: e.clientY - h / 2
       })
-      const id = `${payload.shape}-${Date.now()}-${++nodeCounter}`
+      const id = crypto.randomUUID()
 
       const newNode: CanvasNode = {
         id,
@@ -377,10 +394,10 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
         data: {
           label: "",
           color: DEFAULT_NODE_COLOR.fill,
-          shape: payload.shape
+          shape: nodeShape
         },
-        width: payload.width,
-        height: payload.height
+        width: w,
+        height: h
       }
 
       // Route through useLiveblocksFlow's own onNodesChange so the node is
@@ -388,11 +405,46 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
       onNodesChangeRef.current([{ type: "add", item: newNode }])
     }
 
+    function onInsertShape(e: Event) {
+      const detail = (e as CustomEvent<Record<string, unknown>>).detail
+      if (!detail || typeof detail.shape !== "string" || !(detail.shape in DEFAULT_NODE_SIZES)) return
+      const nodeShape = detail.shape as NodeShape
+      const defaults = DEFAULT_NODE_SIZES[nodeShape]
+      const w =
+        Number.isFinite(detail.width) && (detail.width as number) > 0
+          ? (detail.width as number)
+          : defaults.width
+      const h =
+        Number.isFinite(detail.height) && (detail.height as number) > 0
+          ? (detail.height as number)
+          : defaults.height
+
+      if (!domNode) return
+      const rect = domNode.getBoundingClientRect()
+      const position = screenToFlowPositionRef.current({
+        x: rect.left + rect.width / 2 - w / 2,
+        y: rect.top + rect.height / 2 - h / 2
+      })
+      const id = crypto.randomUUID()
+
+      const newNode: CanvasNode = {
+        id,
+        type: "canvasNode",
+        position,
+        data: { label: "", color: DEFAULT_NODE_COLOR.fill, shape: nodeShape },
+        width: w,
+        height: h
+      }
+      onNodesChangeRef.current([{ type: "add", item: newNode }])
+    }
+
     domNode.addEventListener("dragover", onDragOver)
     domNode.addEventListener("drop", onDrop)
+    window.addEventListener("ghost:insert-shape", onInsertShape)
     return () => {
       domNode.removeEventListener("dragover", onDragOver)
       domNode.removeEventListener("drop", onDrop)
+      window.removeEventListener("ghost:insert-shape", onInsertShape)
     }
   }, [domNode])
 
