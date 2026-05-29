@@ -1,4 +1,4 @@
-<%*
+<%\*
 const title = await tp.system.prompt("Issue title");
 if (title === null) { const f = tp.file.find_tfile(tp.file.path(true)); if (f) await app.vault.trash(f, true); return; }
 
@@ -9,8 +9,8 @@ const baseSlug = title.toLowerCase().replace(/[\s_]+/g, "-").replace(/[^a-z0-9-]
 let slug = baseSlug;
 let counter = 1;
 while (app.vault.getAbstractFileByPath(`issues/${slug}.md`)) {
-  slug = `${baseSlug}-${counter}`;
-  counter++;
+slug = `${baseSlug}-${counter}`;
+counter++;
 }
 await tp.file.rename(slug);
 
@@ -24,6 +24,7 @@ priority: Medium
 opened: ${tp.date.now("YYYY-MM-DD")}
 updated: ${tp.date.now("YYYY-MM-DD")}
 description: "${description}"
+
 ---
 
 > [!bug] ${title}
@@ -47,9 +48,9 @@ description: "${description}"
 
 > [!info]- Verification Log
 >
-> | Date | By | Result | Evidence |
-> |------|----|--------|----------|
-> | — | — | Pending | — |
+> | Date | By  | Result  | Evidence |
+> | ---- | --- | ------- | -------- |
+> | —    | —   | Pending | —        |
 
 ---
 

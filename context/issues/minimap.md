@@ -33,9 +33,9 @@ description: Minimap renders but drag-to-pan interaction is non-functional. Cann
 
 > [!info]- Verification Log
 >
-> | Date | By | Result | Evidence |
-> |------|----|--------|----------|
-> | — | — | Pending | — |
+> | Date | By  | Result  | Evidence |
+> | ---- | --- | ------- | -------- |
+> | —    | —   | Pending | —        |
 
 ---
 
