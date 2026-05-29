@@ -1,8 +1,20 @@
 "use client"
 
-import { PanelLeftClose, PanelLeftOpen, Share2, Sparkles } from "lucide-react"
+import {
+  Map,
+  PanelLeftClose,
+  PanelLeftOpen,
+  Share2,
+  Sparkles
+} from "lucide-react"
 import { UserButton } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 interface WorkspaceNavbarProps {
   projectName: string
@@ -11,6 +23,8 @@ interface WorkspaceNavbarProps {
   isAiOpen: boolean
   onToggleAi: () => void
   onShare: () => void
+  isMinimapVisible: boolean
+  onToggleMinimap: () => void
 }
 
 export function WorkspaceNavbar({
@@ -19,7 +33,9 @@ export function WorkspaceNavbar({
   onToggleSidebar,
   isAiOpen,
   onToggleAi,
-  onShare
+  onShare,
+  isMinimapVisible,
+  onToggleMinimap
 }: WorkspaceNavbarProps) {
   return (
     <nav className="fixed inset-x-0 top-0 z-50 flex h-14 items-center gap-3 border-b border-border-default bg-bg-surface px-3">
@@ -46,7 +62,35 @@ export function WorkspaceNavbar({
       </div>
 
       <div className="flex flex-1 items-center justify-end gap-2">
-        <Button variant="outline" size="sm" aria-label="Share project" onClick={onShare}>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon-sm"
+                onClick={onToggleMinimap}
+                aria-label={isMinimapVisible ? "Hide minimap" : "Show minimap"}
+                aria-pressed={isMinimapVisible}
+                className={
+                  isMinimapVisible
+                    ? "border-accent-violet/50 bg-accent-violet/10 text-accent-violet"
+                    : ""
+                }
+              >
+                <Map className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              {isMinimapVisible ? "Hide minimap" : "Show minimap"}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <Button
+          variant="outline"
+          size="sm"
+          aria-label="Share project"
+          onClick={onShare}
+        >
           <Share2 className="h-4 w-4" />
           Share
         </Button>

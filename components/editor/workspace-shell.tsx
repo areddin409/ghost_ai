@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { WorkspaceNavbar } from "@/components/editor/workspace-navbar"
 import { ProjectSidebar } from "@/components/editor/project-sidebar"
-import { CanvasPlaceholder } from "@/components/editor/canvas-placeholder"
+import { CanvasWrapper } from "@/components/editor/canvas-wrapper"
 import { AiSidebar } from "@/components/editor/ai-sidebar"
 import { ShareDialog } from "@/components/editor/share-dialog"
 import { ProjectDialogsContext } from "@/components/editor/project-dialogs-context"
@@ -12,6 +12,7 @@ import {
   RenameProjectDialog,
   DeleteProjectDialog
 } from "@/components/editor/project-dialogs"
+import { ShapePanel } from "@/components/editor/shape-panel"
 import { useProjectActions } from "@/hooks/use-project-actions"
 import type { Project } from "@/hooks/use-project-actions"
 
@@ -31,6 +32,7 @@ export function WorkspaceShell({
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [aiOpen, setAiOpen] = useState(false)
   const [shareOpen, setShareOpen] = useState(false)
+  const [minimapVisible, setMinimapVisible] = useState(true)
   const actionsState = useProjectActions({ initialOwned, initialShared })
 
   return (
@@ -42,6 +44,8 @@ export function WorkspaceShell({
         isAiOpen={aiOpen}
         onToggleAi={() => setAiOpen((o) => !o)}
         onShare={() => setShareOpen(true)}
+        isMinimapVisible={minimapVisible}
+        onToggleMinimap={() => setMinimapVisible((o) => !o)}
       />
       <ProjectSidebar
         isOpen={sidebarOpen}
@@ -55,9 +59,10 @@ export function WorkspaceShell({
           aria-hidden="true"
         />
       )}
-      <div className="h-screen overflow-hidden pt-14">
-        <CanvasPlaceholder />
+      <div className="fixed inset-0 top-14 z-0 bg-bg-base">
+        <CanvasWrapper roomId={project.id} showMinimap={minimapVisible} />
       </div>
+      <ShapePanel />
       <AiSidebar isOpen={aiOpen} />
       <ShareDialog
         projectId={project.id}
