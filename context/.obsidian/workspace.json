@@ -184,8 +184,9 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "6370462bae3b669c",
+  "active": "5099fbe5b12a63b4",
   "lastOpenFiles": [
+    "feature-specs/current-issues.md",
     "templates/current-issues.md",
     "README.md",
     "issues/test-issue-2-1.md",
@@ -221,7 +222,6 @@
     "ai-workflow-rules.md",
     "feature-specs/07-wire-editor-home.md",
     "feature-specs/01-design-system.md",
-    "feature-specs/02-editor.md",
-    "feature-specs/03-auth.md"
+    "feature-specs/02-editor.md"
   ]
 }
