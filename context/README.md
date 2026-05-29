@@ -11,16 +11,17 @@ updated: 2026-05-24
 
 ## Agent Context — Read First
 
-| | |
-|---|---|
-| **Phase** | Phase 1 — Foundation |
-| **Active Feature** | 13 — TBD |
-| **Open Issues** | `$= dv.pages('"issues"').where(p => p.type === "issue" && p.status !== "Resolved").length` |
+|                    |                                                                                            |
+| ------------------ | ------------------------------------------------------------------------------------------ |
+| **Phase**          | Phase 1 — Foundation                                                                       |
+| **Active Feature** | 13 — TBD                                                                                   |
+| **Open Issues**    | `$= dv.pages('"issues"').where(p => p.type === "issue" && p.status !== "Resolved").length` |
 
 **Before implementing, read in order:**
 `project-overview` → `architecture-context` → `ui-context` → `code-standards` → `ai-workflow-rules` → `progress-tracker`
 
 **Critical constraints:**
+
 - Do NOT import `tw-animate-css` — copy keyframes manually into `globals.css`
 - Tailwind v4 — CSS-first config, no `tailwind.config.js`
 - Next.js 16 — read `node_modules/next/dist/docs/` before writing any Next.js code
@@ -143,4 +144,4 @@ SORT file.name ASC
 
 ---
 
-[[progress-tracker]] · [[current-issues]]**
+[[progress-tracker]] · [[current-issues]]\*\*
