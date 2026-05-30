@@ -98,6 +98,13 @@ export function CanvasNodeRenderer({
     if (isEditing) textareaRef.current?.focus()
   }, [isEditing])
 
+  // Cleanup debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+    }
+  }, [])
+
   const scheduleSync = (value: string) => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
     debounceRef.current = setTimeout(() => {
@@ -159,7 +166,7 @@ export function CanvasNodeRenderer({
     >
       <textarea
         ref={textareaRef}
-        className="noDrag noPan"
+        className="nodrag nopan"
         value={editValue}
         onChange={(e) => {
           setEditValue(e.target.value)
@@ -167,6 +174,7 @@ export function CanvasNodeRenderer({
         }}
         onBlur={() => commitAndClose(editValue)}
         onKeyDown={(e) => {
+          e.stopPropagation()
           if (e.key === "Escape") commitAndClose(editValue)
         }}
         onMouseDown={(e) => e.stopPropagation()}
