@@ -1,12 +1,15 @@
 "use client"
 
-import { NodeResizer, type NodeProps } from "@xyflow/react"
+import { useState } from "react"
+import { Handle, NodeResizer, Position, type NodeProps } from "@xyflow/react"
 import type { CanvasNode, NodeShape } from "@/types/canvas"
 import { DEFAULT_NODE_COLOR, DEFAULT_NODE_SIZES } from "@/types/canvas"
 
 const STROKE = "#3a3a42"
 const SW = 1.5
 const H = SW / 2
+const ACCENT = "#00c8d4"
+const CANVAS_BG = "#080809"
 
 function ShapeRenderer({
   shape,
@@ -74,6 +77,7 @@ export function CanvasNodeRenderer({
   const w = nodeW ?? DEFAULT_NODE_SIZES[nodeShape].width
   const h = nodeH ?? DEFAULT_NODE_SIZES[nodeShape].height
   const stroke = selected ? "#00c8d4" : STROKE
+  const [isHovered, setIsHovered] = useState(false)
 
   const defaults = DEFAULT_NODE_SIZES[nodeShape]
   const minW = Math.round(defaults.width / 2)
@@ -87,6 +91,25 @@ export function CanvasNodeRenderer({
     lineStyle: { borderColor: "rgba(255,255,255,0.15)" } as React.CSSProperties,
     handleStyle: { width: 5, height: 5, background: "#ffffff", border: "1px solid #080809", borderRadius: 2 } as React.CSSProperties,
   }
+
+  const handleStyle: React.CSSProperties = {
+    width: 10,
+    height: 10,
+    background: ACCENT,
+    border: `2px solid ${CANVAS_BG}`,
+    borderRadius: "50%",
+    opacity: isHovered ? 1 : 0,
+    transition: "opacity 0.15s",
+  }
+
+  const handles = (
+    <>
+      <Handle type="source" position={Position.Top} style={handleStyle} />
+      <Handle type="source" position={Position.Right} style={handleStyle} />
+      <Handle type="source" position={Position.Bottom} style={handleStyle} />
+      <Handle type="source" position={Position.Left} style={handleStyle} />
+    </>
+  )
 
   const labelEl = label ? (
     <div
@@ -123,17 +146,25 @@ export function CanvasNodeRenderer({
           borderRadius,
           border: `${SW}px solid ${stroke}`,
         }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <NodeResizer {...resizerProps} />
+        {handles}
         {labelEl}
       </div>
     )
   }
 
   return (
-    <div style={{ width: w, height: h, position: "relative" }}>
+    <div
+      style={{ width: w, height: h, position: "relative" }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <ShapeRenderer shape={nodeShape} w={w} h={h} fill={bg} stroke={stroke} />
       <NodeResizer {...resizerProps} />
+      {handles}
       {labelEl}
     </div>
   )
