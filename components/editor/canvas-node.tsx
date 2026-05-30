@@ -1,7 +1,7 @@
 "use client"
 
-import type { NodeProps } from "@xyflow/react"
-import type { CanvasNode, CanvasNodeData, NodeShape } from "@/types/canvas"
+import { NodeResizer, type NodeProps } from "@xyflow/react"
+import type { CanvasNode, NodeShape } from "@/types/canvas"
 import { DEFAULT_NODE_COLOR, DEFAULT_NODE_SIZES } from "@/types/canvas"
 
 const STROKE = "#3a3a42"
@@ -75,6 +75,19 @@ export function CanvasNodeRenderer({
   const h = nodeH ?? DEFAULT_NODE_SIZES[nodeShape].height
   const stroke = selected ? "#00c8d4" : STROKE
 
+  const defaults = DEFAULT_NODE_SIZES[nodeShape]
+  const minW = Math.round(defaults.width / 2)
+  const minH = Math.round(defaults.height / 2)
+
+  const resizerProps = {
+    isVisible: selected,
+    minWidth: minW,
+    minHeight: minH,
+    keepAspectRatio: nodeShape === "circle",
+    lineStyle: { stroke } as React.CSSProperties,
+    handleStyle: { width: 8, height: 8, background: stroke, border: "none" } as React.CSSProperties,
+  }
+
   const labelEl = label ? (
     <div
       style={{
@@ -111,6 +124,7 @@ export function CanvasNodeRenderer({
           border: `${SW}px solid ${stroke}`,
         }}
       >
+        <NodeResizer {...resizerProps} />
         {labelEl}
       </div>
     )
@@ -119,6 +133,7 @@ export function CanvasNodeRenderer({
   return (
     <div style={{ width: w, height: h, position: "relative" }}>
       <ShapeRenderer shape={nodeShape} w={w} h={h} fill={bg} stroke={stroke} />
+      <NodeResizer {...resizerProps} />
       {labelEl}
     </div>
   )
