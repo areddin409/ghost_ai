@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { Handle, NodeResizer, Position, useReactFlow, type NodeProps } from "@xyflow/react"
 import type { CanvasNode, NodeShape } from "@/types/canvas"
 import { DEFAULT_NODE_COLOR, DEFAULT_NODE_SIZES } from "@/types/canvas"
+import { NodeColorToolbar } from "./node-color-toolbar"
 
 const STROKE = "#3a3a42"
 const SW = 1.5
@@ -72,30 +73,47 @@ export function CanvasNodeRenderer({
   width: nodeW,
   height: nodeH,
 }: NodeProps<CanvasNode>) {
-  const { label, color, shape } = data
+  const { label, color, shape, textColor } = data
   const nodeShape: NodeShape = shape ?? "rectangle"
   const bg = color ?? DEFAULT_NODE_COLOR.fill
+  const resolvedTextColor = textColor ?? DEFAULT_NODE_COLOR.text
   const w = nodeW ?? DEFAULT_NODE_SIZES[nodeShape].width
   const h = nodeH ?? DEFAULT_NODE_SIZES[nodeShape].height
   const stroke = selected ? "#00c8d4" : STROKE
   const [isHovered, setIsHovered] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState(label ?? "")
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const editRef = useRef<HTMLDivElement>(null)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // updateNodeData routes through RF's BatchProvider → onNodesChange → useLiveblocksFlow.
   // Verified for @xyflow/react v12.10.2. Re-verify on React Flow upgrades.
   const { updateNodeData } = useReactFlow()
 
+  const handleColorSelect = (fill: string, text: string) => {
+    updateNodeData(id, { color: fill, textColor: text })
+  }
+
   // Keep editValue in sync when label changes from outside (remote collaborator)
   useEffect(() => {
     if (!isEditing) setEditValue(label ?? "")
   }, [label, isEditing])
 
-  // Auto-focus textarea when editing begins
+  // Set initial text content and place cursor at end when editing begins.
+  // We set textContent directly rather than via JSX children so React doesn't
+  // reset the cursor position on every onInput re-render.
   useEffect(() => {
-    if (isEditing) textareaRef.current?.focus()
+    if (!isEditing || !editRef.current) return
+    const el = editRef.current
+    el.textContent = editValue
+    el.focus()
+    const range = document.createRange()
+    range.selectNodeContents(el)
+    const sel = window.getSelection()
+    sel?.removeAllRanges()
+    sel?.addRange(range)
+  // editValue intentionally omitted — we only want this on editing start
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditing])
 
   // Cleanup debounce timer on unmount
@@ -144,14 +162,27 @@ export function CanvasNodeRenderer({
     transition: "opacity 0.15s",
   }
 
+  // ReactFlow's getHandlePosition uses the handle's OUTER edge as the connection point.
+  // Setting t/b/l/r to 0 (instead of the default -5px) places that outer edge exactly
+  // on the shape boundary so drawn edges touch the visual shape.
+  // For hexagon L/R the outer edge must reach the polygon midpoint, not the div edge.
+  const hexLROffset =
+    nodeShape === "hexagon"
+      ? w / 2 * (1 - Math.sqrt(3) / 2) + H * Math.sqrt(3) / 2
+      : 0
+
   const handles = (
     <>
-      <Handle type="source" position={Position.Top} style={handleStyle} />
-      <Handle type="source" position={Position.Right} style={handleStyle} />
-      <Handle type="source" position={Position.Bottom} style={handleStyle} />
-      <Handle type="source" position={Position.Left} style={handleStyle} />
+      <Handle id="top"    type="source" position={Position.Top}    style={{ ...handleStyle, top: 0,    transform: "translateX(-50%)" }} />
+      <Handle id="right"  type="source" position={Position.Right}  style={{ ...handleStyle, right: hexLROffset || 0, transform: "translateY(-50%)" }} />
+      <Handle id="bottom" type="source" position={Position.Bottom} style={{ ...handleStyle, bottom: 0, transform: "translateX(-50%)" }} />
+      <Handle id="left"   type="source" position={Position.Left}   style={{ ...handleStyle, left:  hexLROffset || 0, transform: "translateY(-50%)" }} />
     </>
   )
+
+  const colorToolbar = selected ? (
+    <NodeColorToolbar currentFill={bg} onSelect={handleColorSelect} />
+  ) : null
 
   const labelEl = isEditing ? (
     <div
@@ -164,35 +195,41 @@ export function CanvasNodeRenderer({
         padding: 4,
       }}
     >
-      <textarea
-        ref={textareaRef}
+      <div
+        ref={editRef}
         className="nodrag nopan"
-        value={editValue}
-        onChange={(e) => {
-          setEditValue(e.target.value)
-          scheduleSync(e.target.value)
+        contentEditable
+        suppressContentEditableWarning
+        onInput={(e) => {
+          const value = e.currentTarget.textContent ?? ""
+          setEditValue(value)
+          scheduleSync(value)
         }}
-        onBlur={() => commitAndClose(editValue)}
+        onBlur={() => commitAndClose(editRef.current?.textContent ?? editValue)}
         onKeyDown={(e) => {
           e.stopPropagation()
-          if (e.key === "Escape") commitAndClose(editValue)
+          if (e.key === "Escape") commitAndClose(editRef.current?.textContent ?? editValue)
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault()
+            commitAndClose(editRef.current?.textContent ?? editValue)
+          }
         }}
         onMouseDown={(e) => e.stopPropagation()}
         onClick={(e) => e.stopPropagation()}
         style={{
-          width: "100%",
-          height: "100%",
+          maxWidth: "100%",
+          minWidth: 40,
           background: "transparent",
           border: "none",
           outline: "none",
-          resize: "none",
           textAlign: "center",
-          color: DEFAULT_NODE_COLOR.text,
+          color: resolvedTextColor,
           fontSize: "0.875rem",
           fontFamily: "inherit",
-          padding: 0,
           cursor: "text",
           lineHeight: 1.4,
+          wordBreak: "break-word",
+          whiteSpace: "pre-wrap",
         }}
       />
     </div>
@@ -210,7 +247,7 @@ export function CanvasNodeRenderer({
         alignItems: "center",
         justifyContent: "center",
         fontSize: "0.875rem",
-        color: label?.trim() ? DEFAULT_NODE_COLOR.text : "var(--text-faint, #505060)",
+        color: label?.trim() ? resolvedTextColor : "var(--text-faint, #505060)",
         padding: "8px",
         cursor: "text",
         userSelect: "none",
@@ -241,8 +278,9 @@ export function CanvasNodeRenderer({
         onMouseLeave={() => setIsHovered(false)}
       >
         <NodeResizer {...resizerProps} />
-        {handles}
+        {colorToolbar}
         {labelEl}
+        {handles}
       </div>
     )
   }
@@ -255,8 +293,9 @@ export function CanvasNodeRenderer({
     >
       <ShapeRenderer shape={nodeShape} w={w} h={h} fill={bg} stroke={stroke} />
       <NodeResizer {...resizerProps} />
-      {handles}
+      {colorToolbar}
       {labelEl}
+      {handles}
     </div>
   )
 }
