@@ -204,6 +204,7 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
         target: newConnection.target,
         sourceHandle: newConnection.sourceHandle ?? null,
         targetHandle: newConnection.targetHandle ?? null,
+        selected: false,
       }
       onEdgesChange([
         { type: "remove", id: oldEdge.id },
