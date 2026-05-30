@@ -2,7 +2,7 @@
 type: tracker
 phase: "Phase 1 — Foundation"
 status: active
-updated: 2026-05-06
+updated: 2026-05-29
 ---
 
 # Progress Tracker
@@ -77,12 +77,15 @@ action:
   openNote: true
 ```
 
-> [!todo] Feature 14 (TBD)
+> [!todo] Feature 15 (TBD)
 > Next planned feature unit from the feature spec queue.
 
 ---
 
 ## Completed
+
+> [!success] Feature 14 — [[14-node-editing-node-editing|Node Editing]]
+> `CanvasNodeRenderer` moved to `canvas-node.tsx`. `NodeResizer` (from `@xyflow/react`) renders on selected nodes with per-shape min sizes (half of `DEFAULT_NODE_SIZES`) and `keepAspectRatio` for circles; subtle white 5×5px handles with faint border line. Four `Handle` components (top/right/bottom/left, `type="source"`, `ConnectionMode.Loose`) appear opacity-0 and transition to visible on hover via `isHovered` state. Inline label editing triggers on double-click; a `<textarea className="nodrag nopan">` renders over the label; edits debounce at 300ms to `updateNodeData` (routes through RF's `BatchProvider` → `onNodesChange` → `useLiveblocksFlow`); blur/Escape cancels the debounce and fires a single final write; `onKeyDown` stops propagation to prevent Delete/Backspace from triggering node deletion. Placeholder text shown when label is empty. Build passes.
 
 > [!success] Feature 13 — [[13-node-shape-node-shape|Node Shape]]
 > `CanvasNodeRenderer` uses CSS divs (border + borderRadius + backgroundColor) for rectangle, pill, and circle; SVG `ShapeRenderer` for diamond, hexagon, and cylinder. Selected state switches stroke from `#3a3a42` to `#00c8d4`. Node dimensions read from `NodeProps.width`/`height` with `DEFAULT_NODE_SIZES` fallback. `ShapePanel` suppresses the browser native drag ghost and renders a `DragPreview` component (fixed position, opacity 0.75, accent-cyan border) that tracks cursor via `document.addEventListener("dragover")` and cleans up on `dragend`/`drop`. A `cleanupRef` ensures stale listeners are always evicted before a new drag starts. Build passes.
