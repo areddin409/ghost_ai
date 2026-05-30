@@ -84,8 +84,8 @@ export function CanvasNodeRenderer({
     minWidth: minW,
     minHeight: minH,
     keepAspectRatio: nodeShape === "circle",
-    lineStyle: { stroke } as React.CSSProperties,
-    handleStyle: { width: 8, height: 8, background: stroke, border: "none" } as React.CSSProperties,
+    lineStyle: { borderColor: "rgba(255,255,255,0.15)" } as React.CSSProperties,
+    handleStyle: { width: 5, height: 5, background: "#ffffff", border: "1px solid #080809", borderRadius: 2 } as React.CSSProperties,
   }
 
   const labelEl = label ? (
