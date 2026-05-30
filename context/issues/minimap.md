@@ -6,12 +6,17 @@ priority: Medium
 opened: 2026-05-24
 updated: 2026-05-24
 description: Minimap renders but drag-to-pan interaction is non-functional. Cannot navigate to off-screen nodes.
+verified_result: Pending
+verified_date: ""
+verified_evidence: ""
 ---
 
 > [!bug] Minimap — Cannot Pan Canvas When Zoomed Out
 > **Status:** `INPUT[inlineSelect(option(Open), option(In Progress), option(Fix Implemented), option(Resolved)):status]` · **Priority:** `INPUT[inlineSelect(option(Low), option(Medium), option(High), option(Critical)):priority]`
 >
 > Opened **2026-05-24** · Updated `INPUT[date:updated]`
+>
+> **Result:** `INPUT[inlineSelect(option(Pending), option(Pass), option(Fail)):verified_result]` · **Date:** `INPUT[date:verified_date]` · **Evidence:** `INPUT[text:verified_evidence]`
 
 **Description:** When the user is zoomed out and nodes are out of the visible viewport, the minimap does not allow grabbing/dragging to pan the canvas back to the nodes. The minimap renders but its drag-to-pan interaction is non-functional.
 
@@ -39,4 +44,4 @@ description: Minimap renders but drag-to-pan interaction is non-functional. Cann
 
 ---
 
-_Part of [[README|Ghost AI Vault]]_
+_Part of [[README|Ghost AI Vault]] · [[issues-moc]]_

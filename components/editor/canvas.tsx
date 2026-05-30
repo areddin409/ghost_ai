@@ -7,12 +7,14 @@ import {
   Background,
   BackgroundVariant,
   ConnectionMode,
+  ConnectionLineType,
   useReactFlow,
   useStore,
   type NodeTypes,
   type MiniMapNodeProps
 } from "@xyflow/react"
 import { useLiveblocksFlow, Cursors } from "@liveblocks/react-flow"
+import { useHistory, useCanUndo, useCanRedo } from "@liveblocks/react"
 import "@xyflow/react/dist/style.css"
 import "@liveblocks/react-ui/styles.css"
 import "@liveblocks/react-flow/styles.css"
@@ -25,6 +27,9 @@ import type {
 } from "@/types/canvas"
 import { DEFAULT_NODE_COLOR, DEFAULT_NODE_SIZES } from "@/types/canvas"
 import { CanvasNodeRenderer } from "./canvas-node"
+import { CanvasEdgeRenderer } from "./canvas-edge"
+import { CanvasControlBar } from "./canvas-control-bar"
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts"
 
 // Renders each node inside the MiniMap SVG at the correct shape.
 // Must be defined outside Canvas so the reference is stable across renders.
@@ -157,6 +162,14 @@ const nodeTypes: NodeTypes = {
   canvasNode: CanvasNodeRenderer
 }
 
+const edgeTypes = {
+  canvasEdge: CanvasEdgeRenderer
+}
+
+const defaultEdgeOptions = {
+  type: "canvasEdge",
+}
+
 export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, onDelete } =
     useLiveblocksFlow<CanvasNode, CanvasEdge>({
@@ -165,8 +178,15 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
       edges: { initial: [] }
     })
 
-  const { screenToFlowPosition } = useReactFlow()
+  const instance = useReactFlow()
+  const { screenToFlowPosition } = instance
   const domNode = useStore((state) => state.domNode)
+
+  const { undo, redo } = useHistory()
+  const canUndo = useCanUndo()
+  const canRedo = useCanRedo()
+
+  useKeyboardShortcuts({ instance, undo, redo })
 
   // Stable refs so the native event listeners never go stale
   const screenToFlowPositionRef = useRef(screenToFlowPosition)
@@ -285,6 +305,13 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
 
   return (
     <div className="relative h-full w-full bg-bg-base">
+      <CanvasControlBar
+        instance={instance}
+        canUndo={canUndo}
+        canRedo={canRedo}
+        onUndo={undo}
+        onRedo={redo}
+      />
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -293,7 +320,11 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
         onConnect={onConnect}
         onDelete={onDelete}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
+        defaultEdgeOptions={defaultEdgeOptions}
         connectionMode={ConnectionMode.Loose}
+        connectionLineType={ConnectionLineType.SmoothStep}
+        connectionLineStyle={{ stroke: "rgba(248,250,252,0.35)", strokeWidth: 1.5 }}
         colorMode="dark"
         fitView
       >

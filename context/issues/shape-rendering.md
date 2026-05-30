@@ -6,12 +6,17 @@ priority: Medium
 opened: 2026-05-24
 updated: 2026-05-24
 description: All dropped nodes render identically regardless of which shape was dragged. Shape field stored correctly but renderer ignores it.
+verified_result: Pending
+verified_date: ""
+verified_evidence: ""
 ---
 
 > [!bug] Shape Rendering — All Nodes Render as the Same Shape
 > **Status:** `INPUT[inlineSelect(option(Open), option(In Progress), option(Fix Implemented), option(Resolved)):status]` · **Priority:** `INPUT[inlineSelect(option(Low), option(Medium), option(High), option(Critical)):priority]`
 >
 > Opened **2026-05-24** · Updated `INPUT[date:updated]`
+>
+> **Result:** `INPUT[inlineSelect(option(Pending), option(Pass), option(Fail)):verified_result]` · **Date:** `INPUT[date:verified_date]` · **Evidence:** `INPUT[text:verified_evidence]`
 
 **Description:** All dropped nodes render identically (rounded rectangle) regardless of which shape was dragged. The `shape` field is stored correctly in node data but the renderer ignores it.
 
@@ -37,4 +42,4 @@ description: All dropped nodes render identically regardless of which shape was 
 
 ---
 
-_Part of [[README|Ghost AI Vault]]_
+_Part of [[README|Ghost AI Vault]] · [[issues-moc]]_

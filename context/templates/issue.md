@@ -1,4 +1,4 @@
-<%\*
+<%*
 const title = await tp.system.prompt("Issue title");
 if (title === null) { const f = tp.file.find_tfile(tp.file.path(true)); if (f) await app.vault.trash(f, true); return; }
 
@@ -8,13 +8,11 @@ if (description === null) { const f = tp.file.find_tfile(tp.file.path(true)); if
 const baseSlug = title.toLowerCase().replace(/[\s_]+/g, "-").replace(/[^a-z0-9-]/g, "");
 let slug = baseSlug;
 let counter = 1;
-while (app.vault.getAbstractFileByPath(`issues/${slug}.md`)) {
-slug = `${baseSlug}-${counter}`;
-counter++;
+while (app.vault.getAbstractFileByPath("issues/" + slug + ".md")) {
+  slug = baseSlug + "-" + counter;
+  counter++;
 }
 await tp.file.rename(slug);
-
-const bt = "`";
 
 tR += `---
 type: issue
@@ -24,13 +22,18 @@ priority: Medium
 opened: ${tp.date.now("YYYY-MM-DD")}
 updated: ${tp.date.now("YYYY-MM-DD")}
 description: "${description}"
+verified_result: Pending
+verified_date: ""
+verified_evidence: ""
 
 ---
 
 > [!bug] ${title}
-> **Status:** ${bt}INPUT[inlineSelect(option(Open), option(In Progress), option(Fix Implemented), option(Resolved)):status]${bt} · **Priority:** ${bt}INPUT[inlineSelect(option(Low), option(Medium), option(High), option(Critical)):priority]${bt}
+> **Status:** \`INPUT[inlineSelect(option(Open), option(In Progress), option(Fix Implemented), option(Resolved)):status]\` · **Priority:** \`INPUT[inlineSelect(option(Low), option(Medium), option(High), option(Critical)):priority]\`
 >
-> Opened **${tp.date.now("YYYY-MM-DD")}** · Updated ${bt}INPUT[date:updated]${bt}
+> Opened **${tp.date.now("YYYY-MM-DD")}** · Updated \`INPUT[date:updated]\`
+>
+> **Result:** \`INPUT[inlineSelect(option(Pending), option(Pass), option(Fail)):verified_result]\` · **Date:** \`INPUT[date:verified_date]\` · **Evidence:** \`INPUT[text:verified_evidence]\`
 
 **Description:** ${description}
 
@@ -54,5 +57,5 @@ description: "${description}"
 
 ---
 
-_Part of [[README|Ghost AI Vault]]_`;
+_Part of [[README|Ghost AI Vault]] | [[issues-moc]]_`;
 %>

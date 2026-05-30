@@ -113,7 +113,7 @@ icon: scroll-text
 hidden: true
 action:
   type: open
-  link: "templates/current-issues"
+  link: "current-issues"
   newTab: false
 ```
 

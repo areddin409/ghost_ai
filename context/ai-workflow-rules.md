@@ -64,7 +64,7 @@ Progress state must reflect the actual state of the implementation, not the inte
 
 ## Issue Lifecycle
 
-Issues are tracked in `context/templates/current-issues.md`. Follow these rules exactly.
+Issues are tracked in `context/current-issues.md`. Follow these rules exactly.
 
 ### States
 
