@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Handle, NodeResizer, Position, type NodeProps } from "@xyflow/react"
+import { useState, useRef, useEffect } from "react"
+import { Handle, NodeResizer, Position, useReactFlow, type NodeProps } from "@xyflow/react"
 import type { CanvasNode, NodeShape } from "@/types/canvas"
 import { DEFAULT_NODE_COLOR, DEFAULT_NODE_SIZES } from "@/types/canvas"
 
@@ -66,6 +66,7 @@ function ShapeRenderer({
 }
 
 export function CanvasNodeRenderer({
+  id,
   data,
   selected,
   width: nodeW,
@@ -78,6 +79,40 @@ export function CanvasNodeRenderer({
   const h = nodeH ?? DEFAULT_NODE_SIZES[nodeShape].height
   const stroke = selected ? "#00c8d4" : STROKE
   const [isHovered, setIsHovered] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [editValue, setEditValue] = useState(label ?? "")
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // updateNodeData routes through RF's BatchProvider → onNodesChange → useLiveblocksFlow.
+  // Verified for @xyflow/react v12.10.2. Re-verify on React Flow upgrades.
+  const { updateNodeData } = useReactFlow()
+
+  // Keep editValue in sync when label changes from outside (remote collaborator)
+  useEffect(() => {
+    if (!isEditing) setEditValue(label ?? "")
+  }, [label, isEditing])
+
+  // Auto-focus textarea when editing begins
+  useEffect(() => {
+    if (isEditing) textareaRef.current?.focus()
+  }, [isEditing])
+
+  const scheduleSync = (value: string) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(() => {
+      updateNodeData(id, { label: value })
+    }, 300)
+  }
+
+  const commitAndClose = (value: string) => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current)
+      debounceRef.current = null
+    }
+    updateNodeData(id, { label: value })
+    setIsEditing(false)
+  }
 
   const defaults = DEFAULT_NODE_SIZES[nodeShape]
   const minW = Math.round(defaults.width / 2)
@@ -89,7 +124,7 @@ export function CanvasNodeRenderer({
     minHeight: minH,
     keepAspectRatio: nodeShape === "circle",
     lineStyle: { borderColor: "rgba(255,255,255,0.15)" } as React.CSSProperties,
-    handleStyle: { width: 5, height: 5, background: "#ffffff", border: "1px solid #080809", borderRadius: 2 } as React.CSSProperties,
+    handleStyle: { width: 5, height: 5, background: "#ffffff", border: `1px solid ${CANVAS_BG}`, borderRadius: 2 } as React.CSSProperties,
   }
 
   const handleStyle: React.CSSProperties = {
@@ -111,7 +146,7 @@ export function CanvasNodeRenderer({
     </>
   )
 
-  const labelEl = label ? (
+  const labelEl = isEditing ? (
     <div
       style={{
         position: "absolute",
@@ -119,15 +154,63 @@ export function CanvasNodeRenderer({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "0.875rem",
-        color: DEFAULT_NODE_COLOR.text,
-        padding: "8px",
-        pointerEvents: "none",
+        padding: 4,
       }}
     >
-      {label}
+      <textarea
+        ref={textareaRef}
+        className="noDrag noPan"
+        value={editValue}
+        onChange={(e) => {
+          setEditValue(e.target.value)
+          scheduleSync(e.target.value)
+        }}
+        onBlur={() => commitAndClose(editValue)}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") commitAndClose(editValue)
+        }}
+        onMouseDown={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          width: "100%",
+          height: "100%",
+          background: "transparent",
+          border: "none",
+          outline: "none",
+          resize: "none",
+          textAlign: "center",
+          color: DEFAULT_NODE_COLOR.text,
+          fontSize: "0.875rem",
+          fontFamily: "inherit",
+          padding: 0,
+          cursor: "text",
+          lineHeight: 1.4,
+        }}
+      />
     </div>
-  ) : null
+  ) : (
+    <div
+      onDoubleClick={(e) => {
+        e.stopPropagation()
+        setEditValue(label ?? "")
+        setIsEditing(true)
+      }}
+      style={{
+        position: "absolute",
+        inset: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "0.875rem",
+        color: label?.trim() ? DEFAULT_NODE_COLOR.text : "var(--text-faint, #505060)",
+        padding: "8px",
+        cursor: "text",
+        userSelect: "none",
+      }}
+    >
+      {label?.trim() || "Label"}
+    </div>
+  )
 
   if (nodeShape === "rectangle" || nodeShape === "pill" || nodeShape === "circle") {
     const borderRadius =
