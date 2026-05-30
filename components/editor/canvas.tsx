@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import {
   ReactFlow,
   MiniMap,
@@ -11,7 +11,8 @@ import {
   useReactFlow,
   useStore,
   type NodeTypes,
-  type MiniMapNodeProps
+  type MiniMapNodeProps,
+  type Connection,
 } from "@xyflow/react"
 import { useLiveblocksFlow, Cursors } from "@liveblocks/react-flow"
 import { useHistory, useCanUndo, useCanRedo } from "@liveblocks/react"
@@ -188,6 +189,39 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
 
   useKeyboardShortcuts({ instance, undo, redo })
 
+  const reconnectSuccessRef = useRef(false)
+
+  const handleReconnectStart = useCallback(() => {
+    reconnectSuccessRef.current = false
+  }, [])
+
+  const handleReconnect = useCallback(
+    (oldEdge: CanvasEdge, newConnection: Connection) => {
+      reconnectSuccessRef.current = true
+      const newEdge: CanvasEdge = {
+        ...oldEdge,
+        source: newConnection.source,
+        target: newConnection.target,
+        sourceHandle: newConnection.sourceHandle ?? null,
+        targetHandle: newConnection.targetHandle ?? null,
+      }
+      onEdgesChange([
+        { type: "remove", id: oldEdge.id },
+        { type: "add", item: newEdge },
+      ])
+    },
+    [onEdgesChange]
+  )
+
+  const handleReconnectEnd = useCallback(
+    (_event: MouseEvent | TouchEvent, edge: CanvasEdge) => {
+      if (!reconnectSuccessRef.current) {
+        onEdgesChange([{ type: "remove", id: edge.id }])
+      }
+    },
+    [onEdgesChange]
+  )
+
   // Stable refs so the native event listeners never go stale
   const screenToFlowPositionRef = useRef(screenToFlowPosition)
   useEffect(() => {
@@ -319,6 +353,10 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onDelete={onDelete}
+        edgesReconnectable
+        onReconnectStart={handleReconnectStart}
+        onReconnect={handleReconnect}
+        onReconnectEnd={handleReconnectEnd}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
