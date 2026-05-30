@@ -8,7 +8,11 @@ export type CanvasNodeData = {
 };
 
 export type CanvasNode = Node<CanvasNodeData, "canvasNode">;
-export type CanvasEdge = Edge<Record<string, never>, "canvasEdge">;
+export type CanvasEdgeData = {
+  label?: string;
+};
+
+export type CanvasEdge = Edge<CanvasEdgeData, "canvasEdge">;
 
 export const NODE_COLORS = [
   { fill: "#1F1F1F", text: "#EDEDED" },

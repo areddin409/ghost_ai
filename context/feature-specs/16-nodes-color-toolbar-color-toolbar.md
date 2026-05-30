@@ -5,7 +5,7 @@ status: shipped
 updated: 2026-05-30
 ---
 
-# Feature 15 — nodes color toolbar
+# Feature 16 — nodes color toolbar
 
 > [!abstract] Goal
 > Add a small floating color toolbar so selected nodes can change both their background and text color directly on the canvas.
@@ -225,7 +225,7 @@ updated: 2026-05-30
 
   Expected: exit 0, no TypeScript errors.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
   ```bash
   git add components/editor/canvas-node.tsx
