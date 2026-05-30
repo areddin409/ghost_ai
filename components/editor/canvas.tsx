@@ -191,6 +191,12 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
 
   const reconnectSuccessRef = useRef(false)
 
+  // Tracks the source-handle group the user last clicked for click-to-cycle disambiguation.
+  // When two edges share the same source + sourceHandle, React Flow always fires onEdgeClick
+  // for the topmost (last-rendered) edge. Repeated clicks on the same group cycle the
+  // logical selection through all siblings so every edge remains reachable.
+  const edgeGroupCycleRef = useRef<{ groupKey: string; currentId: string } | null>(null)
+
   const handleReconnectStart = useCallback(() => {
     reconnectSuccessRef.current = false
   }, [])
@@ -206,22 +212,64 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
         targetHandle: newConnection.targetHandle ?? null,
         selected: false,
       }
-      onEdgesChange([
-        { type: "remove", id: oldEdge.id },
-        { type: "add", item: newEdge },
-      ])
+      // onEdgesChange({ type: "remove" }) is a no-op in @liveblocks/react-flow —
+      // deletion must go through onDelete which calls edgesMap.delete() in storage.
+      onDelete({ nodes: [], edges: [oldEdge] })
+      onEdgesChange([{ type: "add", item: newEdge }])
     },
-    [onEdgesChange]
+    [onDelete, onEdgesChange]
   )
 
   const handleReconnectEnd = useCallback(
     (_event: MouseEvent | TouchEvent, edge: CanvasEdge) => {
       if (!reconnectSuccessRef.current) {
-        onEdgesChange([{ type: "remove", id: edge.id }])
+        onDelete({ nodes: [], edges: [edge] })
       }
     },
-    [onEdgesChange]
+    [onDelete]
   )
+
+  const handleEdgeClick = useCallback(
+    (_event: React.MouseEvent, clickedEdge: CanvasEdge) => {
+      const group = edges.filter(
+        (e) =>
+          e.source === clickedEdge.source &&
+          e.sourceHandle === clickedEdge.sourceHandle
+      )
+      if (group.length <= 1) {
+        edgeGroupCycleRef.current = null
+        return
+      }
+
+      const groupKey = `${clickedEdge.source}:${clickedEdge.sourceHandle ?? ""}`
+      const ref = edgeGroupCycleRef.current
+
+      if (ref?.groupKey === groupKey) {
+        if (ref.currentId === clickedEdge.id) {
+          // Same top edge clicked again — cycle selection to the next sibling
+          const sorted = [...group].sort((a, b) => a.id.localeCompare(b.id))
+          const idx = sorted.findIndex((e) => e.id === ref.currentId)
+          const next = sorted[(idx + 1) % sorted.length]
+          onEdgesChange([
+            ...sorted.map((e) => ({ type: "select" as const, id: e.id, selected: false })),
+            { type: "select" as const, id: next.id, selected: true },
+          ])
+          edgeGroupCycleRef.current = { groupKey, currentId: next.id }
+        } else {
+          // User directly clicked a different edge in the group — track it, no override
+          edgeGroupCycleRef.current = { groupKey, currentId: clickedEdge.id }
+        }
+      } else {
+        // First interaction with this group — record position, no override
+        edgeGroupCycleRef.current = { groupKey, currentId: clickedEdge.id }
+      }
+    },
+    [edges, onEdgesChange]
+  )
+
+  const handlePaneClick = useCallback(() => {
+    edgeGroupCycleRef.current = null
+  }, [])
 
   // Stable refs so the native event listeners never go stale
   const screenToFlowPositionRef = useRef(screenToFlowPosition)
@@ -354,6 +402,8 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onDelete={onDelete}
+        onEdgeClick={handleEdgeClick}
+        onPaneClick={handlePaneClick}
         edgesReconnectable
         onReconnectStart={handleReconnectStart}
         onReconnect={handleReconnect}
