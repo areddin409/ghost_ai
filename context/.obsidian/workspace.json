@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "feature-specs/18-starter-template-starter-template.md",
+                "file": "issues/edge-selection-ambiguity.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "18-starter-template-starter-template"
+              "title": "edge-selection-ambiguity"
             }
           }
         ]
@@ -186,22 +186,29 @@
   },
   "active": "6370462bae3b669c",
   "lastOpenFiles": [
-    "README.md",
+    "feature-specs/19-edge-reconnect.md",
+    "feature-specs/20-edge-selection-ambiguity.md",
+    "issues/edge-selection-ambiguity.md",
+    "issues/edge-selection-ambiguity.md.tmp.33216.6fbd6f316237",
+    "screentshots/Screenshot 2026-05-30 171253.png",
+    "screentshots/Screenshot 2026-05-30 171228.png",
     "feature-specs/18-starter-template-starter-template.md",
+    "feature-specs/17-canvas-ergonomics-canvas-ergonomics.md",
+    "feature-specs/19-edge-reconnect.md.tmp.43640.0814b5b8e738",
+    "README.md",
     "issues/issues-moc.md",
     "issues/connection-preview-edge-style-mismatch.md",
     "issues/connection-preview-edge-style-mismatch.md.tmp.41584.e7b16c1fe5fc",
     "issues/connection-handle-direction.md",
     "feature-specs/17-canvas-ergonomics-canvas-ergonomics.md.tmp.35056.ad0bde256899",
     "feature-specs/15-edge-behavior.md",
-    "feature-specs/17-canvas-ergonomics-canvas-ergonomics.md",
     "progress-tracker.md",
     "feature-specs/16-nodes-color-toolbar-color-toolbar.md",
     "feature-specs/14-node-editing-node-editing.md",
     "feature-specs/15-edge-behavior.md.md.tmp.29604.e0aff367b655",
     "feature-specs/15-nodes-color-toolbar-color-toolbar.md.tmp.36268.b33c9363dbe6",
-    "Pasted image 20260530161140.png",
-    "Pasted image 20260530161059.png",
+    "screentshots/Pasted image 20260530161140.png",
+    "screentshots/Pasted image 20260530161059.png",
     "feature-specs/15-nodes-color-toolbar-color-toolbar.md.tmp.36268.c9b24caed019",
     "ui-context.md",
     "issues/connection-handle-direction.md.tmp.27000.558bfa412697",
@@ -211,14 +218,12 @@
     "screentshots/Screenshot 2026-05-29 214302.png",
     "issues/drag-and-drop.md.tmp.27000.b83b9d8139b2",
     "issues/drag-and-drop.md.tmp.27000.aef2e4ad4631",
-    "templates/issue.md.tmp.27000.8b259643957f",
     "issues/connection-offset.md",
-    "Pasted image 20260529213057.png",
+    "screentshots/Pasted image 20260529213057.png",
     "current-issues.md",
     "templates/issue.md",
     "templates/current-issues.md",
     "issues/Untitled.md",
-    "issues/issues-moc.md.tmp.27000.0c53f2b28b00",
     "screentshots/Screenshot 2026-05-29 211850.png",
     "feature-specs/10-liveblocks-setup.md",
     "feature-specs/12-shape-panel.md",
@@ -226,9 +231,6 @@
     "screentshots/Screenshot 2026-05-29 211109.png",
     "screentshots/unable_to_pull_connectons.png",
     "issues/shape-rendering.md",
-    "architecture-context.md",
-    "project-overview.md",
-    "templates/feature-spec.md",
     "screentshots/image.png"
   ]
 }
