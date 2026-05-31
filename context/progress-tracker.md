@@ -84,6 +84,21 @@ action:
 
 ## Completed
 
+> [!success] Feature 19 — [[19-edge-reconnect|Edge Reconnect]]
+> `edgesReconnectable` enabled on `<ReactFlow>` with three callbacks (`onReconnectStart`, `onReconnect`, `onReconnectEnd`) in `canvas.tsx`. A `useRef<boolean>` tracks whether the drag landed on a valid handle; missing a valid target deletes the edge via `onEdgesChange`. Reconnect builds a new edge object preserving label and data, removes the old edge, and adds the new one — both routed through `useLiveblocksFlow` so rewire and delete are in undo history. `.react-flow__edgeupdater` styled in `globals.css`: subtle dot appears on `.updating`, brightens on `:hover`. Build passes.
+
+> [!success] Feature 18 — [[18-starter-template-starter-template|Starter Templates]]
+> `components/editor/starter-templates.ts` defines `CanvasTemplate` type and three built-in templates (microservices, CI/CD pipeline, event-driven system) using shared canvas types and the existing node color palette. `components/editor/starter-templates-modal.tsx` renders a dialog with a scrollable card grid — each card includes a lightweight SVG diagram preview (bounds-fitted, edges as center-to-center lines, nodes drawn with shape and color), name, description, and an import button. Navbar button opens the modal; on import, existing nodes and edges are cleared, the template's nodes/edges are added via `onNodesChange`/`onEdgesChange`, and `fitView` is called. Build passes.
+
+> [!success] Feature 17 — [[17-canvas-ergonomics-canvas-ergonomics|Canvas Ergonomics]]
+> Pill-shaped control bar at bottom-left with two groups: zoom (out / fit / in) and history (undo / redo), separated by a thin divider. Zoom actions call `instance.zoomIn/Out/fitView` with 200–300ms animation. Undo/redo use Liveblocks `useHistory()` — buttons dim when `canUndo`/`canRedo` is false. `hooks/useKeyboardShortcuts.ts` listens on `window`, skips editable fields via `isEditing()`, and handles `+`/`=` (zoom in), `-` (zoom out), `Ctrl+Z` (undo), `Ctrl+Shift+Z` / `Ctrl+Y` (redo), `Home` (fit view). Build passes.
+
+> [!success] Feature 16 — [[16-nodes-color-toolbar-color-toolbar|Nodes Color Toolbar]]
+> `textColor` field added to `CanvasNodeData`. `components/editor/node-color-toolbar.tsx` renders a floating pill toolbar (absolutely positioned above the selected node) with 8 color swatches from `NODE_COLORS`. Each swatch shows hover glow and active ring; selection calls `updateNodeData` with both `color` and `textColor`, routing through React Flow's `BatchProvider` → `onNodesChange` → `useLiveblocksFlow`. Toolbar visible only when `selected` is true. Build passes.
+
+> [!success] Feature 15 — [[15-edge-behavior|Edge Behavior]]
+> `components/editor/canvas-edge.tsx` renders edges with `getSmoothStepPath` (right-angle routing), `MarkerType.ArrowClosed`, and a 16px transparent hit-area stroke for easier clicking. Edges dim at rest (`rgba(248,250,252,0.35)`) and brighten on hover/selection (`rgba(248,250,252,0.85)`). `EdgeLabelRenderer` positions an inline label at the path midpoint; double-click enters edit mode with an auto-growing input; label saves on blur/Enter/Escape and renders as a small pill badge; active unlabeled edges show a faint hint. `connectionLineType={ConnectionLineType.SmoothStep}` and matching `connectionLineStyle` added to `<ReactFlow>` so the preview matches the settled edge style. Build passes.
+
 > [!success] Feature 14 — [[14-node-editing-node-editing|Node Editing]]
 > `CanvasNodeRenderer` moved to `canvas-node.tsx`. `NodeResizer` (from `@xyflow/react`) renders on selected nodes with per-shape min sizes (half of `DEFAULT_NODE_SIZES`) and `keepAspectRatio` for circles; subtle white 5×5px handles with faint border line. Four `Handle` components (top/right/bottom/left, `type="source"`, `ConnectionMode.Loose`) appear opacity-0 and transition to visible on hover via `isHovered` state. Inline label editing triggers on double-click; a `<textarea className="nodrag nopan">` renders over the label; edits debounce at 300ms to `updateNodeData` (routes through RF's `BatchProvider` → `onNodesChange` → `useLiveblocksFlow`); blur/Escape cancels the debounce and fires a single final write; `onKeyDown` stops propagation to prevent Delete/Backspace from triggering node deletion. Placeholder text shown when label is empty. Build passes.
 

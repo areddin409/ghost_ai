@@ -55,13 +55,18 @@ function Swatch({
   onSelect: (fill: string, text: string) => void
 }) {
   const [hovered, setHovered] = useState(false)
+  const [focused, setFocused] = useState(false)
 
   return (
     <button
       type="button"
+      aria-label={`Select ${fill} color`}
+      aria-pressed={isActive}
       onMouseDown={(e) => e.stopPropagation()}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
       onClick={(e) => {
         e.stopPropagation()
         onSelect(fill, text)
@@ -74,11 +79,13 @@ function Swatch({
         border: isActive
           ? "2px solid #f0f0f4"
           : "1.5px solid rgba(255,255,255,0.18)",
-        boxShadow: isActive
-          ? "0 0 0 2px rgba(240,240,244,0.25)"
-          : hovered
-            ? `0 0 6px 0px ${text}b3`
-            : "none",
+        boxShadow: focused
+          ? `0 0 0 2px #f0f0f4`
+          : isActive
+            ? "0 0 0 2px rgba(240,240,244,0.25)"
+            : hovered
+              ? `0 0 6px 0px ${text}b3`
+              : "none",
         cursor: "pointer",
         padding: 0,
         outline: "none",

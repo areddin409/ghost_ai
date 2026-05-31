@@ -7,8 +7,8 @@ opened: 2026-05-29
 updated: 2026-05-29
 description: Rendered connection lines do not meet the edge of their source and target shapes accurately — lines appear to start and end slightly off the shape boundary.
 verified_result: Pass
-verified_date: ""
-verified_evidence: ""
+verified_date: "2026-05-29"
+verified_evidence: "user"
 ---
 
 > [!bug] Connection Lines — Endpoints Are Visually Offset from Shape Edges
@@ -24,7 +24,7 @@ verified_evidence: ""
 
 > [!note]- Investigation
 >
-> #### Checklist
+> ### Checklist
 >
 > - [x] Capture exact pixel offset at different zoom levels to determine if it's scale-dependent
 > - [x] Check whether offset differs by shape type (circle vs rectangle vs hexagon)
@@ -53,7 +53,7 @@ verified_evidence: ""
 >
 > | Date | By  | Result  | Evidence |
 > | ---- | ---- | ------- | -------- |
-> | —    | —   | Pending | —        |
+> | 2026-05-29 | user | Pass | — |
 
 ---
 

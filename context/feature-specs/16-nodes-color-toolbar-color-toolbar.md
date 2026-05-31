@@ -1,6 +1,6 @@
 ---
 type: feature-spec
-feature: "15 — nodes color toolbar"
+feature: "16 — nodes color toolbar"
 status: shipped
 updated: 2026-05-30
 ---

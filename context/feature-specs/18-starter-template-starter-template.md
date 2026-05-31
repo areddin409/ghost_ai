@@ -1,7 +1,7 @@
 ---
 type: feature-spec
 feature: "18-starter-template — starter-template"
-status: done
+status: shipped
 updated: 2026-05-31
 ---
 

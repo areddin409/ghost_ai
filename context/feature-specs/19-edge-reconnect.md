@@ -1,7 +1,7 @@
 ---
 type: feature-spec
 feature: "19 — Edge Reconnect"
-status: done
+status: shipped
 updated: 2026-05-30
 ---
 

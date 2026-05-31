@@ -5,7 +5,7 @@ if (title === null) { const f = tp.file.find_tfile(tp.file.path(true)); if (f) a
 const description = await tp.system.prompt("Brief description");
 if (description === null) { const f = tp.file.find_tfile(tp.file.path(true)); if (f) await app.vault.trash(f, true); return; }
 
-const baseSlug = title.toLowerCase().replace(/[\s_]+/g, "-").replace(/[^a-z0-9-]/g, "");
+const baseSlug = (title.toLowerCase().replace(/[\s_]+/g, "-").replace(/[^a-z0-9-]/g, "")) || "untitled";
 let slug = baseSlug;
 let counter = 1;
 while (app.vault.getAbstractFileByPath("issues/" + slug + ".md")) {

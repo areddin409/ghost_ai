@@ -27,7 +27,7 @@ updated: 2026-05-30
 	- [x] use a short animation so the movement feels smooth
 - [x] Wire undo and redo to Liveblocks history
 	- [x] use the existing Liveblocks undo/redo blocks 
-	- [x] diable undo when there is nothing to undo 
+	- [x] disable undo when there is nothing to undo 
 	- [x] disable redo when there is nothing to redo
 	- [x] keep disabled buttons visually dimmed
 - [x] Create a `useKeyboardShortcuts` hook in `hooks/`

@@ -24,7 +24,7 @@ verified_evidence: user
 
 > [!note]- Investigation
 >
-> #### Checklist
+> ### Checklist
 >
 > - [x] Confirm `connectionLineType` is absent / defaulting to Bezier in `canvas.tsx`
 > - [x] Confirm `CanvasEdgeRenderer` uses `getSmoothStepPath` (right-angle steps)
@@ -43,7 +43,7 @@ verified_evidence: user
 >
 > | Date | By  | Result  | Evidence |
 > | ---- | --- | ------- | -------- |
-> | —    | —   | Pending | —        |
+> | 2026-05-30 | user | Pass | — |
 
 ---
 
