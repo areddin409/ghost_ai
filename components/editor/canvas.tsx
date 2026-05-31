@@ -230,30 +230,73 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
   )
 
   const handleEdgeClick = useCallback(
-    (_event: React.MouseEvent, clickedEdge: CanvasEdge) => {
+    (event: React.MouseEvent, clickedEdge: CanvasEdge) => {
+      // Compute the flow-coordinate position of a named handle on a node.
+      // Used to determine which endpoint of the clicked edge is nearest to the
+      // mouse, so we anchor the disambiguation group at the correct handle point.
+      const getHandlePos = (nodeId: string, handleId: string | null | undefined) => {
+        const node = instance.getNode(nodeId)
+        if (!node) return null
+        const { x, y } = node.position
+        const w = node.width ?? 160
+        const h = node.height ?? 80
+        switch (handleId) {
+          case "top":    return { x: x + w / 2, y }
+          case "right":  return { x: x + w,     y: y + h / 2 }
+          case "bottom": return { x: x + w / 2, y: y + h }
+          case "left":   return { x,             y: y + h / 2 }
+          default:       return { x: x + w / 2,  y: y + h / 2 }
+        }
+      }
+
+      const clickPos = instance.screenToFlowPosition({ x: event.clientX, y: event.clientY })
+      const srcPos = getHandlePos(clickedEdge.source, clickedEdge.sourceHandle)
+      const tgtPos = getHandlePos(clickedEdge.target, clickedEdge.targetHandle)
+      if (!srcPos || !tgtPos) return
+
+      const dSrc = Math.hypot(clickPos.x - srcPos.x, clickPos.y - srcPos.y)
+      const dTgt = Math.hypot(clickPos.x - tgtPos.x, clickPos.y - tgtPos.y)
+
+      // Anchor = whichever endpoint is closest to the click.
+      // Grouping by the anchor (not just source) ensures edges that meet at the
+      // same handle in opposite directions (one starts there, another ends there)
+      // are treated as the same ambiguous group.
+      const anchor = dSrc <= dTgt
+        ? { node: clickedEdge.source, handle: clickedEdge.sourceHandle }
+        : { node: clickedEdge.target, handle: clickedEdge.targetHandle }
+
       const group = edges.filter(
         (e) =>
-          e.source === clickedEdge.source &&
-          e.sourceHandle === clickedEdge.sourceHandle
+          (e.source === anchor.node && e.sourceHandle === anchor.handle) ||
+          (e.target === anchor.node && e.targetHandle === anchor.handle)
       )
+
       if (group.length <= 1) {
         edgeGroupCycleRef.current = null
         return
       }
 
-      const groupKey = `${clickedEdge.source}:${clickedEdge.sourceHandle ?? ""}`
+      const groupKey = `${anchor.node}:${anchor.handle ?? ""}`
       const ref = edgeGroupCycleRef.current
 
       if (ref?.groupKey === groupKey) {
         if (ref.currentId === clickedEdge.id) {
-          // Same top edge clicked again — cycle selection to the next sibling
+          // Same top edge clicked again — cycle selection to the next sibling and
+          // elevate it to zIndex 1 so its reconnect handles are on top.
           const sorted = [...group].sort((a, b) => a.id.localeCompare(b.id))
           const idx = sorted.findIndex((e) => e.id === ref.currentId)
           const next = sorted[(idx + 1) % sorted.length]
-          onEdgesChange([
-            ...sorted.map((e) => ({ type: "select" as const, id: e.id, selected: false })),
-            { type: "select" as const, id: next.id, selected: true },
-          ])
+          onEdgesChange(
+            sorted.map((e) => ({
+              type: "replace" as const,
+              id: e.id,
+              item: {
+                ...e,
+                selected: e.id === next.id,
+                zIndex: e.id === next.id ? 1 : 0,
+              },
+            }))
+          )
           edgeGroupCycleRef.current = { groupKey, currentId: next.id }
         } else {
           // User directly clicked a different edge in the group — track it, no override
@@ -264,7 +307,7 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
         edgeGroupCycleRef.current = { groupKey, currentId: clickedEdge.id }
       }
     },
-    [edges, onEdgesChange]
+    [edges, instance, onEdgesChange]
   )
 
   const handlePaneClick = useCallback(() => {
