@@ -605,19 +605,19 @@ npm run build
 
 ## Check when done
 
-- [ ] Opening the workspace loads settings from the DB with no loading flash
-- [ ] The navbar shows a Settings icon; the Map/minimap button is gone from the navbar
-- [ ] Opening the settings modal shows three sections: Canvas, Connections, Node Defaults
-- [ ] Changing background pattern updates the canvas behind the modal in real time
-- [ ] Background brightness swatches are disabled when pattern is set to None
-- [ ] Toggling minimap shows/hides the minimap on the canvas immediately
-- [ ] Toggling snap-to-grid activates snapping immediately
-- [ ] Changing edge routing updates existing and newly drawn edges immediately
-- [ ] Choosing a new default shape/color applies to the next dropped or inserted node
-- [ ] Clicking Save commits changes to the DB and closes the modal
-- [ ] Clicking Cancel reverts pending changes and closes the modal without a DB write
-- [ ] Settings persist across a full page reload
-- [ ] `npm run build` passes without type errors
+- [x] Opening the workspace loads settings from the DB with no loading flash ✅ 2026-05-31
+- [x] The navbar shows a Settings icon; the Map/minimap button is gone from the navbar ✅ 2026-05-31
+- [x] Opening the settings modal shows three sections: Canvas, Connections, Node Defaults ✅ 2026-05-31
+- [x] Changing background pattern updates the canvas behind the modal in real time ✅ 2026-05-31
+- [x] Background brightness swatches are disabled when pattern is set to None ✅ 2026-05-31
+- [x] Toggling minimap shows/hides the minimap on the canvas immediately ✅ 2026-05-31
+- [x] Toggling snap-to-grid activates snapping immediately ✅ 2026-05-31
+- [x] Changing edge routing updates existing and newly drawn edges immediately ✅ 2026-05-31
+- [x] Choosing a new default shape/color applies to the next dropped or inserted node ✅ 2026-05-31
+- [x] Clicking Save commits changes to the DB and closes the modal ✅ 2026-05-31
+- [x] Clicking Cancel reverts pending changes and closes the modal without a DB write ✅ 2026-05-31
+- [x] Settings persist across a full page reload ✅ 2026-05-31
+- [x] `npm run build` passes without type errors ✅ 2026-05-31
 
 ---
 
