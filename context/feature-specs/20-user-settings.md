@@ -572,7 +572,7 @@ npm run build
 **Files:**
 - Modify: `app/editor/[roomId]/page.tsx`
 
-- [ ] **Step 1: Parallel-fetch settings alongside project data**
+- [x] **Step 1: Parallel-fetch settings alongside project data**
 
 In the workspace page server component, import `getUserSettings` from `@/lib/user-settings`. Fetch settings in parallel with the project:
 
@@ -583,7 +583,7 @@ const [project, settings] = await Promise.all([
 ])
 ```
 
-- [ ] **Step 2: Pass settings to WorkspaceShell**
+- [x] **Step 2: Pass settings to WorkspaceShell**
 
 Pass `settings` as the `initialSettings` prop to `<WorkspaceShell>`:
 
