@@ -40,7 +40,7 @@ export function UserSettingsModal({ open, onClose }: UserSettingsModalProps) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && handleCancel()}>
+    <Dialog open={open} onOpenChange={(v) => !v && !isSaving && handleCancel()}>
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
