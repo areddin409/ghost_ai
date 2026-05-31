@@ -468,14 +468,14 @@ npm run build
 - Modify: `components/editor/workspace-navbar.tsx`
 - Modify: `components/editor/workspace-shell.tsx`
 
-- [ ] **Step 1: Update workspace-navbar.tsx**
+- [x] **Step 1: Update workspace-navbar.tsx**
 
 In `WorkspaceNavbar`:
 - Remove the `Map` icon button and its `isMinimapVisible` + `onToggleMinimap` props
 - Add `onOpenSettings: () => void` to the props interface
 - Add a `<Settings className="h-4 w-4" />` icon button (Lucide) on the right side where the `Map` button was, wired to `onOpenSettings`
 
-- [ ] **Step 2: Update workspace-shell.tsx**
+- [x] **Step 2: Update workspace-shell.tsx**
 
 In `WorkspaceShell`:
 - Add `initialSettings: UserSettings` to the component props
@@ -486,7 +486,7 @@ In `WorkspaceShell`:
 - Render `<UserSettingsModal open={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />` inside the provider
 - Pass `onOpenSettings` to `WorkspaceNavbar`; remove the old minimap props from that call
 
-- [ ] **Step 3: Verify build passes**
+- [x] **Step 3: Verify build passes**
 
 ```bash
 npm run build
