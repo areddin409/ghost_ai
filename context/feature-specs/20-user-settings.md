@@ -112,7 +112,7 @@ The `upsert` with an empty `update: {}` body guarantees a row is always returned
 **Files:**
 - Create: `app/api/user-settings/route.ts`
 
-- [ ] **Step 1: Create the route file**
+- [x] **Step 1: Create the route file**
 
 Create `app/api/user-settings/route.ts`:
 
@@ -161,7 +161,7 @@ export async function PATCH(request: Request) {
 }
 ```
 
-- [ ] **Step 2: Verify build passes**
+- [x] **Step 2: Verify build passes**
 
 ```bash
 npm run build
