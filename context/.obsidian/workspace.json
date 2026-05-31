@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "issues/edge-selection-ambiguity.md",
+                "file": "feature-specs/18-starter-template-starter-template.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "edge-selection-ambiguity"
+              "title": "18-starter-template-starter-template"
             }
           }
         ]
@@ -186,14 +186,19 @@
   },
   "active": "6370462bae3b669c",
   "lastOpenFiles": [
+    "feature-specs/18-starter-template-starter-template.md.tmp.35804.294795758c30",
     "feature-specs/19-edge-reconnect.md",
-    "feature-specs/20-edge-selection-ambiguity.md",
+    "feature-specs/19-edge-reconnect.md.tmp.38620.890dddf2945a",
+    "feature-specs/19-edge-reconnect.md.tmp.38620.b3e1b9c6807a",
+    "feature-specs/19-edge-reconnect.md.tmp.38620.f49694e6b31d",
+    "feature-specs/19-edge-reconnect.md.tmp.38620.822f2aad9b93",
+    "feature-specs/18-starter-template-starter-template.md",
+    "feature-specs/17-canvas-ergonomics-canvas-ergonomics.md",
     "issues/edge-selection-ambiguity.md",
+    "feature-specs/20-edge-selection-ambiguity.md",
     "issues/edge-selection-ambiguity.md.tmp.33216.6fbd6f316237",
     "screentshots/Screenshot 2026-05-30 171253.png",
     "screentshots/Screenshot 2026-05-30 171228.png",
-    "feature-specs/18-starter-template-starter-template.md",
-    "feature-specs/17-canvas-ergonomics-canvas-ergonomics.md",
     "feature-specs/19-edge-reconnect.md.tmp.43640.0814b5b8e738",
     "README.md",
     "issues/issues-moc.md",
@@ -209,15 +214,11 @@
     "feature-specs/15-nodes-color-toolbar-color-toolbar.md.tmp.36268.b33c9363dbe6",
     "screentshots/Pasted image 20260530161140.png",
     "screentshots/Pasted image 20260530161059.png",
-    "feature-specs/15-nodes-color-toolbar-color-toolbar.md.tmp.36268.c9b24caed019",
     "ui-context.md",
-    "issues/connection-handle-direction.md.tmp.27000.558bfa412697",
     "code-standards.md",
     "issues/drag-and-drop.md",
     "issues/connection-offset-resize-bounds.md",
     "screentshots/Screenshot 2026-05-29 214302.png",
-    "issues/drag-and-drop.md.tmp.27000.b83b9d8139b2",
-    "issues/drag-and-drop.md.tmp.27000.aef2e4ad4631",
     "issues/connection-offset.md",
     "screentshots/Pasted image 20260529213057.png",
     "current-issues.md",
@@ -230,7 +231,6 @@
     "feature-specs/13-node-shape-node-shape.md",
     "screentshots/Screenshot 2026-05-29 211109.png",
     "screentshots/unable_to_pull_connectons.png",
-    "issues/shape-rendering.md",
     "screentshots/image.png"
   ]
 }

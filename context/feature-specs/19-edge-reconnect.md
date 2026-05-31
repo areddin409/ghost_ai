@@ -1,7 +1,7 @@
 ---
 type: feature-spec
 feature: "19 — Edge Reconnect"
-status: planned
+status: done
 updated: 2026-05-30
 ---
 
@@ -35,7 +35,7 @@ updated: 2026-05-30
 **Files:**
 - Modify: `components/editor/canvas.tsx`
 
-- [ ] **Step 1: Add imports**
+- [x] **Step 1: Add imports**
 
 Open `components/editor/canvas.tsx`. The current `@xyflow/react` import block is:
 
@@ -84,7 +84,7 @@ Replace with:
 import { useCallback, useEffect, useRef } from "react"
 ```
 
-- [ ] **Step 2: Add reconnect success ref and handlers**
+- [x] **Step 2: Add reconnect success ref and handlers**
 
 Inside the `Canvas` function body, directly after the `useKeyboardShortcuts` call, add:
 
@@ -123,7 +123,7 @@ const handleReconnectEnd = useCallback(
 )
 ```
 
-- [ ] **Step 3: Wire props onto `<ReactFlow>`**
+- [x] **Step 3: Wire props onto `<ReactFlow>`**
 
 In the JSX, the `<ReactFlow>` opening tag currently ends before `connectionMode`. Add four props after `onDelete`:
 
@@ -160,7 +160,7 @@ The full `<ReactFlow>` tag should look like:
 >
 ```
 
-- [ ] **Step 4: Verify build passes**
+- [x] **Step 4: Verify build passes**
 
 ```bash
 npm run build
@@ -168,7 +168,7 @@ npm run build
 
 Expected: no TypeScript errors, successful build.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add components/editor/canvas.tsx
@@ -184,7 +184,7 @@ React Flow renders a transparent `<circle r="10">` at each edge endpoint (class 
 **Files:**
 - Modify: `app/globals.css`
 
-- [ ] **Step 1: Add CSS rules**
+- [x] **Step 1: Add CSS rules**
 
 Append the following block to the very end of `app/globals.css`, **after** the closing `}` of the `:root` block (these are element selectors, not CSS variables, so they must live outside `:root`):
 
@@ -203,7 +203,7 @@ Append the following block to the very end of `app/globals.css`, **after** the c
 
 The `.react-flow__edge.updating` class is added by React Flow when the cursor enters an anchor hit area — this controls when the dot becomes visible. The `:hover` rule brightens it on direct cursor contact, matching the existing edge active color.
 
-- [ ] **Step 2: Verify build passes**
+- [x] **Step 2: Verify build passes**
 
 ```bash
 npm run build
@@ -211,7 +211,7 @@ npm run build
 
 Expected: no errors.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add app/globals.css
@@ -222,13 +222,13 @@ git commit -m "style: show edge reconnect anchor dots on hover"
 
 ## Check when done
 
-- [ ] Hovering an existing edge endpoint shows a faint dot; moving over it directly brightens the dot and shows a move cursor
-- [ ] Dragging an edge endpoint and dropping it on a different node handle rewires the connection to the new target
-- [ ] The rewired edge retains its label and data
-- [ ] Dragging an edge endpoint and releasing it on empty canvas deletes the edge
-- [ ] Dragging an edge endpoint and releasing it on an invalid target (wrong handle type, same node) also deletes the edge
-- [ ] Ctrl+Z after either a rewire or a delete restores the original edge
-- [ ] `npm run build` passes without type errors
+- [x] Hovering an existing edge endpoint shows a faint dot; moving over it directly brightens the dot and shows a move cursor
+- [x] Dragging an edge endpoint and dropping it on a different node handle rewires the connection to the new target
+- [x] The rewired edge retains its label and data
+- [x] Dragging an edge endpoint and releasing it on empty canvas deletes the edge
+- [x] Dragging an edge endpoint and releasing it on an invalid target (wrong handle type, same node) also deletes the edge
+- [x] Ctrl+Z after either a rewire or a delete restores the original edge
+- [x] `npm run build` passes without type errors
 
 ---
 

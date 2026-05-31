@@ -27,6 +27,7 @@ import type {
   NodeShape
 } from "@/types/canvas"
 import { DEFAULT_NODE_COLOR, DEFAULT_NODE_SIZES } from "@/types/canvas"
+import type { CanvasTemplate } from "./starter-templates"
 import { CanvasNodeRenderer } from "./canvas-node"
 import { CanvasEdgeRenderer } from "./canvas-edge"
 import { CanvasControlBar } from "./canvas-control-bar"
@@ -323,6 +324,26 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
   useEffect(() => {
     onNodesChangeRef.current = onNodesChange
   }, [onNodesChange])
+  const onEdgesChangeRef = useRef(onEdgesChange)
+  useEffect(() => {
+    onEdgesChangeRef.current = onEdgesChange
+  }, [onEdgesChange])
+  const onDeleteRef = useRef(onDelete)
+  useEffect(() => {
+    onDeleteRef.current = onDelete
+  }, [onDelete])
+  const nodesRef = useRef(nodes)
+  useEffect(() => {
+    nodesRef.current = nodes
+  }, [nodes])
+  const edgesRef = useRef(edges)
+  useEffect(() => {
+    edgesRef.current = edges
+  }, [edges])
+  const instanceRef = useRef(instance)
+  useEffect(() => {
+    instanceRef.current = instance
+  }, [instance])
 
   useEffect(() => {
     if (!domNode) return
@@ -419,13 +440,24 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
       onNodesChangeRef.current([{ type: "add", item: newNode }])
     }
 
+    function onImportTemplate(e: Event) {
+      const template = (e as CustomEvent<CanvasTemplate>).detail
+      if (!template) return
+      onDeleteRef.current({ nodes: nodesRef.current, edges: edgesRef.current })
+      onNodesChangeRef.current(template.nodes.map((n) => ({ type: "add" as const, item: n })))
+      onEdgesChangeRef.current(template.edges.map((ed) => ({ type: "add" as const, item: ed })))
+      setTimeout(() => instanceRef.current.fitView({ padding: 0.15, duration: 400 }), 150)
+    }
+
     domNode.addEventListener("dragover", onDragOver)
     domNode.addEventListener("drop", onDrop)
     window.addEventListener("ghost:insert-shape", onInsertShape)
+    window.addEventListener("ghost:import-template", onImportTemplate)
     return () => {
       domNode.removeEventListener("dragover", onDragOver)
       domNode.removeEventListener("drop", onDrop)
       window.removeEventListener("ghost:insert-shape", onInsertShape)
+      window.removeEventListener("ghost:import-template", onImportTemplate)
     }
   }, [domNode])
 

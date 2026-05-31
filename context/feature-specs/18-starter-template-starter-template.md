@@ -1,8 +1,8 @@
 ---
 type: feature-spec
 feature: "18-starter-template — starter-template"
-status: planned
-updated: 2026-05-30
+status: done
+updated: 2026-05-31
 ---
 
 # Feature 18-starter-template — starter-template
@@ -16,31 +16,31 @@ updated: 2026-05-30
 
 ## Implementation
 
-- [ ] Create `components/editor/starter-templates.ts`
-	- [ ] Define a `CanvasTemplate` type
-	- [ ] Define a `CANVAS_TEMPLATES` array with at least three templates (e.g. microservices, CI/CD pipeline, event-driven system)
-	- [ ] Each template includes `id`, `name`, `description`, `nodes`, and `edges`
-	- [ ] Use shared canvas types and the existing node color palette
+- [x] Create `components/editor/starter-templates.ts`
+	- [x] Define a `CanvasTemplate` type
+	- [x] Define a `CANVAS_TEMPLATES` array with at least three templates (e.g. microservices, CI/CD pipeline, event-driven system)
+	- [x] Each template includes `id`, `name`, `description`, `nodes`, and `edges`
+	- [x] Use shared canvas types and the existing node color palette
 	- [ ] Add small helper functions if needed to keep template data readable
-- [ ] Create `components/editor/starter-templates-modal.tsx`
-	- [ ] Open as a dialog
-	- [ ] Show template cards in a scrollable grid
-	- [ ] Show template name and description on each card
-	- [ ] Include an import button for each template
-	- [ ] Call `onImport` with the selected template, then close the dialog
-- [ ] Add a diagram preview to each template card
-	- [ ] Fit the preview to a fixed-size viewport
-	- [ ] Calculate preview bounds from template node positions
-	- [ ] Draw edges as simple lines between node centers
-	- [ ] Draw nodes using their shape and color data
-	- [ ] Keep the preview lightweight — no React Flow instance needed
-- [ ] Wire starter templates into the editor
-	- [ ] Add a navbar button to open the starter templates modal
-	- [ ] When a template is selected, clear all existing nodes and edges first
-	- [ ] Add the selected template's nodes and edges after the canvas is cleared
-	- [ ] Ensure the template replaces the current canvas (not added on top)
-	- [ ] Fit the view after the template is loaded
-	- [ ] Keep this inside the existing collaborative canvas state
+- [x] Create `components/editor/starter-templates-modal.tsx`
+	- [x] Open as a dialog
+	- [x] Show template cards in a scrollable grid
+	- [x] Show template name and description on each card
+	- [x] Include an import button for each template
+	- [x] Call `onImport` with the selected template, then close the dialog
+- [x] Add a diagram preview to each template card
+	- [x] Fit the preview to a fixed-size viewport
+	- [x] Calculate preview bounds from template node positions
+	- [x] Draw edges as simple lines between node centers
+	- [x] Draw nodes using their shape and color data
+	- [x] Keep the preview lightweight — no React Flow instance needed
+- [x] Wire starter templates into the editor
+	- [x] Add a navbar button to open the starter templates modal
+	- [x] When a template is selected, clear all existing nodes and edges first
+	- [x] Add the selected template's nodes and edges after the canvas is cleared
+	- [x] Ensure the template replaces the current canvas (not added on top)
+	- [x] Fit the view after the template is loaded
+	- [x] Keep this inside the existing collaborative canvas state
 
 ## Scope
 
@@ -52,11 +52,11 @@ updated: 2026-05-30
 
 ## Check when done
 
-- [ ] Template data is defined using shared canvas types
-- [ ] Import modal renders template cards with previews
-- [ ] Import action replaces the current canvas through the existing node and edge state flow
-- [ ] Editor navbar includes the import entry point
-- [ ] `npm run build` passes
+- [x] Template data is defined using shared canvas types
+- [x] Import modal renders template cards with previews
+- [x] Import action replaces the current canvas through the existing node and edge state flow
+- [x] Editor navbar includes the import entry point
+- [x] `npm run build` passes
 
 ---
 

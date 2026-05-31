@@ -1,0 +1,258 @@
+import type { CanvasNode, CanvasEdge } from "@/types/canvas"
+
+export interface CanvasTemplate {
+  id: string
+  name: string
+  description: string
+  nodes: CanvasNode[]
+  edges: CanvasEdge[]
+}
+
+export const CANVAS_TEMPLATES: CanvasTemplate[] = [
+  {
+    id: "microservices",
+    name: "Microservices Architecture",
+    description:
+      "API gateway routing to independent services with message queue and dedicated databases.",
+    nodes: [
+      {
+        id: "ms-gw",
+        type: "canvasNode",
+        position: { x: 350, y: 60 },
+        data: { label: "API Gateway", color: "#062822", textColor: "#0AC7B4", shape: "rectangle" },
+        width: 160,
+        height: 60,
+      },
+      {
+        id: "ms-auth",
+        type: "canvasNode",
+        position: { x: 60, y: 220 },
+        data: { label: "Auth Service", color: "#2E1938", textColor: "#BF7AF0", shape: "pill" },
+        width: 150,
+        height: 55,
+      },
+      {
+        id: "ms-user",
+        type: "canvasNode",
+        position: { x: 270, y: 220 },
+        data: { label: "User Service", color: "#10233D", textColor: "#52A8FF", shape: "pill" },
+        width: 150,
+        height: 55,
+      },
+      {
+        id: "ms-order",
+        type: "canvasNode",
+        position: { x: 480, y: 220 },
+        data: { label: "Order Service", color: "#331B00", textColor: "#FF990A", shape: "pill" },
+        width: 150,
+        height: 55,
+      },
+      {
+        id: "ms-product",
+        type: "canvasNode",
+        position: { x: 690, y: 220 },
+        data: { label: "Product Service", color: "#0F2E18", textColor: "#62C073", shape: "pill" },
+        width: 150,
+        height: 55,
+      },
+      {
+        id: "ms-queue",
+        type: "canvasNode",
+        position: { x: 555, y: 390 },
+        data: { label: "Message Queue", color: "#3A1726", textColor: "#F75F8F", shape: "hexagon" },
+        width: 150,
+        height: 120,
+      },
+      {
+        id: "ms-db-user",
+        type: "canvasNode",
+        position: { x: 270, y: 400 },
+        data: { label: "User DB", color: "#10233D", textColor: "#52A8FF", shape: "cylinder" },
+        width: 120,
+        height: 100,
+      },
+      {
+        id: "ms-db-order",
+        type: "canvasNode",
+        position: { x: 460, y: 400 },
+        data: { label: "Order DB", color: "#331B00", textColor: "#FF990A", shape: "cylinder" },
+        width: 120,
+        height: 100,
+      },
+    ],
+    edges: [
+      { id: "ms-e1", type: "canvasEdge", source: "ms-gw", target: "ms-auth", sourceHandle: "bottom", targetHandle: "top" },
+      { id: "ms-e2", type: "canvasEdge", source: "ms-gw", target: "ms-user", sourceHandle: "bottom", targetHandle: "top" },
+      { id: "ms-e3", type: "canvasEdge", source: "ms-gw", target: "ms-order", sourceHandle: "bottom", targetHandle: "top" },
+      { id: "ms-e4", type: "canvasEdge", source: "ms-gw", target: "ms-product", sourceHandle: "bottom", targetHandle: "top" },
+      { id: "ms-e5", type: "canvasEdge", source: "ms-order", target: "ms-queue", sourceHandle: "bottom", targetHandle: "top" },
+      { id: "ms-e6", type: "canvasEdge", source: "ms-product", target: "ms-queue", sourceHandle: "bottom", targetHandle: "right" },
+      { id: "ms-e7", type: "canvasEdge", source: "ms-user", target: "ms-db-user", sourceHandle: "bottom", targetHandle: "top" },
+      { id: "ms-e8", type: "canvasEdge", source: "ms-order", target: "ms-db-order", sourceHandle: "bottom", targetHandle: "top" },
+    ],
+  },
+
+  {
+    id: "cicd-pipeline",
+    name: "CI/CD Pipeline",
+    description:
+      "Source control to automated build, test, staging, and production deployment with monitoring.",
+    nodes: [
+      {
+        id: "ci-dev",
+        type: "canvasNode",
+        position: { x: 60, y: 160 },
+        data: { label: "Developer", color: "#1F1F1F", textColor: "#EDEDED", shape: "circle" },
+        width: 100,
+        height: 100,
+      },
+      {
+        id: "ci-repo",
+        type: "canvasNode",
+        position: { x: 240, y: 170 },
+        data: { label: "Git Repo", color: "#10233D", textColor: "#52A8FF", shape: "rectangle" },
+        width: 140,
+        height: 65,
+      },
+      {
+        id: "ci-server",
+        type: "canvasNode",
+        position: { x: 450, y: 170 },
+        data: { label: "CI Server", color: "#2E1938", textColor: "#BF7AF0", shape: "rectangle" },
+        width: 140,
+        height: 65,
+      },
+      {
+        id: "ci-tests",
+        type: "canvasNode",
+        position: { x: 655, y: 145 },
+        data: { label: "Test Suite", color: "#0F2E18", textColor: "#62C073", shape: "diamond" },
+        width: 120,
+        height: 120,
+      },
+      {
+        id: "ci-build",
+        type: "canvasNode",
+        position: { x: 855, y: 170 },
+        data: { label: "Build", color: "#331B00", textColor: "#FF990A", shape: "rectangle" },
+        width: 130,
+        height: 65,
+      },
+      {
+        id: "ci-staging",
+        type: "canvasNode",
+        position: { x: 855, y: 340 },
+        data: { label: "Staging", color: "#062822", textColor: "#0AC7B4", shape: "rectangle" },
+        width: 130,
+        height: 65,
+      },
+      {
+        id: "ci-prod",
+        type: "canvasNode",
+        position: { x: 635, y: 340 },
+        data: { label: "Production", color: "#3C1618", textColor: "#FF6166", shape: "rectangle" },
+        width: 140,
+        height: 65,
+      },
+      {
+        id: "ci-monitor",
+        type: "canvasNode",
+        position: { x: 415, y: 340 },
+        data: { label: "Monitor", color: "#0F2E18", textColor: "#62C073", shape: "hexagon" },
+        width: 130,
+        height: 100,
+      },
+    ],
+    edges: [
+      { id: "ci-e1", type: "canvasEdge", source: "ci-dev", target: "ci-repo", sourceHandle: "right", targetHandle: "left" },
+      { id: "ci-e2", type: "canvasEdge", source: "ci-repo", target: "ci-server", sourceHandle: "right", targetHandle: "left" },
+      { id: "ci-e3", type: "canvasEdge", source: "ci-server", target: "ci-tests", sourceHandle: "right", targetHandle: "left" },
+      { id: "ci-e4", type: "canvasEdge", source: "ci-tests", target: "ci-build", sourceHandle: "right", targetHandle: "left" },
+      { id: "ci-e5", type: "canvasEdge", source: "ci-build", target: "ci-staging", sourceHandle: "bottom", targetHandle: "top" },
+      { id: "ci-e6", type: "canvasEdge", source: "ci-staging", target: "ci-prod", sourceHandle: "left", targetHandle: "right" },
+      { id: "ci-e7", type: "canvasEdge", source: "ci-prod", target: "ci-monitor", sourceHandle: "left", targetHandle: "right" },
+    ],
+  },
+
+  {
+    id: "event-driven",
+    name: "Event-Driven System",
+    description:
+      "Publishers emit events to a central bus; independent consumers process and persist to their own stores.",
+    nodes: [
+      {
+        id: "ev-pub-a",
+        type: "canvasNode",
+        position: { x: 60, y: 100 },
+        data: { label: "Publisher A", color: "#2E1938", textColor: "#BF7AF0", shape: "pill" },
+        width: 150,
+        height: 55,
+      },
+      {
+        id: "ev-pub-b",
+        type: "canvasNode",
+        position: { x: 60, y: 270 },
+        data: { label: "Publisher B", color: "#3A1726", textColor: "#F75F8F", shape: "pill" },
+        width: 150,
+        height: 55,
+      },
+      {
+        id: "ev-bus",
+        type: "canvasNode",
+        position: { x: 320, y: 160 },
+        data: { label: "Event Bus", color: "#062822", textColor: "#0AC7B4", shape: "hexagon" },
+        width: 160,
+        height: 130,
+      },
+      {
+        id: "ev-con-a",
+        type: "canvasNode",
+        position: { x: 600, y: 60 },
+        data: { label: "Consumer A", color: "#10233D", textColor: "#52A8FF", shape: "rectangle" },
+        width: 150,
+        height: 60,
+      },
+      {
+        id: "ev-con-b",
+        type: "canvasNode",
+        position: { x: 600, y: 195 },
+        data: { label: "Consumer B", color: "#331B00", textColor: "#FF990A", shape: "rectangle" },
+        width: 150,
+        height: 60,
+      },
+      {
+        id: "ev-con-c",
+        type: "canvasNode",
+        position: { x: 600, y: 330 },
+        data: { label: "Consumer C", color: "#0F2E18", textColor: "#62C073", shape: "rectangle" },
+        width: 150,
+        height: 60,
+      },
+      {
+        id: "ev-store-a",
+        type: "canvasNode",
+        position: { x: 840, y: 55 },
+        data: { label: "Store A", color: "#10233D", textColor: "#52A8FF", shape: "cylinder" },
+        width: 120,
+        height: 100,
+      },
+      {
+        id: "ev-store-b",
+        type: "canvasNode",
+        position: { x: 840, y: 325 },
+        data: { label: "Store B", color: "#0F2E18", textColor: "#62C073", shape: "cylinder" },
+        width: 120,
+        height: 100,
+      },
+    ],
+    edges: [
+      { id: "ev-e1", type: "canvasEdge", source: "ev-pub-a", target: "ev-bus", sourceHandle: "right", targetHandle: "left" },
+      { id: "ev-e2", type: "canvasEdge", source: "ev-pub-b", target: "ev-bus", sourceHandle: "right", targetHandle: "left" },
+      { id: "ev-e3", type: "canvasEdge", source: "ev-bus", target: "ev-con-a", sourceHandle: "right", targetHandle: "left" },
+      { id: "ev-e4", type: "canvasEdge", source: "ev-bus", target: "ev-con-b", sourceHandle: "right", targetHandle: "left" },
+      { id: "ev-e5", type: "canvasEdge", source: "ev-bus", target: "ev-con-c", sourceHandle: "right", targetHandle: "left" },
+      { id: "ev-e6", type: "canvasEdge", source: "ev-con-a", target: "ev-store-a", sourceHandle: "right", targetHandle: "left" },
+      { id: "ev-e7", type: "canvasEdge", source: "ev-con-c", target: "ev-store-b", sourceHandle: "right", targetHandle: "left" },
+    ],
+  },
+]
