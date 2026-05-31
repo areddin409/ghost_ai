@@ -260,7 +260,7 @@ npm run build
 **Files:**
 - Create: `components/editor/user-settings-modal.tsx`
 
-- [ ] **Step 1: Create the modal file**
+- [x] **Step 1: Create the modal file**
 
 Create `components/editor/user-settings-modal.tsx`. Uses the existing shadcn `Dialog` (same pattern as `ShareDialog`). Three sections:
 
@@ -454,7 +454,7 @@ export function UserSettingsModal({ open, onClose }: UserSettingsModalProps) {
 }
 ```
 
-- [ ] **Step 2: Verify build passes**
+- [x] **Step 2: Verify build passes**
 
 ```bash
 npm run build
