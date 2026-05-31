@@ -174,7 +174,7 @@ npm run build
 **Files:**
 - Create: `components/editor/user-settings-context.tsx`
 
-- [ ] **Step 1: Create the context file**
+- [x] **Step 1: Create the context file**
 
 Create `components/editor/user-settings-context.tsx`:
 
@@ -247,7 +247,7 @@ export function useUserSettings(): UserSettingsContextValue {
 
 `settings` always exposes `pendingSettings` so the canvas reflects live edits while the modal is open. The context never tracks modal open/close state.
 
-- [ ] **Step 2: Verify build passes**
+- [x] **Step 2: Verify build passes**
 
 ```bash
 npm run build
