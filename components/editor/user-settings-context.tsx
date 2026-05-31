@@ -36,6 +36,7 @@ export function UserSettingsProvider({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(pendingSettings),
       })
+      if (!res.ok) throw new Error(`Failed to save settings: ${res.status}`)
       const updated: UserSettings = await res.json()
       setSavedSettings(updated)
       setPendingSettings(updated)
