@@ -54,5 +54,6 @@ context/screentshots/
 context/screenshots/
 context/Pasted image*
 
-docs/superpowers
+docs/superpowers/brainstorm
+.superpowers/
 /app/generated/prisma
