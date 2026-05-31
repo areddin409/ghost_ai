@@ -19,7 +19,10 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
-  const body = await request.json()
+  const body: unknown = await request.json().catch(() => ({}))
+  if (typeof body !== "object" || body === null) {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 })
+  }
 
   const allowed = [
     "edgeRouting",
@@ -33,7 +36,7 @@ export async function PATCH(request: Request) {
 
   const patch: Record<string, unknown> = {}
   for (const key of allowed) {
-    if (key in body) patch[key] = body[key]
+    if (key in body) patch[key] = (body as Record<string, unknown>)[key]
   }
 
   const settings = await prisma.userSettings.upsert({
