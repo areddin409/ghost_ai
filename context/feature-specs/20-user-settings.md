@@ -46,7 +46,7 @@ Seven settings stored as one `UserSettings` row per Clerk user:
 **Files:**
 - Modify: `prisma/schema.prisma`
 
-- [ ] **Step 1: Add `UserSettings` model**
+- [x] **Step 1: Add `UserSettings` model**
 
 Open `prisma/schema.prisma`. Append the following model:
 
@@ -65,7 +65,7 @@ model UserSettings {
 }
 ```
 
-- [ ] **Step 2: Run migration**
+- [x] **Step 2: Run migration**
 
 ```bash
 npx prisma migrate dev --name add-user-settings
@@ -73,7 +73,7 @@ npx prisma migrate dev --name add-user-settings
 
 Expected: migration created and applied, Prisma client regenerated.
 
-- [ ] **Step 3: Verify build passes**
+- [x] **Step 3: Verify build passes**
 
 ```bash
 npm run build
