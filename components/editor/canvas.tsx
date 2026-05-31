@@ -1,19 +1,21 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import {
   ReactFlow,
   MiniMap,
   Background,
   BackgroundVariant,
   ConnectionMode,
+  ConnectionLineType,
   useReactFlow,
   useStore,
   type NodeTypes,
-  type NodeProps,
-  type MiniMapNodeProps
+  type MiniMapNodeProps,
+  type Connection,
 } from "@xyflow/react"
 import { useLiveblocksFlow, Cursors } from "@liveblocks/react-flow"
+import { useHistory, useCanUndo, useCanRedo } from "@liveblocks/react"
 import "@xyflow/react/dist/style.css"
 import "@liveblocks/react-ui/styles.css"
 import "@liveblocks/react-flow/styles.css"
@@ -25,156 +27,11 @@ import type {
   NodeShape
 } from "@/types/canvas"
 import { DEFAULT_NODE_COLOR, DEFAULT_NODE_SIZES } from "@/types/canvas"
-
-const STROKE = "#3a3a42"
-const SW = 1.5
-const H = SW / 2 // half stroke inset
-
-function ShapeRenderer({
-  shape,
-  w,
-  h,
-  fill,
-  stroke = STROKE,
-}: {
-  shape: NodeShape
-  w: number
-  h: number
-  fill: string
-  stroke?: string
-}) {
-  switch (shape) {
-    case "diamond": {
-      const pts = `${w / 2},${H} ${w - H},${h / 2} ${w / 2},${h - H} ${H},${h / 2}`
-      return (
-        <svg width={w} height={h} style={{ display: "block" }}>
-          <polygon points={pts} fill={fill} stroke={stroke} strokeWidth={SW} />
-        </svg>
-      )
-    }
-    case "hexagon": {
-      const cx = w / 2,
-        cy = h / 2
-      const rx = w / 2 - H,
-        ry = h / 2 - H
-      const pts = Array.from({ length: 6 }, (_, i) => {
-        const a = (i * 60 - 90) * (Math.PI / 180)
-        return `${cx + rx * Math.cos(a)},${cy + ry * Math.sin(a)}`
-      }).join(" ")
-      return (
-        <svg width={w} height={h} style={{ display: "block" }}>
-          <polygon points={pts} fill={fill} stroke={stroke} strokeWidth={SW} />
-        </svg>
-      )
-    }
-    case "cylinder": {
-      const eRy = Math.round(h * 0.18)
-      return (
-        <svg width={w} height={h} style={{ display: "block" }}>
-          <rect
-            x={H}
-            y={eRy}
-            width={w - SW}
-            height={h - eRy * 2}
-            fill={fill}
-            stroke="none"
-          />
-          <line x1={H} y1={eRy} x2={H} y2={h - eRy} stroke={stroke} strokeWidth={SW} />
-          <line
-            x1={w - H}
-            y1={eRy}
-            x2={w - H}
-            y2={h - eRy}
-            stroke={stroke}
-            strokeWidth={SW}
-          />
-          <ellipse
-            cx={w / 2}
-            cy={h - eRy}
-            rx={w / 2 - H}
-            ry={eRy}
-            fill={fill}
-            stroke={stroke}
-            strokeWidth={SW}
-          />
-          <ellipse
-            cx={w / 2}
-            cy={eRy}
-            rx={w / 2 - H}
-            ry={eRy}
-            fill={fill}
-            stroke={stroke}
-            strokeWidth={SW}
-          />
-        </svg>
-      )
-    }
-    default:
-      return null
-  }
-}
-
-function CanvasNodeRenderer({
-  data,
-  selected,
-  width: nodeW,
-  height: nodeH,
-}: NodeProps<CanvasNode>) {
-  const { label, color, shape } = data
-  const nodeShape: NodeShape = shape ?? "rectangle"
-  const bg = color ?? DEFAULT_NODE_COLOR.fill
-  const w = nodeW ?? DEFAULT_NODE_SIZES[nodeShape].width
-  const h = nodeH ?? DEFAULT_NODE_SIZES[nodeShape].height
-  const stroke = selected ? "#00c8d4" : STROKE
-
-  const labelEl = label ? (
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "0.875rem",
-        color: DEFAULT_NODE_COLOR.text,
-        padding: "8px",
-        pointerEvents: "none",
-      }}
-    >
-      {label}
-    </div>
-  ) : null
-
-  if (nodeShape === "rectangle" || nodeShape === "pill" || nodeShape === "circle") {
-    const borderRadius =
-      nodeShape === "circle"
-        ? "50%"
-        : nodeShape === "pill"
-          ? `${h / 2}px`
-          : "8px"
-    return (
-      <div
-        style={{
-          width: w,
-          height: h,
-          position: "relative",
-          backgroundColor: bg,
-          borderRadius,
-          border: `${SW}px solid ${stroke}`,
-        }}
-      >
-        {labelEl}
-      </div>
-    )
-  }
-
-  return (
-    <div style={{ width: w, height: h, position: "relative" }}>
-      <ShapeRenderer shape={nodeShape} w={w} h={h} fill={bg} stroke={stroke} />
-      {labelEl}
-    </div>
-  )
-}
+import type { CanvasTemplate } from "./starter-templates"
+import { CanvasNodeRenderer } from "./canvas-node"
+import { CanvasEdgeRenderer } from "./canvas-edge"
+import { CanvasControlBar } from "./canvas-control-bar"
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts"
 
 // Renders each node inside the MiniMap SVG at the correct shape.
 // Must be defined outside Canvas so the reference is stable across renders.
@@ -194,7 +51,7 @@ function MiniMapNodeRenderer({
         ?.shape as NodeShape) ?? "rectangle"
   )
   const fill = color ?? DEFAULT_NODE_COLOR.fill
-  const sk = strokeColor ?? STROKE
+  const sk = strokeColor ?? "#3a3a42"
   const sw = strokeWidth ?? 1
 
   switch (shape) {
@@ -307,6 +164,14 @@ const nodeTypes: NodeTypes = {
   canvasNode: CanvasNodeRenderer
 }
 
+const edgeTypes = {
+  canvasEdge: CanvasEdgeRenderer
+}
+
+const defaultEdgeOptions = {
+  type: "canvasEdge",
+}
+
 export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, onDelete } =
     useLiveblocksFlow<CanvasNode, CanvasEdge>({
@@ -315,8 +180,140 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
       edges: { initial: [] }
     })
 
-  const { screenToFlowPosition } = useReactFlow()
+  const instance = useReactFlow()
+  const { screenToFlowPosition } = instance
   const domNode = useStore((state) => state.domNode)
+
+  const { undo, redo } = useHistory()
+  const canUndo = useCanUndo()
+  const canRedo = useCanRedo()
+
+  useKeyboardShortcuts({ instance, undo, redo })
+
+  const reconnectSuccessRef = useRef(false)
+
+  // Tracks the source-handle group the user last clicked for click-to-cycle disambiguation.
+  // When two edges share the same source + sourceHandle, React Flow always fires onEdgeClick
+  // for the topmost (last-rendered) edge. Repeated clicks on the same group cycle the
+  // logical selection through all siblings so every edge remains reachable.
+  const edgeGroupCycleRef = useRef<{ groupKey: string; currentId: string } | null>(null)
+
+  const handleReconnectStart = useCallback(() => {
+    reconnectSuccessRef.current = false
+  }, [])
+
+  const handleReconnect = useCallback(
+    (oldEdge: CanvasEdge, newConnection: Connection) => {
+      reconnectSuccessRef.current = true
+      const newEdge: CanvasEdge = {
+        ...oldEdge,
+        source: newConnection.source,
+        target: newConnection.target,
+        sourceHandle: newConnection.sourceHandle ?? null,
+        targetHandle: newConnection.targetHandle ?? null,
+        selected: false,
+      }
+      // onEdgesChange({ type: "remove" }) is a no-op in @liveblocks/react-flow —
+      // deletion must go through onDelete which calls edgesMap.delete() in storage.
+      onDelete({ nodes: [], edges: [oldEdge] })
+      onEdgesChange([{ type: "add", item: newEdge }])
+    },
+    [onDelete, onEdgesChange]
+  )
+
+  const handleReconnectEnd = useCallback(
+    (_event: MouseEvent | TouchEvent, edge: CanvasEdge) => {
+      if (!reconnectSuccessRef.current) {
+        onDelete({ nodes: [], edges: [edge] })
+      }
+    },
+    [onDelete]
+  )
+
+  const handleEdgeClick = useCallback(
+    (event: React.MouseEvent, clickedEdge: CanvasEdge) => {
+      // Compute the flow-coordinate position of a named handle on a node.
+      // Used to determine which endpoint of the clicked edge is nearest to the
+      // mouse, so we anchor the disambiguation group at the correct handle point.
+      const getHandlePos = (nodeId: string, handleId: string | null | undefined) => {
+        const node = instance.getNode(nodeId)
+        if (!node) return null
+        const { x, y } = node.position
+        const w = node.width ?? 160
+        const h = node.height ?? 80
+        switch (handleId) {
+          case "top":    return { x: x + w / 2, y }
+          case "right":  return { x: x + w,     y: y + h / 2 }
+          case "bottom": return { x: x + w / 2, y: y + h }
+          case "left":   return { x,             y: y + h / 2 }
+          default:       return { x: x + w / 2,  y: y + h / 2 }
+        }
+      }
+
+      const clickPos = instance.screenToFlowPosition({ x: event.clientX, y: event.clientY })
+      const srcPos = getHandlePos(clickedEdge.source, clickedEdge.sourceHandle)
+      const tgtPos = getHandlePos(clickedEdge.target, clickedEdge.targetHandle)
+      if (!srcPos || !tgtPos) return
+
+      const dSrc = Math.hypot(clickPos.x - srcPos.x, clickPos.y - srcPos.y)
+      const dTgt = Math.hypot(clickPos.x - tgtPos.x, clickPos.y - tgtPos.y)
+
+      // Anchor = whichever endpoint is closest to the click.
+      // Grouping by the anchor (not just source) ensures edges that meet at the
+      // same handle in opposite directions (one starts there, another ends there)
+      // are treated as the same ambiguous group.
+      const anchor = dSrc <= dTgt
+        ? { node: clickedEdge.source, handle: clickedEdge.sourceHandle }
+        : { node: clickedEdge.target, handle: clickedEdge.targetHandle }
+
+      const group = edges.filter(
+        (e) =>
+          (e.source === anchor.node && e.sourceHandle === anchor.handle) ||
+          (e.target === anchor.node && e.targetHandle === anchor.handle)
+      )
+
+      if (group.length <= 1) {
+        edgeGroupCycleRef.current = null
+        return
+      }
+
+      const groupKey = `${anchor.node}:${anchor.handle ?? ""}`
+      const ref = edgeGroupCycleRef.current
+
+      if (ref?.groupKey === groupKey) {
+        if (ref.currentId === clickedEdge.id) {
+          // Same top edge clicked again — cycle selection to the next sibling and
+          // elevate it to zIndex 1 so its reconnect handles are on top.
+          const sorted = [...group].sort((a, b) => a.id.localeCompare(b.id))
+          const idx = sorted.findIndex((e) => e.id === ref.currentId)
+          const next = sorted[(idx + 1) % sorted.length]
+          onEdgesChange(
+            sorted.map((e) => ({
+              type: "replace" as const,
+              id: e.id,
+              item: {
+                ...e,
+                selected: e.id === next.id,
+                zIndex: e.id === next.id ? 1 : 0,
+              },
+            }))
+          )
+          edgeGroupCycleRef.current = { groupKey, currentId: next.id }
+        } else {
+          // User directly clicked a different edge in the group — track it, no override
+          edgeGroupCycleRef.current = { groupKey, currentId: clickedEdge.id }
+        }
+      } else {
+        // First interaction with this group — record position, no override
+        edgeGroupCycleRef.current = { groupKey, currentId: clickedEdge.id }
+      }
+    },
+    [edges, instance, onEdgesChange]
+  )
+
+  const handlePaneClick = useCallback(() => {
+    edgeGroupCycleRef.current = null
+  }, [])
 
   // Stable refs so the native event listeners never go stale
   const screenToFlowPositionRef = useRef(screenToFlowPosition)
@@ -327,6 +324,26 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
   useEffect(() => {
     onNodesChangeRef.current = onNodesChange
   }, [onNodesChange])
+  const onEdgesChangeRef = useRef(onEdgesChange)
+  useEffect(() => {
+    onEdgesChangeRef.current = onEdgesChange
+  }, [onEdgesChange])
+  const onDeleteRef = useRef(onDelete)
+  useEffect(() => {
+    onDeleteRef.current = onDelete
+  }, [onDelete])
+  const nodesRef = useRef(nodes)
+  useEffect(() => {
+    nodesRef.current = nodes
+  }, [nodes])
+  const edgesRef = useRef(edges)
+  useEffect(() => {
+    edgesRef.current = edges
+  }, [edges])
+  const instanceRef = useRef(instance)
+  useEffect(() => {
+    instanceRef.current = instance
+  }, [instance])
 
   useEffect(() => {
     if (!domNode) return
@@ -423,18 +440,36 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
       onNodesChangeRef.current([{ type: "add", item: newNode }])
     }
 
+    function onImportTemplate(e: Event) {
+      const template = (e as CustomEvent<CanvasTemplate>).detail
+      if (!template) return
+      onDeleteRef.current({ nodes: nodesRef.current, edges: edgesRef.current })
+      onNodesChangeRef.current(template.nodes.map((n) => ({ type: "add" as const, item: n })))
+      onEdgesChangeRef.current(template.edges.map((ed) => ({ type: "add" as const, item: ed })))
+      setTimeout(() => instanceRef.current.fitView({ padding: 0.15, duration: 400 }), 150)
+    }
+
     domNode.addEventListener("dragover", onDragOver)
     domNode.addEventListener("drop", onDrop)
     window.addEventListener("ghost:insert-shape", onInsertShape)
+    window.addEventListener("ghost:import-template", onImportTemplate)
     return () => {
       domNode.removeEventListener("dragover", onDragOver)
       domNode.removeEventListener("drop", onDrop)
       window.removeEventListener("ghost:insert-shape", onInsertShape)
+      window.removeEventListener("ghost:import-template", onImportTemplate)
     }
   }, [domNode])
 
   return (
     <div className="relative h-full w-full bg-bg-base">
+      <CanvasControlBar
+        instance={instance}
+        canUndo={canUndo}
+        canRedo={canRedo}
+        onUndo={undo}
+        onRedo={redo}
+      />
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -442,8 +477,18 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onDelete={onDelete}
+        onEdgeClick={handleEdgeClick}
+        onPaneClick={handlePaneClick}
+        edgesReconnectable
+        onReconnectStart={handleReconnectStart}
+        onReconnect={handleReconnect}
+        onReconnectEnd={handleReconnectEnd}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
+        defaultEdgeOptions={defaultEdgeOptions}
         connectionMode={ConnectionMode.Loose}
+        connectionLineType={ConnectionLineType.SmoothStep}
+        connectionLineStyle={{ stroke: "rgba(248,250,252,0.35)", strokeWidth: 1.5 }}
         colorMode="dark"
         fitView
       >

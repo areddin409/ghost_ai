@@ -1,12 +1,49 @@
 {
-  "choices": [],
+  "choices": [
+    {
+      "id": "a3f2e1d0-b9c8-4e7d-8f6a-5b4c3d2e1f0a",
+      "name": "New Issue",
+      "type": "Template",
+      "command": true,
+      "templatePath": "templates/issue.md",
+      "folder": {
+        "enabled": true,
+        "folders": ["issues"],
+        "chooseWhenCreatingNote": false,
+        "createInSameFolderAsActiveFile": false,
+        "chooseFromSubfolders": false
+      },
+      "fileNameFormat": {
+        "enabled": false,
+        "format": ""
+      },
+      "settings": {
+        "openFileInNewTab": {
+          "enabled": false,
+          "direction": "vertical",
+          "focus": true
+        },
+        "openFile": true,
+        "openFileInMode": "default",
+        "runCommandAfterCreation": false,
+        "templaterCreateFile": true,
+        "shouldCreateFileIfItDoesNotExist": {
+          "enabled": false
+        },
+        "setFileExistsBehavior": false,
+        "fileExistsBehavior": "Increment the file name",
+        "appendLink": false,
+        "ignoreTasksInCanvas": false
+      }
+    }
+  ],
   "inputPrompt": "single-line",
   "persistInputPromptDrafts": true,
   "useSelectionAsCaptureValue": true,
   "devMode": false,
   "templateFolderPath": "",
   "announceUpdates": "major",
-  "version": "2.12.0",
+  "version": "2.12.3",
   "globalVariables": {},
   "onePageInputEnabled": false,
   "disableOnlineFeatures": true,
@@ -110,6 +147,9 @@
     "migrateFileOpeningSettings": true,
     "backfillFileOpeningDefaults": true,
     "setProviderModelDiscoveryMode": true,
-    "migrateProviderApiKeysToSecretStorage": true
-  }
+    "migrateProviderApiKeysToSecretStorage": true,
+    "consolidateFileExistsBehavior": true,
+    "repairTemplateFileExistsBehavior": true
+  },
+  "macros": []
 }

@@ -3,11 +3,16 @@ import type { Node, Edge } from "@xyflow/react";
 export type CanvasNodeData = {
   label: string;
   color?: string;
+  textColor?: string;
   shape?: NodeShape;
 };
 
 export type CanvasNode = Node<CanvasNodeData, "canvasNode">;
-export type CanvasEdge = Edge<Record<string, never>, "canvasEdge">;
+export type CanvasEdgeData = {
+  label?: string;
+};
+
+export type CanvasEdge = Edge<CanvasEdgeData, "canvasEdge">;
 
 export const NODE_COLORS = [
   { fill: "#1F1F1F", text: "#EDEDED" },

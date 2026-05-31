@@ -6,11 +6,16 @@ priority: Medium
 opened: 2026-05-23
 updated: 2026-05-24
 description: Canvas nodes from the shape panel cannot be dragged and dropped onto the canvas.
+verified_result: Pass
+verified_date: "2026-05-24"
+verified_evidence: "running app"
 ---
 
 # Drag and Drop — Shape Panel → Canvas
 
-**Status:** `INPUT[inlineSelect(option(Open), option(Fix Implemented), option(Resolved)):status]`
+**Status:** `INPUT[inlineSelect(option(Open), option(In Progress), option(Fix Implemented), option(Resolved)):status]`
+
+**Result:** `INPUT[inlineSelect(option(Pending), option(Pass), option(Fail)):verified_result]` · **Date:** `INPUT[date:verified_date]` · **Evidence:** `INPUT[text:verified_evidence]`
 
 |             |            |
 | ----------- | ---------- |
@@ -46,8 +51,8 @@ description: Canvas nodes from the shape panel cannot be dragged and dropped ont
 
 | Date | By  | Result  | Evidence |
 | ---- | --- | ------- | -------- |
-| —    | —   | Pending | —        |
+| 2026-05-24 | user | Pass | running app |
 
 ---
 
-_Part of [[README|Ghost AI Vault]]_
+_Part of [[README|Ghost AI Vault]] · [[issues-moc]]_
