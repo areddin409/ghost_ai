@@ -519,11 +519,13 @@ export function Canvas() {
             maskColor="rgba(8,8,9,0.65)"
           />
         )}
-        <Background
-          variant={settings.backgroundVariant as BackgroundVariant}
-          color={settings.backgroundPatternColor}
-          bgColor="#080809"
-        />
+        {settings.backgroundVariant !== "none" && (
+          <Background
+            variant={settings.backgroundVariant as BackgroundVariant}
+            color={settings.backgroundPatternColor}
+            bgColor="#080809"
+          />
+        )}
       </ReactFlow>
     </div>
   )
