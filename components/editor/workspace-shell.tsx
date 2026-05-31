@@ -13,6 +13,7 @@ import {
   DeleteProjectDialog
 } from "@/components/editor/project-dialogs"
 import { ShapePanel } from "@/components/editor/shape-panel"
+import { StarterTemplatesModal } from "@/components/editor/starter-templates-modal"
 import { useProjectActions } from "@/hooks/use-project-actions"
 import type { Project } from "@/hooks/use-project-actions"
 
@@ -33,6 +34,7 @@ export function WorkspaceShell({
   const [aiOpen, setAiOpen] = useState(false)
   const [shareOpen, setShareOpen] = useState(false)
   const [minimapVisible, setMinimapVisible] = useState(true)
+  const [templatesOpen, setTemplatesOpen] = useState(false)
   const actionsState = useProjectActions({ initialOwned, initialShared })
 
   return (
@@ -46,6 +48,7 @@ export function WorkspaceShell({
         onShare={() => setShareOpen(true)}
         isMinimapVisible={minimapVisible}
         onToggleMinimap={() => setMinimapVisible((o) => !o)}
+        onOpenTemplates={() => setTemplatesOpen(true)}
       />
       <ProjectSidebar
         isOpen={sidebarOpen}
@@ -71,6 +74,7 @@ export function WorkspaceShell({
         open={shareOpen}
         onOpenChange={setShareOpen}
       />
+      <StarterTemplatesModal open={templatesOpen} onOpenChange={setTemplatesOpen} />
       <CreateProjectDialog />
       <RenameProjectDialog />
       <DeleteProjectDialog />
