@@ -409,7 +409,7 @@ export function Canvas() {
         data: {
           label: "",
           color: settingsRef.current.defaultNodeColor,
-          shape: nodeShape
+          shape: settingsRef.current.defaultNodeShape as NodeShape
         },
         width: w,
         height: h
@@ -446,7 +446,7 @@ export function Canvas() {
         id,
         type: "canvasNode",
         position,
-        data: { label: "", color: settingsRef.current.defaultNodeColor, shape: nodeShape },
+        data: { label: "", color: settingsRef.current.defaultNodeColor, shape: settingsRef.current.defaultNodeShape as NodeShape },
         width: w,
         height: h
       }
@@ -502,7 +502,7 @@ export function Canvas() {
         snapToGrid={settings.snapToGrid}
         snapGrid={[20, 20]}
         connectionMode={ConnectionMode.Loose}
-        connectionLineType={connectionLineTypeMap[settings.edgeRouting as keyof typeof connectionLineTypeMap]}
+        connectionLineType={connectionLineTypeMap[settings.edgeRouting as keyof typeof connectionLineTypeMap] ?? ConnectionLineType.SmoothStep}
         connectionLineStyle={{ stroke: "rgba(248,250,252,0.35)", strokeWidth: 1.5 }}
         colorMode="dark"
         fitView
