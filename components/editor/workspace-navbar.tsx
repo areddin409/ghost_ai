@@ -2,9 +2,9 @@
 
 import {
   LayoutTemplate,
-  Map,
   PanelLeftClose,
   PanelLeftOpen,
+  Settings,
   Share2,
   Sparkles
 } from "lucide-react"
@@ -24,8 +24,7 @@ interface WorkspaceNavbarProps {
   isAiOpen: boolean
   onToggleAi: () => void
   onShare: () => void
-  isMinimapVisible: boolean
-  onToggleMinimap: () => void
+  onOpenSettings: () => void
   onOpenTemplates: () => void
 }
 
@@ -36,8 +35,7 @@ export function WorkspaceNavbar({
   isAiOpen,
   onToggleAi,
   onShare,
-  isMinimapVisible,
-  onToggleMinimap,
+  onOpenSettings,
   onOpenTemplates,
 }: WorkspaceNavbarProps) {
   return (
@@ -71,21 +69,13 @@ export function WorkspaceNavbar({
               <Button
                 variant="outline"
                 size="icon-sm"
-                onClick={onToggleMinimap}
-                aria-label={isMinimapVisible ? "Hide minimap" : "Show minimap"}
-                aria-pressed={isMinimapVisible}
-                className={
-                  isMinimapVisible
-                    ? "border-accent-violet/50 bg-accent-violet/10 text-accent-violet"
-                    : ""
-                }
+                onClick={onOpenSettings}
+                aria-label="Open settings"
               >
-                <Map className="h-4 w-4" />
+                <Settings className="h-4 w-4" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="bottom">
-              {isMinimapVisible ? "Hide minimap" : "Show minimap"}
-            </TooltipContent>
+            <TooltipContent side="bottom">Settings</TooltipContent>
           </Tooltip>
         </TooltipProvider>
         <Button
