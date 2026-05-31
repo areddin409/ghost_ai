@@ -49,5 +49,10 @@ context/current-issues.md
 context/feature-specs/current-issues.md
 context/.obsidian/workspace.json
 
+# Issue screenshots and pasted images
+context/screentshots/
+context/screenshots/
+context/Pasted image*
+
 docs/superpowers
 /app/generated/prisma

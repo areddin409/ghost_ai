@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  LayoutTemplate,
   Map,
   PanelLeftClose,
   PanelLeftOpen,
@@ -25,6 +26,7 @@ interface WorkspaceNavbarProps {
   onShare: () => void
   isMinimapVisible: boolean
   onToggleMinimap: () => void
+  onOpenTemplates: () => void
 }
 
 export function WorkspaceNavbar({
@@ -35,7 +37,8 @@ export function WorkspaceNavbar({
   onToggleAi,
   onShare,
   isMinimapVisible,
-  onToggleMinimap
+  onToggleMinimap,
+  onOpenTemplates,
 }: WorkspaceNavbarProps) {
   return (
     <nav className="fixed inset-x-0 top-0 z-50 flex h-14 items-center gap-3 border-b border-border-default bg-bg-surface px-3">
@@ -85,6 +88,15 @@ export function WorkspaceNavbar({
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
+        <Button
+          variant="outline"
+          size="sm"
+          aria-label="Open starter templates"
+          onClick={onOpenTemplates}
+        >
+          <LayoutTemplate className="h-4 w-4" />
+          Templates
+        </Button>
         <Button
           variant="outline"
           size="sm"
