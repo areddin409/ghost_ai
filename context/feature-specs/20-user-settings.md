@@ -500,11 +500,11 @@ npm run build
 - Modify: `components/editor/canvas-wrapper.tsx`
 - Modify: `components/editor/canvas.tsx`
 
-- [ ] **Step 1: Update canvas-wrapper.tsx**
+- [x] **Step 1: Update canvas-wrapper.tsx**
 
 Remove the `showMinimap` prop — minimap visibility is now owned by `UserSettingsContext`. Update the prop interface and remove any passing of `showMinimap` down to `Canvas`.
 
-- [ ] **Step 2: Wire settings into canvas.tsx**
+- [x] **Step 2: Wire settings into canvas.tsx**
 
 Import `useUserSettings` from `./user-settings-context`. At the top of the `Canvas` component body, destructure the settings needed:
 
@@ -531,7 +531,7 @@ connectionLineType={connectionLineTypeMap[settings.edgeRouting]}
 
 - Minimap — replace the static `showMinimap` prop (or hardcoded render) with a conditional: `{settings.minimapVisible && <MiniMap ... />}`
 
-- [ ] **Step 3: Wire edge routing into CanvasEdgeRenderer**
+- [x] **Step 3: Wire edge routing into CanvasEdgeRenderer**
 
 `CanvasEdgeRenderer` currently calls a single path function (e.g. `getSmoothStepPath`). Import `useUserSettings` and switch on `settings.edgeRouting`:
 
@@ -546,7 +546,7 @@ const getPath =
       : getSmoothStepPath
 ```
 
-- [ ] **Step 4: Wire defaults into new node creation**
+- [x] **Step 4: Wire defaults into new node creation**
 
 In `canvas.tsx`, find the `onDrop` and `onInsertShape` handlers that build new `CanvasNode` data objects. Replace hardcoded shape and color values with:
 
@@ -559,7 +559,7 @@ data: {
 }
 ```
 
-- [ ] **Step 5: Verify build passes**
+- [x] **Step 5: Verify build passes**
 
 ```bash
 npm run build
@@ -595,7 +595,7 @@ Pass `settings` as the `initialSettings` prop to `<WorkspaceShell>`:
 />
 ```
 
-- [ ] **Step 3: Verify build passes**
+- [x] **Step 3: Verify build passes**
 
 ```bash
 npm run build

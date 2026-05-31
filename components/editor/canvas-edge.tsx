@@ -4,10 +4,12 @@ import { useState, useRef } from "react"
 import {
   EdgeLabelRenderer,
   getSmoothStepPath,
+  getStraightPath,
   useReactFlow,
   type EdgeProps,
 } from "@xyflow/react"
 import type { CanvasEdge } from "@/types/canvas"
+import { useUserSettings } from "./user-settings-context"
 
 const COLOR_REST = "rgba(248,250,252,0.35)"
 const COLOR_ACTIVE = "rgba(248,250,252,0.85)"
@@ -29,15 +31,15 @@ export function CanvasEdgeRenderer({
   const [editValue, setEditValue] = useState(data?.label ?? "")
   const inputRef = useRef<HTMLInputElement>(null)
   const { updateEdgeData } = useReactFlow()
+  const { settings } = useUserSettings()
 
-  const [edgePath, labelX, labelY] = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  })
+  const pathArgs = { sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition }
+  const [edgePath, labelX, labelY] =
+    settings.edgeRouting === "straight"
+      ? getStraightPath(pathArgs)
+      : settings.edgeRouting === "step"
+        ? getSmoothStepPath({ ...pathArgs, borderRadius: 0 })
+        : getSmoothStepPath(pathArgs)
 
   const isActive = hovered || !!selected
   const edgeColor = isActive ? COLOR_ACTIVE : COLOR_REST

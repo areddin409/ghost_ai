@@ -9,12 +9,10 @@ import { Canvas } from "@/components/editor/canvas"
 
 interface CanvasWrapperProps {
   roomId: string
-  showMinimap?: boolean
 }
 
 export function CanvasWrapper({
   roomId,
-  showMinimap = true
 }: CanvasWrapperProps) {
   return (
     <LiveblocksProvider authEndpoint="/api/liveblocks-auth">
@@ -28,7 +26,7 @@ export function CanvasWrapper({
         <CanvasErrorBoundary>
           <ClientSideSuspense fallback={<CanvasLoading />}>
             <ReactFlowProvider>
-              <Canvas showMinimap={showMinimap} />
+              <Canvas />
             </ReactFlowProvider>
           </ClientSideSuspense>
         </CanvasErrorBoundary>
