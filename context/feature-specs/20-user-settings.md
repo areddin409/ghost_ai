@@ -86,13 +86,13 @@ npm run build
 **Files:**
 - Create: `lib/user-settings.ts`
 
-- [ ] **Step 1: Create the helper**
+- [x] **Step 1: Create the helper**
 
 Create `lib/user-settings.ts`:
 
 ```ts
 import { prisma } from "@/lib/prisma"
-import type { UserSettings } from "@prisma/client"
+import type { UserSettings } from "@/app/generated/prisma/client"
 
 export async function getUserSettings(userId: string): Promise<UserSettings> {
   return prisma.userSettings.upsert({
