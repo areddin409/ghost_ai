@@ -27,7 +27,7 @@ verified_evidence: ""
 
 > [!note]- Investigation
 >
-> #### Checklist
+> ### Checklist
 >
 > - [x] Confirm React Flow picks the topmost/last-rendered edge when hit areas overlap
 > - [x] Determine whether this is a z-index, pointer-events, or hit-test ordering issue

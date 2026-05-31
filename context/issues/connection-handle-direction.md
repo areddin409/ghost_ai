@@ -1,7 +1,7 @@
 ---
 type: issue
 title: Connection Handles — All Connections Exit and Anchor to Top of Shape
-status: Resolved
+status: Fix Implemented
 priority: High
 opened: 2026-05-29
 updated: 2026-05-29

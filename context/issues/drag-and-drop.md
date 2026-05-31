@@ -7,8 +7,8 @@ opened: 2026-05-23
 updated: 2026-05-24
 description: Canvas nodes from the shape panel cannot be dragged and dropped onto the canvas.
 verified_result: Pass
-verified_date: ""
-verified_evidence: ""
+verified_date: "2026-05-24"
+verified_evidence: "running app"
 ---
 
 # Drag and Drop — Shape Panel → Canvas
@@ -51,7 +51,7 @@ verified_evidence: ""
 
 | Date | By  | Result  | Evidence |
 | ---- | --- | ------- | -------- |
-| —    | —   | Pending | —        |
+| 2026-05-24 | user | Pass | running app |
 
 ---
 
