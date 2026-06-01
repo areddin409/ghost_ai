@@ -5,7 +5,7 @@ import { LiveMap, LiveObject } from "@liveblocks/client"
 import { LiveblocksProvider, RoomProvider } from "@liveblocks/react"
 import { ClientSideSuspense } from "@liveblocks/react/suspense"
 import { ReactFlowProvider } from "@xyflow/react"
-import { Canvas } from "@/components/editor/canvas"
+import { Canvas } from "./canvas"
 
 interface CanvasWrapperProps {
   roomId: string

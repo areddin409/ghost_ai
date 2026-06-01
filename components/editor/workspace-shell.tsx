@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { WorkspaceNavbar } from "@/components/editor/workspace-navbar"
 import { ProjectSidebar } from "@/components/editor/project-sidebar"
-import { CanvasWrapper } from "@/components/editor/canvas-wrapper"
+import { CanvasWrapper } from "@/components/editor/canvas/canvas-wrapper"
 import { AiSidebar } from "@/components/editor/ai-sidebar"
 import { ShareDialog } from "@/components/editor/share-dialog"
 import { ProjectDialogsContext } from "@/components/editor/project-dialogs-context"
