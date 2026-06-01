@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useProjectDialogsContext } from "@/components/editor/project-dialogs-context"
+import { useProjectDialogsContext } from "./project-dialogs-context"
 
 export function CreateProjectDialog() {
   const {
