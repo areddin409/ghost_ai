@@ -4,7 +4,7 @@ import { Plus, X, Pencil, Trash2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useProjectDialogsContext } from "@/components/editor/project-dialogs-context"
+import { useProjectDialogsContext } from "@/components/editor/dialogs/project-dialogs-context"
 import type { Project } from "@/hooks/use-project-actions"
 
 interface ProjectSidebarProps {
