@@ -32,6 +32,7 @@ import { CanvasNodeRenderer } from "./canvas-node"
 import { CanvasEdgeRenderer } from "./canvas-edge"
 import { CanvasControlBar } from "./canvas-control-bar"
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts"
+import { useUserSettings } from "./user-settings-context"
 
 // Renders each node inside the MiniMap SVG at the correct shape.
 // Must be defined outside Canvas so the reference is stable across renders.
@@ -172,7 +173,15 @@ const defaultEdgeOptions = {
   type: "canvasEdge",
 }
 
-export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
+const connectionLineTypeMap = {
+  smoothstep: ConnectionLineType.SmoothStep,
+  step: ConnectionLineType.Step,
+  straight: ConnectionLineType.Straight,
+} as const
+
+export function Canvas() {
+  const { settings } = useUserSettings()
+
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, onDelete } =
     useLiveblocksFlow<CanvasNode, CanvasEdge>({
       suspense: true,
@@ -344,6 +353,10 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
   useEffect(() => {
     instanceRef.current = instance
   }, [instance])
+  const settingsRef = useRef(settings)
+  useEffect(() => {
+    settingsRef.current = settings
+  }, [settings])
 
   useEffect(() => {
     if (!domNode) return
@@ -395,8 +408,8 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
         position,
         data: {
           label: "",
-          color: DEFAULT_NODE_COLOR.fill,
-          shape: nodeShape
+          color: settingsRef.current.defaultNodeColor,
+          shape: settingsRef.current.defaultNodeShape as NodeShape
         },
         width: w,
         height: h
@@ -433,7 +446,7 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
         id,
         type: "canvasNode",
         position,
-        data: { label: "", color: DEFAULT_NODE_COLOR.fill, shape: nodeShape },
+        data: { label: "", color: settingsRef.current.defaultNodeColor, shape: settingsRef.current.defaultNodeShape as NodeShape },
         width: w,
         height: h
       }
@@ -486,14 +499,16 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
+        snapToGrid={settings.snapToGrid}
+        snapGrid={[20, 20]}
         connectionMode={ConnectionMode.Loose}
-        connectionLineType={ConnectionLineType.SmoothStep}
+        connectionLineType={connectionLineTypeMap[settings.edgeRouting as keyof typeof connectionLineTypeMap] ?? ConnectionLineType.SmoothStep}
         connectionLineStyle={{ stroke: "rgba(248,250,252,0.35)", strokeWidth: 1.5 }}
         colorMode="dark"
         fitView
       >
         <Cursors />
-        {showMinimap && (
+        {settings.minimapVisible && (
           <MiniMap
             nodeComponent={MiniMapNodeRenderer}
             pannable
@@ -504,11 +519,13 @@ export function Canvas({ showMinimap = true }: { showMinimap?: boolean }) {
             maskColor="rgba(8,8,9,0.65)"
           />
         )}
-        <Background
-          variant={BackgroundVariant.Dots}
-          color="#2a2a30"
-          bgColor="#080809"
-        />
+        {settings.backgroundVariant !== "none" && (
+          <Background
+            variant={settings.backgroundVariant as BackgroundVariant}
+            color={settings.backgroundPatternColor}
+            bgColor="#080809"
+          />
+        )}
       </ReactFlow>
     </div>
   )

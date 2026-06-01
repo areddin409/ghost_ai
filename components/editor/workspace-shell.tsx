@@ -14,70 +14,79 @@ import {
 } from "@/components/editor/project-dialogs"
 import { ShapePanel } from "@/components/editor/shape-panel"
 import { StarterTemplatesModal } from "@/components/editor/starter-templates-modal"
+import { UserSettingsProvider } from "@/components/editor/user-settings-context"
+import { UserSettingsModal } from "@/components/editor/user-settings-modal"
 import { useProjectActions } from "@/hooks/use-project-actions"
 import type { Project } from "@/hooks/use-project-actions"
+import type { UserSettings } from "@/app/generated/prisma/client"
 
 interface WorkspaceShellProps {
   project: Project
   initialOwned: Project[]
   initialShared: Project[]
   isOwner: boolean
+  initialSettings: UserSettings
 }
 
 export function WorkspaceShell({
   project,
   initialOwned,
   initialShared,
-  isOwner
+  isOwner,
+  initialSettings,
 }: WorkspaceShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [aiOpen, setAiOpen] = useState(false)
   const [shareOpen, setShareOpen] = useState(false)
-  const [minimapVisible, setMinimapVisible] = useState(true)
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [templatesOpen, setTemplatesOpen] = useState(false)
   const actionsState = useProjectActions({ initialOwned, initialShared })
 
+  const onOpenSettings = () => setIsSettingsOpen(true)
+
   return (
-    <ProjectDialogsContext.Provider value={actionsState}>
-      <WorkspaceNavbar
-        projectName={project.name}
-        isSidebarOpen={sidebarOpen}
-        onToggleSidebar={() => setSidebarOpen((o) => !o)}
-        isAiOpen={aiOpen}
-        onToggleAi={() => setAiOpen((o) => !o)}
-        onShare={() => setShareOpen(true)}
-        isMinimapVisible={minimapVisible}
-        onToggleMinimap={() => setMinimapVisible((o) => !o)}
-        onOpenTemplates={() => setTemplatesOpen(true)}
-      />
-      <ProjectSidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-        activeProjectId={project.id}
-      />
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-30 bg-black/50 md:hidden"
-          onClick={() => setSidebarOpen(false)}
-          aria-hidden="true"
+    <UserSettingsProvider initialSettings={initialSettings}>
+      <ProjectDialogsContext.Provider value={actionsState}>
+        <WorkspaceNavbar
+          projectName={project.name}
+          isSidebarOpen={sidebarOpen}
+          onToggleSidebar={() => setSidebarOpen((o) => !o)}
+          isAiOpen={aiOpen}
+          onToggleAi={() => setAiOpen((o) => !o)}
+          onShare={() => setShareOpen(true)}
+          onOpenSettings={onOpenSettings}
+          onOpenTemplates={() => setTemplatesOpen(true)}
         />
-      )}
-      <div className="fixed inset-0 top-14 z-0 bg-bg-base">
-        <CanvasWrapper roomId={project.id} showMinimap={minimapVisible} />
-      </div>
-      <ShapePanel />
-      <AiSidebar isOpen={aiOpen} />
-      <ShareDialog
-        projectId={project.id}
-        projectName={project.name}
-        isOwner={isOwner}
-        open={shareOpen}
-        onOpenChange={setShareOpen}
-      />
-      <StarterTemplatesModal open={templatesOpen} onOpenChange={setTemplatesOpen} />
-      <CreateProjectDialog />
-      <RenameProjectDialog />
-      <DeleteProjectDialog />
-    </ProjectDialogsContext.Provider>
+        <ProjectSidebar
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          activeProjectId={project.id}
+        />
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 z-30 bg-black/50 md:hidden"
+            onClick={() => setSidebarOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+        <div className="fixed inset-0 top-14 z-0 bg-bg-base">
+          <CanvasWrapper roomId={project.id} />
+        </div>
+        <ShapePanel />
+        <AiSidebar isOpen={aiOpen} />
+        <ShareDialog
+          projectId={project.id}
+          projectName={project.name}
+          isOwner={isOwner}
+          open={shareOpen}
+          onOpenChange={setShareOpen}
+        />
+        <StarterTemplatesModal open={templatesOpen} onOpenChange={setTemplatesOpen} />
+        <UserSettingsModal open={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+        <CreateProjectDialog />
+        <RenameProjectDialog />
+        <DeleteProjectDialog />
+      </ProjectDialogsContext.Provider>
+    </UserSettingsProvider>
   )
 }
