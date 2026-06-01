@@ -9,7 +9,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { CANVAS_TEMPLATES, type CanvasTemplate } from "./starter-templates"
+import { CANVAS_TEMPLATES, type CanvasTemplate } from "@/lib/starter-templates"
 import type { NodeShape } from "@/types/canvas"
 
 interface StarterTemplatesModalProps {

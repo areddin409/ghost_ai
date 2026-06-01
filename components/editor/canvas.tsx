@@ -27,7 +27,7 @@ import type {
   NodeShape
 } from "@/types/canvas"
 import { DEFAULT_NODE_COLOR, DEFAULT_NODE_SIZES } from "@/types/canvas"
-import type { CanvasTemplate } from "./starter-templates"
+import type { CanvasTemplate } from "@/lib/starter-templates"
 import { CanvasNodeRenderer } from "./canvas-node"
 import { CanvasEdgeRenderer } from "./canvas-edge"
 import { CanvasControlBar } from "./canvas-control-bar"
