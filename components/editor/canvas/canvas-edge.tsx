@@ -9,7 +9,7 @@ import {
   type EdgeProps,
 } from "@xyflow/react"
 import type { CanvasEdge } from "@/types/canvas"
-import { useUserSettings } from "./user-settings-context"
+import { useUserSettings } from "../user-settings-context"
 
 const COLOR_REST = "rgba(248,250,252,0.35)"
 const COLOR_ACTIVE = "rgba(248,250,252,0.85)"
