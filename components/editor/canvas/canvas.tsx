@@ -32,7 +32,7 @@ import { CanvasNodeRenderer } from "./canvas-node"
 import { CanvasEdgeRenderer } from "./canvas-edge"
 import { CanvasControlBar } from "./canvas-control-bar"
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts"
-import { useUserSettings } from "../user-settings-context"
+import { useUserSettings } from "@/components/editor/dialogs/user-settings-context"
 
 // Renders each node inside the MiniMap SVG at the correct shape.
 // Must be defined outside Canvas so the reference is stable across renders.
