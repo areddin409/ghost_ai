@@ -1,14 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { EditorNavbar } from "@/components/editor/editor-navbar"
-import { ProjectSidebar } from "@/components/editor/project-sidebar"
-import { ProjectDialogsContext } from "@/components/editor/project-dialogs-context"
+import { EditorNavbar } from "./editor-navbar"
+import { ProjectSidebar } from "@/components/editor/panels/project-sidebar"
+import { ProjectDialogsContext } from "@/components/editor/dialogs/project-dialogs-context"
 import {
   CreateProjectDialog,
   RenameProjectDialog,
   DeleteProjectDialog
-} from "@/components/editor/project-dialogs"
+} from "@/components/editor/dialogs/project-dialogs"
 import { useProjectActions } from "@/hooks/use-project-actions"
 import type { Project } from "@/hooks/use-project-actions"
 
