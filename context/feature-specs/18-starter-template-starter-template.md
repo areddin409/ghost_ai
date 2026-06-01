@@ -21,7 +21,7 @@ updated: 2026-05-31
 	- [x] Define a `CANVAS_TEMPLATES` array with at least three templates (e.g. microservices, CI/CD pipeline, event-driven system)
 	- [x] Each template includes `id`, `name`, `description`, `nodes`, and `edges`
 	- [x] Use shared canvas types and the existing node color palette
-	- [ ] Add small helper functions if needed to keep template data readable
+	- [-] Add small helper functions if needed to keep template data readable ❌ 2026-05-31
 - [x] Create `components/editor/starter-templates-modal.tsx`
 	- [x] Open as a dialog
 	- [x] Show template cards in a scrollable grid

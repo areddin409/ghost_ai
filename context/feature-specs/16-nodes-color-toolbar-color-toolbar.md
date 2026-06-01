@@ -49,7 +49,7 @@ updated: 2026-05-30
   };
   ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit** ✅ 2026-05-31
 
   ```bash
   git add types/canvas.ts
@@ -158,7 +158,7 @@ updated: 2026-05-30
   }
   ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit** ✅ 2026-05-31
 
   ```bash
   git add components/editor/node-color-toolbar.tsx

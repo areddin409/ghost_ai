@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 import { getCurrentIdentity, getProjectWithAccess } from "@/lib/project-access"
 import { getProjectsForUser } from "@/lib/projects"
+import { getUserSettings } from "@/lib/user-settings"
 import { AccessDenied } from "@/components/editor/access-denied"
 import { WorkspaceShell } from "@/components/editor/workspace-shell"
 
@@ -14,9 +15,10 @@ export default async function EditorRoomPage({ params }: EditorRoomPageProps) {
   const identity = await getCurrentIdentity()
   if (!identity) redirect("/sign-in")
 
-  const [project, { owned, shared }] = await Promise.all([
+  const [project, { owned, shared }, settings] = await Promise.all([
     getProjectWithAccess(roomId, identity),
-    getProjectsForUser()
+    getProjectsForUser(),
+    getUserSettings(identity.userId),
   ])
 
   if (!project) return <AccessDenied />
@@ -29,6 +31,7 @@ export default async function EditorRoomPage({ params }: EditorRoomPageProps) {
       initialOwned={owned}
       initialShared={shared}
       isOwner={isOwner}
+      initialSettings={settings}
     />
   )
 }

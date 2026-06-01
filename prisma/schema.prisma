@@ -11,3 +11,16 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model UserSettings {
+  id                     String   @id @default(cuid())
+  userId                 String   @unique
+  edgeRouting            String   @default("smoothstep")
+  minimapVisible         Boolean  @default(true)
+  backgroundVariant      String   @default("dots")
+  backgroundPatternColor String   @default("#2a2a30")
+  snapToGrid             Boolean  @default(false)
+  defaultNodeShape       String   @default("rectangle")
+  defaultNodeColor       String   @default("#1F1F1F")
+  updatedAt              DateTime @updatedAt
+}
