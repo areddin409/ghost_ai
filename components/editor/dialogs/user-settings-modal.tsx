@@ -14,7 +14,7 @@ const BACKGROUND_PRESETS = [
   { label: "Vivid", hex: "#52525e" },
 ]
 
-const EDGE_ROUTING_OPTIONS = ["smoothstep", "step", "straight"] as const
+const EDGE_ROUTING_OPTIONS = ["smoothstep", "step", "straight", "bezier"] as const
 const BACKGROUND_VARIANTS = ["dots", "lines", "cross", "none"] as const
 
 interface UserSettingsModalProps {

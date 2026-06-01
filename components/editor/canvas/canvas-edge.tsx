@@ -3,6 +3,7 @@
 import { useState, useRef } from "react"
 import {
   EdgeLabelRenderer,
+  getBezierPath,
   getSmoothStepPath,
   getStraightPath,
   useReactFlow,
@@ -39,7 +40,9 @@ export function CanvasEdgeRenderer({
       ? getStraightPath(pathArgs)
       : settings.edgeRouting === "step"
         ? getSmoothStepPath({ ...pathArgs, borderRadius: 0 })
-        : getSmoothStepPath(pathArgs)
+        : settings.edgeRouting === "bezier"
+          ? getBezierPath(pathArgs)
+          : getSmoothStepPath(pathArgs)
 
   const isActive = hovered || !!selected
   const edgeColor = isActive ? COLOR_ACTIVE : COLOR_REST

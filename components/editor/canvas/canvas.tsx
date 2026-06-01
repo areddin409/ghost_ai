@@ -177,6 +177,7 @@ const connectionLineTypeMap = {
   smoothstep: ConnectionLineType.SmoothStep,
   step: ConnectionLineType.Step,
   straight: ConnectionLineType.Straight,
+  bezier: ConnectionLineType.Bezier,
 } as const
 
 export function Canvas() {
