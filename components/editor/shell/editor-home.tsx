@@ -2,7 +2,7 @@
 
 import { Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useProjectDialogsContext } from "@/components/editor/project-dialogs-context"
+import { useProjectDialogsContext } from "@/components/editor/dialogs/project-dialogs-context"
 
 export function EditorHome() {
   const { openCreate } = useProjectDialogsContext()

@@ -1,21 +1,21 @@
 "use client"
 
 import { useState } from "react"
-import { WorkspaceNavbar } from "@/components/editor/workspace-navbar"
-import { ProjectSidebar } from "@/components/editor/project-sidebar"
+import { WorkspaceNavbar } from "./workspace-navbar"
+import { ProjectSidebar } from "@/components/editor/panels/project-sidebar"
 import { CanvasWrapper } from "@/components/editor/canvas/canvas-wrapper"
-import { AiSidebar } from "@/components/editor/ai-sidebar"
-import { ShareDialog } from "@/components/editor/share-dialog"
-import { ProjectDialogsContext } from "@/components/editor/project-dialogs-context"
+import { AiSidebar } from "@/components/editor/panels/ai-sidebar"
+import { ShareDialog } from "@/components/editor/dialogs/share-dialog"
+import { ProjectDialogsContext } from "@/components/editor/dialogs/project-dialogs-context"
 import {
   CreateProjectDialog,
   RenameProjectDialog,
   DeleteProjectDialog
-} from "@/components/editor/project-dialogs"
-import { ShapePanel } from "@/components/editor/shape-panel"
-import { StarterTemplatesModal } from "@/components/editor/starter-templates-modal"
-import { UserSettingsProvider } from "@/components/editor/user-settings-context"
-import { UserSettingsModal } from "@/components/editor/user-settings-modal"
+} from "@/components/editor/dialogs/project-dialogs"
+import { ShapePanel } from "@/components/editor/panels/shape-panel"
+import { StarterTemplatesModal } from "@/components/editor/dialogs/starter-templates-modal"
+import { UserSettingsProvider } from "@/components/editor/dialogs/user-settings-context"
+import { UserSettingsModal } from "@/components/editor/dialogs/user-settings-modal"
 import { useProjectActions } from "@/hooks/use-project-actions"
 import type { Project } from "@/hooks/use-project-actions"
 import type { UserSettings } from "@/app/generated/prisma/client"
