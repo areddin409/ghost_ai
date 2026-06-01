@@ -1,5 +1,5 @@
-import { EditorShell } from "@/components/editor/editor-shell"
-import { EditorHome } from "@/components/editor/editor-home"
+import { EditorShell } from "@/components/editor/shell/editor-shell"
+import { EditorHome } from "@/components/editor/shell/editor-home"
 import { getProjectsForUser } from "@/lib/projects"
 
 export default async function EditorPage() {

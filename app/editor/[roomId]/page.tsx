@@ -3,7 +3,7 @@ import { getCurrentIdentity, getProjectWithAccess } from "@/lib/project-access"
 import { getProjectsForUser } from "@/lib/projects"
 import { getUserSettings } from "@/lib/user-settings"
 import { AccessDenied } from "@/components/editor/access-denied"
-import { WorkspaceShell } from "@/components/editor/workspace-shell"
+import { WorkspaceShell } from "@/components/editor/shell/workspace-shell"
 
 interface EditorRoomPageProps {
   params: Promise<{ roomId: string }>
