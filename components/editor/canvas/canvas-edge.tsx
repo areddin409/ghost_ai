@@ -8,6 +8,7 @@ import {
   getStraightPath,
   useReactFlow,
   type EdgeProps,
+  type Position,
 } from "@xyflow/react"
 import type { CanvasEdge } from "@/types/canvas"
 import { useUserSettings } from "@/components/editor/dialogs/user-settings-context"
@@ -15,6 +16,64 @@ import { useUserSettings } from "@/components/editor/dialogs/user-settings-conte
 const COLOR_REST = "rgba(248,250,252,0.35)"
 const COLOR_ACTIVE = "rgba(248,250,252,0.85)"
 const STROKE_WIDTH = 1.5
+
+type PathArgs = {
+  sourceX: number
+  sourceY: number
+  sourcePosition: Position
+  targetX: number
+  targetY: number
+  targetPosition: Position
+}
+
+function resolvePath(
+  routing: string,
+  args: PathArgs,
+  bp: { x: number; y: number } | null
+): [string, number, number] {
+  if (bp) {
+    // When a bend point is set, construct the path to route through it
+    if (routing === "bezier") {
+      // Quadratic bezier: control point = bend point
+      return [
+        `M ${args.sourceX},${args.sourceY} Q ${bp.x},${bp.y} ${args.targetX},${args.targetY}`,
+        bp.x,
+        bp.y,
+      ]
+    }
+    if (routing === "straight") {
+      // Two-segment polyline through the bend point
+      return [
+        `M ${args.sourceX},${args.sourceY} L ${bp.x},${bp.y} L ${args.targetX},${args.targetY}`,
+        bp.x,
+        bp.y,
+      ]
+    }
+    if (routing === "step") {
+      const [p] = getSmoothStepPath({ ...args, borderRadius: 0, centerX: bp.x, centerY: bp.y })
+      return [p, bp.x, bp.y]
+    }
+    // smoothstep (default)
+    const [p] = getSmoothStepPath({ ...args, centerX: bp.x, centerY: bp.y })
+    return [p, bp.x, bp.y]
+  }
+
+  // No bend — default path for each routing type
+  if (routing === "straight") {
+    const [p, lx, ly] = getStraightPath(args)
+    return [p, lx, ly]
+  }
+  if (routing === "step") {
+    const [p, lx, ly] = getSmoothStepPath({ ...args, borderRadius: 0 })
+    return [p, lx, ly]
+  }
+  if (routing === "bezier") {
+    const [p, lx, ly] = getBezierPath(args)
+    return [p, lx, ly]
+  }
+  const [p, lx, ly] = getSmoothStepPath(args)
+  return [p, lx, ly] // smoothstep default
+}
 
 export function CanvasEdgeRenderer({
   id,
@@ -34,15 +93,9 @@ export function CanvasEdgeRenderer({
   const { updateEdgeData } = useReactFlow()
   const { settings } = useUserSettings()
 
-  const pathArgs = { sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition }
-  const [edgePath, labelX, labelY] =
-    settings.edgeRouting === "straight"
-      ? getStraightPath(pathArgs)
-      : settings.edgeRouting === "step"
-        ? getSmoothStepPath({ ...pathArgs, borderRadius: 0 })
-        : settings.edgeRouting === "bezier"
-          ? getBezierPath(pathArgs)
-          : getSmoothStepPath(pathArgs)
+  const bendPoint = data?.bendPoint ?? null
+  const pathArgs: PathArgs = { sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition }
+  const [edgePath, labelX, labelY] = resolvePath(settings.edgeRouting, pathArgs, bendPoint)
 
   const isActive = hovered || !!selected
   const edgeColor = isActive ? COLOR_ACTIVE : COLOR_REST

@@ -9,8 +9,9 @@ export type CanvasNodeData = {
 
 export type CanvasNode = Node<CanvasNodeData, "canvasNode">;
 export type CanvasEdgeData = {
-  label?: string;
-};
+  label?: string
+  bendPoint?: { x: number; y: number }
+}
 
 export type CanvasEdge = Edge<CanvasEdgeData, "canvasEdge">;
 
