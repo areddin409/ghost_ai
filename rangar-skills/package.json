@@ -1,0 +1,6 @@
+{
+  "name": "rangar",
+  "version": "1.0.0",
+  "description": "Rangar vault steward — portable Obsidian vault standard for software development projects",
+  "skills": "./skills"
+}
