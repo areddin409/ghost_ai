@@ -74,15 +74,15 @@ updated: 2026-06-01
   2. [x] Wrap `ReactFlowProvider` with `DragEdgeProvider` in `canvas-wrapper.tsx`
   3. [x] Build check · Commit
 
-- [ ] #spec **Task 5: Edge hit detection + highlight feedback**
+- [x] #spec **Task 5: Edge hit detection + highlight feedback**
 
-  1. Add `@keyframes ghost-dash` to `globals.css`
-  2. Add `data-edgeid` attribute to hit-area path
-  3. Read `DragEdgeContext` in `CanvasEdgeRenderer`
-  4. Apply dashed highlight to visible path when `isDragTarget`
-  5. Render "Insert here" label via `EdgeLabelRenderer`
-  6. Add `dragOverEdgeId` ref + `onDragOver` edge detection in `canvas.tsx`
-  7. Add `onDragLeave` handler
+  1. [x] Add `@keyframes ghost-dash` to `globals.css`
+  2. [x] Add `data-edgeid` attribute to hit-area path
+  3. [x] Read `DragEdgeContext` in `CanvasEdgeRenderer`
+  4. [x] Apply dashed highlight to visible path when `isDragTarget`
+  5. [x] Render "Insert here" label via `EdgeLabelRenderer`
+  6. [x] Add `dragOverEdgeId` ref + `onDragOver` edge detection in `canvas.tsx`
+  7. [x] Add `onDragLeave` handler
   8. Manual verify · Commit
 
 - [ ] #spec **Task 6: Drop-onto-edge split logic**
