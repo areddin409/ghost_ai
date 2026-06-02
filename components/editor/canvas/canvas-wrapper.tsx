@@ -6,6 +6,7 @@ import { LiveblocksProvider, RoomProvider } from "@liveblocks/react"
 import { ClientSideSuspense } from "@liveblocks/react/suspense"
 import { ReactFlowProvider } from "@xyflow/react"
 import { Canvas } from "./canvas"
+import { DragEdgeProvider } from "./drag-edge-context"
 
 interface CanvasWrapperProps {
   roomId: string
@@ -25,9 +26,11 @@ export function CanvasWrapper({
       >
         <CanvasErrorBoundary>
           <ClientSideSuspense fallback={<CanvasLoading />}>
-            <ReactFlowProvider>
-              <Canvas />
-            </ReactFlowProvider>
+            <DragEdgeProvider>
+              <ReactFlowProvider>
+                <Canvas />
+              </ReactFlowProvider>
+            </DragEdgeProvider>
           </ClientSideSuspense>
         </CanvasErrorBoundary>
       </RoomProvider>

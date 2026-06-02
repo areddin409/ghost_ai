@@ -68,11 +68,11 @@ updated: 2026-06-01
   4. Render handle circle in SVG when `selected`
   5. Manual verify · Commit
 
-- [ ] #spec **Task 4: DragEdgeContext**
+- [x] #spec **Task 4: DragEdgeContext**
 
-  1. Create `drag-edge-context.tsx` with provider and hook
-  2. Wrap `ReactFlowProvider` with `DragEdgeProvider` in `canvas-wrapper.tsx`
-  3. Build check · Commit
+  1. [x] Create `drag-edge-context.tsx` with provider and hook
+  2. [x] Wrap `ReactFlowProvider` with `DragEdgeProvider` in `canvas-wrapper.tsx`
+  3. [x] Build check · Commit
 
 - [ ] #spec **Task 5: Edge hit detection + highlight feedback**
 
