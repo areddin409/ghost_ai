@@ -1,7 +1,7 @@
 ---
 type: feature-spec
 feature: "21 — Editor Folder Refactor"
-status: planned
+status: completed
 updated: 2026-06-01
 ---
 
@@ -12,7 +12,7 @@ updated: 2026-06-01
 
 **References:** [[architecture-context]] · [[code-standards]]
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Architecture:** Pure structural refactor — no logic changes. Files are moved using `git mv` to preserve history, then every import referencing a moved file is updated to its new path.
 
@@ -70,13 +70,13 @@ lib/
 - Modify: `components/editor/canvas.tsx` (import)
 - Modify: `components/editor/starter-templates-modal.tsx` (import)
 
-- [ ] **Step 1: Move the file**
+- [x] **Step 1: Move the file**
 
 ```powershell
 git mv "components/editor/starter-templates.ts" "lib/starter-templates.ts"
 ```
 
-- [ ] **Step 2: Update import in `components/editor/canvas.tsx`**
+- [x] **Step 2: Update import in `components/editor/canvas.tsx`**
 
 Change:
 ```ts
@@ -87,7 +87,7 @@ To:
 import type { CanvasTemplate } from "@/lib/starter-templates"
 ```
 
-- [ ] **Step 3: Update import in `components/editor/starter-templates-modal.tsx`**
+- [x] **Step 3: Update import in `components/editor/starter-templates-modal.tsx`**
 
 Change:
 ```ts
@@ -98,7 +98,7 @@ To:
 import { CANVAS_TEMPLATES, type CanvasTemplate } from "@/lib/starter-templates"
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```powershell
 git add -A
@@ -119,7 +119,7 @@ git commit -m "refactor: move starter-templates to lib/"
 - Move: `components/editor/node-color-toolbar.tsx` → `components/editor/canvas/node-color-toolbar.tsx`
 - Modify: `components/editor/canvas/canvas-wrapper.tsx` (import update)
 
-- [ ] **Step 1: Move all canvas files**
+- [x] **Step 1: Move all canvas files**
 
 ```powershell
 git mv "components/editor/canvas.tsx" "components/editor/canvas/canvas.tsx"
@@ -131,7 +131,7 @@ git mv "components/editor/canvas-wrapper.tsx" "components/editor/canvas/canvas-w
 git mv "components/editor/node-color-toolbar.tsx" "components/editor/canvas/node-color-toolbar.tsx"
 ```
 
-- [ ] **Step 2: Update import in `components/editor/canvas/canvas-wrapper.tsx`**
+- [x] **Step 2: Update import in `components/editor/canvas/canvas-wrapper.tsx`**
 
 Change:
 ```ts
@@ -142,7 +142,7 @@ To:
 import { Canvas } from "./canvas"
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```powershell
 git add -A
@@ -163,7 +163,7 @@ git commit -m "refactor: move canvas components into canvas/ subfolder"
 - Modify: `components/editor/shell/editor-shell.tsx` (4 imports)
 - Modify: `components/editor/shell/workspace-shell.tsx` (11 imports)
 
-- [ ] **Step 1: Move all shell files**
+- [x] **Step 1: Move all shell files**
 
 ```powershell
 git mv "components/editor/editor-home.tsx" "components/editor/shell/editor-home.tsx"
@@ -173,7 +173,7 @@ git mv "components/editor/workspace-navbar.tsx" "components/editor/shell/workspa
 git mv "components/editor/workspace-shell.tsx" "components/editor/shell/workspace-shell.tsx"
 ```
 
-- [ ] **Step 2: Update imports in `components/editor/shell/editor-home.tsx`**
+- [x] **Step 2: Update imports in `components/editor/shell/editor-home.tsx`**
 
 Change:
 ```ts
@@ -184,7 +184,7 @@ To:
 import { useProjectDialogsContext } from "@/components/editor/dialogs/project-dialogs-context"
 ```
 
-- [ ] **Step 3: Update imports in `components/editor/shell/editor-shell.tsx`**
+- [x] **Step 3: Update imports in `components/editor/shell/editor-shell.tsx`**
 
 Change:
 ```ts
@@ -203,7 +203,7 @@ import { ... } from "@/components/editor/dialogs/project-dialogs"
 
 > [!note] The `...` represents whatever named imports already exist in the file — do not change the imported names, only the path string.
 
-- [ ] **Step 4: Update imports in `components/editor/shell/workspace-shell.tsx`**
+- [x] **Step 4: Update imports in `components/editor/shell/workspace-shell.tsx`**
 
 Change:
 ```ts
@@ -236,7 +236,7 @@ import { UserSettingsModal } from "@/components/editor/dialogs/user-settings-mod
 
 > [!note] Preserve the existing named imports — only update the path strings.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```powershell
 git add -A
@@ -253,7 +253,7 @@ git commit -m "refactor: move shell components into shell/ subfolder"
 - Move: `components/editor/shape-panel.tsx` → `components/editor/panels/shape-panel.tsx`
 - Modify: `components/editor/panels/project-sidebar.tsx` (1 import)
 
-- [ ] **Step 1: Move all panel files**
+- [x] **Step 1: Move all panel files**
 
 ```powershell
 git mv "components/editor/ai-sidebar.tsx" "components/editor/panels/ai-sidebar.tsx"
@@ -261,7 +261,7 @@ git mv "components/editor/project-sidebar.tsx" "components/editor/panels/project
 git mv "components/editor/shape-panel.tsx" "components/editor/panels/shape-panel.tsx"
 ```
 
-- [ ] **Step 2: Update import in `components/editor/panels/project-sidebar.tsx`**
+- [x] **Step 2: Update import in `components/editor/panels/project-sidebar.tsx`**
 
 Change:
 ```ts
@@ -272,7 +272,7 @@ To:
 import { useProjectDialogsContext } from "@/components/editor/dialogs/project-dialogs-context"
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```powershell
 git add -A
@@ -292,7 +292,7 @@ git commit -m "refactor: move panel components into panels/ subfolder"
 - Move: `components/editor/user-settings-modal.tsx` → `components/editor/dialogs/user-settings-modal.tsx`
 - Modify: `components/editor/dialogs/project-dialogs.tsx` (1 import)
 
-- [ ] **Step 1: Move all dialog files**
+- [x] **Step 1: Move all dialog files**
 
 ```powershell
 git mv "components/editor/project-dialogs.tsx" "components/editor/dialogs/project-dialogs.tsx"
@@ -303,7 +303,7 @@ git mv "components/editor/user-settings-context.tsx" "components/editor/dialogs/
 git mv "components/editor/user-settings-modal.tsx" "components/editor/dialogs/user-settings-modal.tsx"
 ```
 
-- [ ] **Step 2: Update import in `components/editor/dialogs/project-dialogs.tsx`**
+- [x] **Step 2: Update import in `components/editor/dialogs/project-dialogs.tsx`**
 
 Change:
 ```ts
@@ -314,7 +314,7 @@ To:
 import { useProjectDialogsContext } from "./project-dialogs-context"
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```powershell
 git add -A
@@ -329,7 +329,7 @@ git commit -m "refactor: move dialog components into dialogs/ subfolder"
 - Modify: `app/editor/page.tsx` (2 imports)
 - Modify: `app/editor/[roomId]/page.tsx` (1 import — `access-denied` stays at root)
 
-- [ ] **Step 1: Update `app/editor/page.tsx`**
+- [x] **Step 1: Update `app/editor/page.tsx`**
 
 Change:
 ```ts
@@ -342,7 +342,7 @@ import { EditorShell } from "@/components/editor/shell/editor-shell"
 import { EditorHome } from "@/components/editor/shell/editor-home"
 ```
 
-- [ ] **Step 2: Update `app/editor/[roomId]/page.tsx`**
+- [x] **Step 2: Update `app/editor/[roomId]/page.tsx`**
 
 Change:
 ```ts
@@ -355,7 +355,7 @@ import { WorkspaceShell } from "@/components/editor/shell/workspace-shell"
 
 > [!note] `access-denied` stays at `@/components/editor/access-denied` — no change needed for that import.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```powershell
 git add -A
@@ -366,15 +366,15 @@ git commit -m "refactor: update app/editor page imports to new subfolder paths"
 
 ### Task 7: Verify build
 
-- [ ] **Step 1: Run TypeScript build check**
+- [x] **Step 1: Run TypeScript build check**
 
 ```powershell
-pnpm build
+npm run build
 ```
 
 Expected: build completes with no TypeScript errors. If errors appear, they will point to any missed import paths — fix them and re-run.
 
-- [ ] **Step 2: Commit fix if needed**
+- [x] **Step 2: Commit fix if needed**
 
 If any import was missed, fix it, then:
 
@@ -387,10 +387,18 @@ git commit -m "fix: correct missed import paths after editor refactor"
 
 ## Check when done
 
-- [ ] `components/editor/` root contains only `access-denied.tsx` and the four subfolders
-- [ ] `lib/starter-templates.ts` exists; `components/editor/starter-templates.ts` is gone
-- [ ] `pnpm build` passes without type errors
-- [ ] No `@/components/editor/[filename]` flat imports remain (all now reference a subfolder or `access-denied`)
+- [x] `components/editor/` root contains only `access-denied.tsx` and the four subfolders
+- [x] `lib/starter-templates.ts` exists; `components/editor/starter-templates.ts` is gone
+- [x] `npm run build` passes without type errors
+- [x] No `@/components/editor/[filename]` flat imports remain (all now reference a subfolder or `access-denied`)
+
+## Notes from execution
+
+> [!info] Additional work done
+> During implementation, `libs/utils.ts` (shadcn `cn()` helper) was consolidated into `lib/utils.ts` to eliminate the redundant `libs/` folder. Updated `components.json` and all 10 `components/ui/` files from `@/libs/utils` → `@/lib/utils`. The `libs/` directory no longer exists.
+
+> [!info] Discovered imports
+> - `canvas-edge.tsx` and `canvas.tsx` both imported `user-settings-context` via relative path — caught during review and updated to `@/components/editor/dialogs/user-settings-context` when the dialogs task ran.
 
 ---
 
