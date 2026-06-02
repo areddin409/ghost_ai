@@ -96,13 +96,14 @@ updated: 2026-06-01
 
 ## Check when done
 
-- [ ] Settings modal shows four routing options: Smoothstep, Step, Straight, Bezier — all switch the canvas edges and the connection preview line
+- [x] Settings modal shows four routing options: Smoothstep, Step, Straight, Bezier — all switch the canvas edges and the connection preview line ✅ 2026-06-02
 - [ ] Selecting an edge shows a cyan midpoint handle; dragging reshapes the path for all four routing types; double-clicking the handle resets the path
 - [ ] `bendPoint` persists in Liveblocks — a second browser tab sees the bent edge
 - [ ] Dragging a shape over an edge highlights it with a bright dashed stroke and "Insert here" label; releasing drops the shape and splits the edge into two
 - [ ] Both split edges carry the original edge's label
 - [ ] Ctrl+Z after a split restores the original edge
 - [ ] `npm run build` passes without type errors
+
 
 ---
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState } from "react"
 import {
   EdgeLabelRenderer,
   getBezierPath,
@@ -27,39 +27,7 @@ type PathArgs = {
   targetPosition: Position
 }
 
-function resolvePath(
-  routing: string,
-  args: PathArgs,
-  bp: { x: number; y: number } | null
-): [string, number, number] {
-  if (bp) {
-    // When a bend point is set, construct the path to route through it
-    if (routing === "bezier") {
-      // Quadratic bezier: control point = bend point
-      return [
-        `M ${args.sourceX},${args.sourceY} Q ${bp.x},${bp.y} ${args.targetX},${args.targetY}`,
-        bp.x,
-        bp.y,
-      ]
-    }
-    if (routing === "straight") {
-      // Two-segment polyline through the bend point
-      return [
-        `M ${args.sourceX},${args.sourceY} L ${bp.x},${bp.y} L ${args.targetX},${args.targetY}`,
-        bp.x,
-        bp.y,
-      ]
-    }
-    if (routing === "step") {
-      const [p] = getSmoothStepPath({ ...args, borderRadius: 0, centerX: bp.x, centerY: bp.y })
-      return [p, bp.x, bp.y]
-    }
-    // smoothstep (default)
-    const [p] = getSmoothStepPath({ ...args, centerX: bp.x, centerY: bp.y })
-    return [p, bp.x, bp.y]
-  }
-
-  // No bend — default path for each routing type
+function resolvePath(routing: string, args: PathArgs): [string, number, number] {
   if (routing === "straight") {
     const [p, lx, ly] = getStraightPath(args)
     return [p, lx, ly]
@@ -73,7 +41,7 @@ function resolvePath(
     return [p, lx, ly]
   }
   const [p, lx, ly] = getSmoothStepPath(args)
-  return [p, lx, ly] // smoothstep default
+  return [p, lx, ly]
 }
 
 export function CanvasEdgeRenderer({
@@ -90,19 +58,13 @@ export function CanvasEdgeRenderer({
   const [hovered, setHovered] = useState(false)
   const [editing, setEditing] = useState(false)
   const [editValue, setEditValue] = useState(data?.label ?? "")
-  const inputRef = useRef<HTMLInputElement>(null)
-  const bendDragRef = useRef<{
-    startClient: { x: number; y: number }
-    startBend: { x: number; y: number }
-  } | null>(null)
-  const { updateEdgeData, screenToFlowPosition } = useReactFlow()
+  const { updateEdgeData } = useReactFlow()
   const { settings } = useUserSettings()
   const { dragOverEdgeId } = useDragEdge()
   const isDragTarget = dragOverEdgeId === id
 
-  const bendPoint = data?.bendPoint ?? null
   const pathArgs: PathArgs = { sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition }
-  const [edgePath, labelX, labelY] = resolvePath(settings.edgeRouting, pathArgs, bendPoint)
+  const [edgePath, labelX, labelY] = resolvePath(settings.edgeRouting, pathArgs)
 
   const isActive = hovered || !!selected
   const edgeColor = isActive ? COLOR_ACTIVE : COLOR_REST
@@ -117,41 +79,6 @@ export function CanvasEdgeRenderer({
   const openEditor = () => {
     setEditValue(label ?? "")
     setEditing(true)
-  }
-
-  function handleBendPointerDown(e: React.PointerEvent<SVGCircleElement>) {
-    e.stopPropagation()
-    e.currentTarget.setPointerCapture(e.pointerId)
-    bendDragRef.current = {
-      startClient: { x: e.clientX, y: e.clientY },
-      startBend: bendPoint ?? { x: labelX, y: labelY },
-    }
-  }
-
-  function handleBendPointerMove(e: React.PointerEvent<SVGCircleElement>) {
-    if (!bendDragRef.current) return
-    e.stopPropagation()
-    const cur = screenToFlowPosition({ x: e.clientX, y: e.clientY })
-    const start = screenToFlowPosition({
-      x: bendDragRef.current.startClient.x,
-      y: bendDragRef.current.startClient.y,
-    })
-    updateEdgeData(id, {
-      bendPoint: {
-        x: bendDragRef.current.startBend.x + (cur.x - start.x),
-        y: bendDragRef.current.startBend.y + (cur.y - start.y),
-      },
-    })
-  }
-
-  function handleBendPointerUp(e: React.PointerEvent<SVGCircleElement>) {
-    e.currentTarget.releasePointerCapture(e.pointerId)
-    bendDragRef.current = null
-  }
-
-  function handleBendReset(e: React.MouseEvent) {
-    e.stopPropagation()
-    updateEdgeData(id, { bendPoint: undefined })
   }
 
   return (
@@ -203,23 +130,6 @@ export function CanvasEdgeRenderer({
         }}
       />
 
-      {selected && (
-        <circle
-          cx={bendPoint ? bendPoint.x : labelX}
-          cy={bendPoint ? bendPoint.y : labelY}
-          r={8}
-          fill={bendPoint ? "#00c8d4" : "rgba(0,200,212,0.4)"}
-          stroke="rgba(255,255,255,0.8)"
-          strokeWidth={1.5}
-          style={{ pointerEvents: "all", cursor: "grab" }}
-          onPointerDown={handleBendPointerDown}
-          onPointerMove={handleBendPointerMove}
-          onPointerUp={handleBendPointerUp}
-          onPointerCancel={handleBendPointerUp}
-          onDoubleClick={handleBendReset}
-        />
-      )}
-
       <EdgeLabelRenderer>
         <div
           style={{
@@ -247,7 +157,6 @@ export function CanvasEdgeRenderer({
             </div>
           ) : editing ? (
             <input
-              ref={inputRef}
               autoFocus
               value={editValue}
               className="nodrag nopan"

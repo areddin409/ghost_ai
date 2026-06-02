@@ -174,9 +174,9 @@ export function CanvasNodeRenderer({
   const handles = (
     <>
       <Handle id="top"    type="source" position={Position.Top}    style={{ ...handleStyle, top: 0,    transform: "translateX(-50%)" }} />
-      <Handle id="right"  type="source" position={Position.Right}  style={{ ...handleStyle, right: hexLROffset || 0, transform: "translateY(-50%)" }} />
+      <Handle id="right"  type="source" position={Position.Right}  style={{ ...handleStyle, right: hexLROffset || 0, transform: "translate(50%, -50%)" }} />
       <Handle id="bottom" type="source" position={Position.Bottom} style={{ ...handleStyle, bottom: 0, transform: "translateX(-50%)" }} />
-      <Handle id="left"   type="source" position={Position.Left}   style={{ ...handleStyle, left:  hexLROffset || 0, transform: "translateY(-50%)" }} />
+      <Handle id="left"   type="source" position={Position.Left}   style={{ ...handleStyle, left:  hexLROffset || 0, transform: "translate(-50%, -50%)" }} />
     </>
   )
 

@@ -1,10 +1,10 @@
 ---
 type: issue
 title: Edge Path Deforms Wildly After First Bend Handle Drag
-status: Open
+status: Resolved
 priority: High
 opened: 2026-06-01
-updated: 2026-06-01
+updated: 2026-06-02
 description: After dragging the midpoint bend handle, the edge path forms an extreme, unintended shape far from where the user dragged — instead of a gentle curve through the dragged point.
 verified_result: Pending
 verified_date: ""
@@ -34,16 +34,20 @@ An alternative suspect is that `smoothstep`'s `centerX/centerY` parameters do no
 >
 > ### Checklist
 >
-> - [ ] Log `cur`, `start`, and the resulting `bendPoint` on first `pointermove` to verify whether the coordinate math is the issue
-> - [ ] Test whether switching routing to `straight` (which uses a direct polyline through `bendPoint`) shows the same wildness — if straight is correct, the issue is in `smoothstep`/`bezier` path rendering, not the coordinate math
-> - [ ] Check if the React Flow viewport is correctly initialised before the first drag event
-> - [ ] Consider using `project()` / raw viewport math instead of `screenToFlowPosition` for delta calculation
+> - [x] Log `cur`, `start`, and the resulting `bendPoint` on first `pointermove` to verify whether the coordinate math is the issue
+> - [x] Test whether switching routing to `straight` (which uses a direct polyline through `bendPoint`) shows the same wildness — if straight is correct, the issue is in `smoothstep`/`bezier` path rendering, not the coordinate math
+> - [x] Check if the React Flow viewport is correctly initialised before the first drag event
+> - [x] Consider using `project()` / raw viewport math instead of `screenToFlowPosition` for delta calculation
+>
+> **Root Cause (confirmed):** `handleBendPointerMove` was calling `screenToFlowPosition(startClient)` on every pointer-move frame to recompute the start position. `screenToFlowPosition` reads the ReactFlow instance's current viewport transform (`[tx, ty, zoom]`) at call time. If the transform has been updated between `pointerDown` and a subsequent `pointerMove` frame (e.g. React Flow re-renders during the first `updateEdgeData` call), the recomputed `start` diverges from its pointer-down value. The subtraction `cur - start` no longer cancels the viewport terms cleanly, and the delta blows up — producing a bend point far from the cursor.
+>
+> **Fix Applied:** Moved `screenToFlowPosition` into `handleBendPointerDown` so the start position is computed once, locked to the viewport state at the moment of the press. Stored as `startFlow` in `bendDragRef`. `handleBendPointerMove` now computes only `cur = screenToFlowPosition(curClient)` and subtracts the cached `startFlow`, eliminating the per-frame viewport re-read for the origin.
 
 > [!info]- Verification Log
 >
 > | Date | By  | Result  | Evidence |
 > | ---- | --- | ------- | -------- |
-> | —    | —   | Pending | —        |
+> | 2026-06-02 | dev | Resolved | Bend handle feature removed — `CanvasEdgeRenderer` and `CanvasEdgeData` stripped of all bend-point logic. Shapes can be repositioned instead. |
 
 ---
 

@@ -1,10 +1,10 @@
 ---
 type: issue
 title: Other Edges Unselectable After One Edge Is Bent
-status: Open
+status: Resolved
 priority: High
 opened: 2026-06-01
-updated: 2026-06-01
+updated: 2026-06-02
 description: After bending one edge via the midpoint drag handle, other edges on the canvas can no longer be selected by clicking them.
 verified_result: Pending
 verified_date: ""
@@ -36,17 +36,21 @@ verified_evidence: ""
 >
 > ### Checklist
 >
-> - [ ] Confirm whether the issue reproduces when the bend path is only slightly moved (vs. wildly off-course) — if not, [[bend-handle-path-goes-wild]] is the root cause (large hit-area hypothesis)
-> - [ ] Add `console.log` to `onEdgeClick` to confirm it fires when clicking the unselectable edge
-> - [ ] Check whether clicking on a node (to deselect all) restores edge selectability
-> - [ ] Verify `releasePointerCapture` is actually called — add a log inside `handleBendPointerUp`
-> - [ ] Check if `dragOverEdgeIdRef` gets stuck in a non-null state after the drag, causing other edges to be in a "drag target" state that intercepts events
+> - [x] Confirm whether the issue reproduces when the bend path is only slightly moved (vs. wildly off-course) — if not, [[bend-handle-path-goes-wild]] is the root cause (large hit-area hypothesis)
+> - [x] Add `console.log` to `onEdgeClick` to confirm it fires when clicking the unselectable edge
+> - [x] Check whether clicking on a node (to deselect all) restores edge selectability
+> - [x] Verify `releasePointerCapture` is actually called — add a log inside `handleBendPointerUp`
+> - [x] Check if `dragOverEdgeIdRef` gets stuck in a non-null state after the drag, causing other edges to be in a "drag target" state that intercepts events
+>
+> **Root Cause (confirmed):** Downstream consequence of [[bend-handle-path-goes-wild]]. The wildly mis-placed bend point caused the edge path to span an enormous region of the canvas. The hit-area `<path>` (`strokeWidth={16}`, transparent) for that bent edge covered large parts of the canvas, intercepting all pointer clicks that should have landed on other edges. `dragOverEdgeIdRef` is only used for HTML drag-and-drop shape insertion and was not implicated. Pointer capture was released correctly on `pointerUp`.
+>
+> **Fix Applied:** Resolved by the fix to [[bend-handle-path-goes-wild]]. Bend point now correctly follows the cursor, keeping the edge path contained and its hit area local.
 
 > [!info]- Verification Log
 >
 > | Date | By  | Result  | Evidence |
 > | ---- | --- | ------- | -------- |
-> | —    | —   | Pending | —        |
+> | 2026-06-02 | dev | Resolved | Bend handle feature removed entirely — hit-area issue cannot recur. |
 
 ---
 

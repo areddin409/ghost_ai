@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import { useUserSettings } from "./user-settings-context"
-import { NODE_COLORS, NODE_SHAPES } from "@/types/canvas"
+import { NODE_COLORS } from "@/types/canvas"
 
 const BACKGROUND_PRESETS = [
   { label: "Subtle", hex: "#1e1e23" },
@@ -128,22 +128,6 @@ export function UserSettingsModal({ open, onClose }: UserSettingsModalProps) {
           {/* Node Defaults */}
           <section className="space-y-4">
             <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Node Defaults</h3>
-
-            <div className="space-y-1">
-              <Label>Default shape</Label>
-              <div className="flex gap-1 flex-wrap">
-                {NODE_SHAPES.map((shape) => (
-                  <Button
-                    key={shape}
-                    variant={settings.defaultNodeShape === shape ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => updatePending("defaultNodeShape", shape)}
-                  >
-                    {shape}
-                  </Button>
-                ))}
-              </div>
-            </div>
 
             <div className="space-y-1">
               <Label>Default color</Label>

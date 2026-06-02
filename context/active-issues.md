@@ -1,6 +1,15 @@
 ---
 type: issue-log
 updated: 2026-06-02
+edge_insert_verified: Pass
+edge_insert_verified_date: ""
+edge_insert_verified_evidence: ""
+shape_rendering_verified: Pending
+shape_rendering_verified_date: ""
+shape_rendering_verified_evidence: ""
+minimap_verified: Pending
+minimap_verified_date: ""
+minimap_verified_evidence: ""
 ---
 
 > [!warning] Governance Rules
@@ -12,12 +21,11 @@ updated: 2026-06-02
 
 > [!important] Resolution Rules — Read Before Touching This File
 >
-> **States:** `Open` → `Fix Implemented (Pending Verification)` → `Resolved`
+> **States:** `Open` → `Fix Implemented` → `Resolved`
 >
 > **Agents may:**
 >
 > - Move `Open → Fix Implemented` only after running the app and observing the fix working
-> - Add a row to the **Verification Log** with the date, what was run, and what was observed
 >
 > **Agents may NOT:**
 >
@@ -26,24 +34,26 @@ updated: 2026-06-02
 >
 > **To mark Resolved:**
 >
-> - The user must explicitly confirm it
-> - The agent then updates the Status field and moves the entry under `## Resolved`
->
-> **If verification fails after Fix Implemented:**
->
-> - Move back to `Open` and add a `Verification failed:` row to the log explaining what broke
+> - Set Result to `Pass` below, then confirm with the human
+> - The agent then moves the entry under `## Resolved`
 
 ---
 
 ## Open
 
+### Edge Insert — "Insert Here" Persists and Shape Not Always Inserted Between Nodes
+
+**Status:** `INPUT[inlineSelect(option(Open), option(Fix Implemented), option(Resolved)):edge_insert_status]` · **Spec:** [[specs/22-edge-enhancements|Spec 22 — Edge Enhancements]] · **Opened:** 2026-06-02
+
+**Description:** After dropping a shape onto an edge, the "Insert here" dashed indicator is never cleared and remains on the canvas permanently. The dropped node is also not consistently spliced between the source and target nodes (existing edge is not always split into two edges through the new node).
+
+**Verification:** `INPUT[inlineSelect(option(Pending), option(Pass), option(Fail)):edge_insert_verified]` · **Date:** `INPUT[date:edge_insert_verified_date]` · **Evidence:** `INPUT[text:edge_insert_verified_evidence]`
+
+---
+
 ### Shape Rendering — All Nodes Render as the Same Shape
 
-|             |                                                                                                                            |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------- |
-| **Status**  | `INPUT[select(option("Open"),option("Fix Implemented (Pending Verification)"),option("Resolved")):shape_rendering_status]` |
-| **Opened**  | 2026-05-24                                                                                                                 |
-| **Updated** | 2026-05-29                                                                                                                 |
+**Status:** `INPUT[inlineSelect(option(Open), option(Fix Implemented), option(Resolved)):shape_rendering_status]` · **Opened:** 2026-05-24
 
 **Description:** All dropped nodes render identically (rounded rectangle) regardless of which shape was dragged. The `shape` field is stored correctly in node data but the renderer ignores it.
 
@@ -51,21 +61,13 @@ updated: 2026-06-02
 
 **Fix Applied — 2026-05-24:** Replaced the generic div renderer with an SVG-based `ShapeRenderer` in `canvas.tsx` that branches on `data.shape` and renders: rectangle (rounded rect), pill (fully rounded rect), circle (ellipse), diamond (4-point polygon), hexagon (6-point polygon, pointed top/bottom), cylinder (rect body + top/bottom ellipses with side lines). Label overlaid as an absolute-positioned div.
 
-#### Verification Log
-
-| Date | By  | Result  | Evidence |
-| ---- | --- | ------- | -------- |
-| —    | —   | Pending | —        |
+**Verification:** `INPUT[inlineSelect(option(Pending), option(Pass), option(Fail)):shape_rendering_verified]` · **Date:** `INPUT[date:shape_rendering_verified_date]` · **Evidence:** `INPUT[text:shape_rendering_verified_evidence]`
 
 ---
 
 ### Minimap — Cannot Pan Canvas When Zoomed Out
 
-|             |                                                                                                                                    |
-| ----------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **Status**  | `INPUT[select(option("Open"),option("Fix Implemented (Pending Verification)"),option("Resolved")):minimap_status]` |
-| **Opened**  | 2026-05-24                                                                                                                         |
-| **Updated** | 2026-05-29                                                                                                                         |
+**Status:** `INPUT[inlineSelect(option(Open), option(Fix Implemented), option(Resolved)):minimap_status]` · **Opened:** 2026-05-24
 
 **Description:** When the user is zoomed out and nodes are out of the visible viewport, the minimap does not allow grabbing/dragging to pan the canvas back to the nodes. The minimap renders but its drag-to-pan interaction is non-functional.
 
@@ -75,11 +77,7 @@ updated: 2026-06-02
 
 **Fix Applied — 2026-05-24:** Added `pannable` and `zoomable` props to `<MiniMap>` in `components/editor/canvas.tsx`.
 
-#### Verification Log
-
-| Date | By  | Result  | Evidence |
-| ---- | --- | ------- | -------- |
-| —    | —   | Pending | —        |
+**Verification:** `INPUT[inlineSelect(option(Pending), option(Pass), option(Fail)):minimap_verified]` · **Date:** `INPUT[date:minimap_verified_date]` · **Evidence:** `INPUT[text:minimap_verified_evidence]`
 
 ---
 

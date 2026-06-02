@@ -430,7 +430,7 @@ export function Canvas() {
         data: {
           label: "",
           color: settingsRef.current.defaultNodeColor,
-          shape: settingsRef.current.defaultNodeShape as NodeShape
+          shape: nodeShape
         },
         width: w,
         height: h
@@ -467,7 +467,7 @@ export function Canvas() {
         id,
         type: "canvasNode",
         position,
-        data: { label: "", color: settingsRef.current.defaultNodeColor, shape: settingsRef.current.defaultNodeShape as NodeShape },
+        data: { label: "", color: settingsRef.current.defaultNodeColor, shape: nodeShape },
         width: w,
         height: h
       }
