@@ -1,0 +1,37 @@
+/* Ghost AI callout colors — mirrors design tokens from globals.css */
+
+.callout[data-callout="warning"] {
+  --callout-color: 255, 77, 79;
+}
+
+.callout[data-callout="success"] {
+  --callout-color: 52, 211, 153;
+}
+
+.callout[data-callout="abstract"] {
+  --callout-color: 100, 87, 249;
+}
+
+.callout[data-callout="bug"] {
+  --callout-color: 255, 77, 79;
+}
+
+.callout[data-callout="bug"] .callout-content {
+  background-color: rgba(255, 77, 79, 0.08);
+}
+
+.callout[data-callout="info"] {
+  --callout-color: 0, 200, 212;
+}
+
+.callout[data-callout="todo"] {
+  --callout-color: 251, 191, 36;
+}
+
+.callout[data-callout="question"] {
+  --callout-color: 128, 128, 144;
+}
+
+.callout[data-callout="note"] {
+  --callout-color: 58, 58, 66;
+}

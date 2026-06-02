@@ -1,6 +1,6 @@
 ---
 type: issue
-title: "Edge Selection Ambiguity — Shared Handle Point"
+title: Edge Selection Ambiguity — Shared Handle Point
 status: Fix Implemented
 priority: Medium
 opened: 2026-05-30
@@ -9,8 +9,8 @@ description: When two edges share the same source handle on a node, only one edg
 verified_result: Pending
 verified_date: ""
 verified_evidence: ""
-
 ---
+
 
 > [!bug] Edge Selection Ambiguity — Shared Handle Point
 > **Status:** `INPUT[inlineSelect(option(Open), option(In Progress), option(Fix Implemented), option(Resolved)):status]` · **Priority:** `INPUT[inlineSelect(option(Low), option(Medium), option(High), option(Critical)):priority]`
