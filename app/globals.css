@@ -133,3 +133,7 @@ body {
 .react-flow__edgeupdater:hover {
   fill: rgba(248, 250, 252, 0.85);
 }
+
+@keyframes ghost-dash {
+  to { stroke-dashoffset: -18; }
+}

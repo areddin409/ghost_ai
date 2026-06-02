@@ -33,6 +33,7 @@ import { CanvasEdgeRenderer } from "./canvas-edge"
 import { CanvasControlBar } from "./canvas-control-bar"
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts"
 import { useUserSettings } from "@/components/editor/dialogs/user-settings-context"
+import { useDragEdge } from "./drag-edge-context"
 
 // Renders each node inside the MiniMap SVG at the correct shape.
 // Must be defined outside Canvas so the reference is stable across renders.
@@ -200,6 +201,9 @@ export function Canvas() {
 
   useKeyboardShortcuts({ instance, undo, redo })
 
+  const { setDragOverEdgeId } = useDragEdge()
+  const dragOverEdgeIdRef = useRef<string | null>(null)
+
   const reconnectSuccessRef = useRef(false)
 
   // Tracks the source-handle group the user last clicked for click-to-cycle disambiguation.
@@ -364,9 +368,25 @@ export function Canvas() {
 
     function onDragOver(e: DragEvent) {
       const types = e.dataTransfer?.types
-      if (types && Array.from(types).includes("application/ghost-shape")) {
-        e.preventDefault()
-        if (e.dataTransfer) e.dataTransfer.dropEffect = "copy"
+      if (!types || !Array.from(types).includes("application/ghost-shape")) return
+      e.preventDefault()
+      if (e.dataTransfer) e.dataTransfer.dropEffect = "copy"
+
+      // Detect if cursor is over an edge hit area
+      const els = document.elementsFromPoint(e.clientX, e.clientY)
+      const edgeEl = els.find((el) => el.hasAttribute("data-edgeid"))
+      const hoveredId = edgeEl?.getAttribute("data-edgeid") ?? null
+      if (hoveredId !== dragOverEdgeIdRef.current) {
+        dragOverEdgeIdRef.current = hoveredId
+        setDragOverEdgeId(hoveredId)
+      }
+    }
+
+    function onDragLeave(e: DragEvent) {
+      // Only clear when leaving the canvas DOM node itself (not a child)
+      if (!domNode?.contains(e.relatedTarget as Node | null)) {
+        dragOverEdgeIdRef.current = null
+        setDragOverEdgeId(null)
       }
     }
 
@@ -464,11 +484,13 @@ export function Canvas() {
     }
 
     domNode.addEventListener("dragover", onDragOver)
+    domNode.addEventListener("dragleave", onDragLeave)
     domNode.addEventListener("drop", onDrop)
     window.addEventListener("ghost:insert-shape", onInsertShape)
     window.addEventListener("ghost:import-template", onImportTemplate)
     return () => {
       domNode.removeEventListener("dragover", onDragOver)
+      domNode.removeEventListener("dragleave", onDragLeave)
       domNode.removeEventListener("drop", onDrop)
       window.removeEventListener("ghost:insert-shape", onInsertShape)
       window.removeEventListener("ghost:import-template", onImportTemplate)

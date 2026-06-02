@@ -12,6 +12,7 @@ import {
 } from "@xyflow/react"
 import type { CanvasEdge } from "@/types/canvas"
 import { useUserSettings } from "@/components/editor/dialogs/user-settings-context"
+import { useDragEdge } from "./drag-edge-context"
 
 const COLOR_REST = "rgba(248,250,252,0.35)"
 const COLOR_ACTIVE = "rgba(248,250,252,0.85)"
@@ -96,6 +97,8 @@ export function CanvasEdgeRenderer({
   } | null>(null)
   const { updateEdgeData, screenToFlowPosition } = useReactFlow()
   const { settings } = useUserSettings()
+  const { dragOverEdgeId } = useDragEdge()
+  const isDragTarget = dragOverEdgeId === id
 
   const bendPoint = data?.bendPoint ?? null
   const pathArgs: PathArgs = { sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition }
@@ -169,6 +172,7 @@ export function CanvasEdgeRenderer({
 
       {/* Wide transparent hit area — allows clicks without thick visible line */}
       <path
+        data-edgeid={id}
         d={edgePath}
         fill="none"
         stroke="transparent"
@@ -186,11 +190,17 @@ export function CanvasEdgeRenderer({
       <path
         d={edgePath}
         fill="none"
-        stroke={edgeColor}
-        strokeWidth={STROKE_WIDTH}
+        stroke={isDragTarget ? "rgba(248,250,252,0.95)" : edgeColor}
+        strokeWidth={isDragTarget ? 2.5 : STROKE_WIDTH}
         strokeLinecap="round"
+        strokeDasharray={isDragTarget ? "6,3" : undefined}
         markerEnd={`url(#arrow-${id})`}
-        style={{ pointerEvents: "none", transition: "stroke 0.15s" }}
+        style={{
+          pointerEvents: "none",
+          transition: isDragTarget ? "none" : "stroke 0.15s",
+          animation: isDragTarget ? "ghost-dash 0.4s linear infinite" : undefined,
+          strokeDashoffset: isDragTarget ? 0 : undefined,
+        }}
       />
 
       {selected && (
@@ -219,7 +229,23 @@ export function CanvasEdgeRenderer({
           }}
           className="nodrag nopan"
         >
-          {editing ? (
+          {isDragTarget ? (
+            <div
+              style={{
+                padding: "2px 10px",
+                background: "#111114",
+                border: "1px solid rgba(248,250,252,0.5)",
+                borderRadius: 9999,
+                color: "rgba(248,250,252,0.9)",
+                fontSize: "0.75rem",
+                whiteSpace: "nowrap",
+                userSelect: "none",
+                pointerEvents: "none",
+              }}
+            >
+              Insert here
+            </div>
+          ) : editing ? (
             <input
               ref={inputRef}
               autoFocus
