@@ -25,7 +25,7 @@ export async function PATCH(request: Request) {
   }
 
   const b = body as Record<string, unknown>
-  const EDGE_ROUTING = ["smoothstep", "step", "straight"] as const
+  const EDGE_ROUTING = ["smoothstep", "step", "straight", "bezier"] as const
   const BG_VARIANT = ["dots", "lines", "cross", "none"] as const
   const NODE_SHAPES = ["rectangle", "rounded", "ellipse", "diamond", "parallelogram", "hexagon"] as const
   const HEX = /^#[0-9a-fA-F]{6}$/
