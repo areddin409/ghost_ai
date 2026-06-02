@@ -1,8 +1,6 @@
 ---
-type: tracker
-phase: "Phase 1 — Foundation"
-status: active
-updated: 2026-05-29
+type: progress
+updated: 2026-06-02
 ---
 
 # Progress Tracker
