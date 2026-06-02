@@ -90,7 +90,11 @@ export function CanvasEdgeRenderer({
   const [editing, setEditing] = useState(false)
   const [editValue, setEditValue] = useState(data?.label ?? "")
   const inputRef = useRef<HTMLInputElement>(null)
-  const { updateEdgeData } = useReactFlow()
+  const bendDragRef = useRef<{
+    startClient: { x: number; y: number }
+    startBend: { x: number; y: number }
+  } | null>(null)
+  const { updateEdgeData, screenToFlowPosition } = useReactFlow()
   const { settings } = useUserSettings()
 
   const bendPoint = data?.bendPoint ?? null
@@ -110,6 +114,40 @@ export function CanvasEdgeRenderer({
   const openEditor = () => {
     setEditValue(label ?? "")
     setEditing(true)
+  }
+
+  function handleBendPointerDown(e: React.PointerEvent<SVGCircleElement>) {
+    e.stopPropagation()
+    e.currentTarget.setPointerCapture(e.pointerId)
+    bendDragRef.current = {
+      startClient: { x: e.clientX, y: e.clientY },
+      startBend: bendPoint ?? { x: labelX, y: labelY },
+    }
+  }
+
+  function handleBendPointerMove(e: React.PointerEvent<SVGCircleElement>) {
+    if (!bendDragRef.current) return
+    e.stopPropagation()
+    const cur = screenToFlowPosition({ x: e.clientX, y: e.clientY })
+    const start = screenToFlowPosition({
+      x: bendDragRef.current.startClient.x,
+      y: bendDragRef.current.startClient.y,
+    })
+    updateEdgeData(id, {
+      bendPoint: {
+        x: bendDragRef.current.startBend.x + (cur.x - start.x),
+        y: bendDragRef.current.startBend.y + (cur.y - start.y),
+      },
+    })
+  }
+
+  function handleBendPointerUp() {
+    bendDragRef.current = null
+  }
+
+  function handleBendReset(e: React.MouseEvent) {
+    e.stopPropagation()
+    updateEdgeData(id, { bendPoint: undefined })
   }
 
   return (
@@ -153,6 +191,22 @@ export function CanvasEdgeRenderer({
         markerEnd={`url(#arrow-${id})`}
         style={{ pointerEvents: "none", transition: "stroke 0.15s" }}
       />
+
+      {selected && (
+        <circle
+          cx={bendPoint ? bendPoint.x : labelX}
+          cy={bendPoint ? bendPoint.y : labelY}
+          r={8}
+          fill={bendPoint ? "#00c8d4" : "rgba(0,200,212,0.4)"}
+          stroke="rgba(255,255,255,0.8)"
+          strokeWidth={1.5}
+          style={{ pointerEvents: "all", cursor: "grab" }}
+          onPointerDown={handleBendPointerDown}
+          onPointerMove={handleBendPointerMove}
+          onPointerUp={handleBendPointerUp}
+          onDoubleClick={handleBendReset}
+        />
+      )}
 
       <EdgeLabelRenderer>
         <div
