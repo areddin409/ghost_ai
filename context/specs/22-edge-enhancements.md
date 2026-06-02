@@ -40,7 +40,7 @@ updated: 2026-06-01
 | `components/editor/canvas/canvas-wrapper.tsx` | Modify | Wrap `<ReactFlowProvider>` with `<DragEdgeProvider>` |
 | `components/editor/canvas/canvas-edge.tsx` | Modify | Bezier path branch, `resolvePath` helper, bend handle, drag-highlight feedback |
 | `components/editor/canvas/canvas.tsx` | Modify | `bezier` in `connectionLineTypeMap`, edge-id detection in `onDragOver`, split logic in `onDrop`, `dragOverEdgeIdRef` |
-| `components/editor/user-settings-modal.tsx` | Modify | Add `"bezier"` to `EDGE_ROUTING_OPTIONS` |
+| `components/editor/dialogs/user-settings-modal.tsx` | Modify | Add `"bezier"` to `EDGE_ROUTING_OPTIONS` |
 | `app/globals.css` | Modify | Add `@keyframes ghost-dash` for animated dashed stroke |
 
 ---
@@ -49,7 +49,7 @@ updated: 2026-06-01
 
 - [ ] #spec **Task 1: Bezier routing option**
 
-  1. Add `"bezier"` to `EDGE_ROUTING_OPTIONS` in `user-settings-modal.tsx`
+  1. Add `"bezier"` to `EDGE_ROUTING_OPTIONS` in `dialogs/user-settings-modal.tsx`
   2. Add `getBezierPath` import to `canvas-edge.tsx`
   3. Add bezier branch to path resolution block
   4. Add `bezier` to `connectionLineTypeMap` in `canvas.tsx`
