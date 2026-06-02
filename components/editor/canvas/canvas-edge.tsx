@@ -141,7 +141,8 @@ export function CanvasEdgeRenderer({
     })
   }
 
-  function handleBendPointerUp() {
+  function handleBendPointerUp(e: React.PointerEvent<SVGCircleElement>) {
+    e.currentTarget.releasePointerCapture(e.pointerId)
     bendDragRef.current = null
   }
 
@@ -204,6 +205,7 @@ export function CanvasEdgeRenderer({
           onPointerDown={handleBendPointerDown}
           onPointerMove={handleBendPointerMove}
           onPointerUp={handleBendPointerUp}
+          onPointerCancel={handleBendPointerUp}
           onDoubleClick={handleBendReset}
         />
       )}
