@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "20 — User Settings"
+type: spec
+id: 20
+title: User Settings
+phase: 1
 status: planned
 updated: 2026-05-31
 ---
 
-# Feature 20 — User Settings
+# Spec 20 — User Settings
 
 > [!abstract] Goal
 > Persist per-user canvas and workspace preferences (edge routing, minimap, background, snap-to-grid, default node shape/color) in PostgreSQL. Settings load server-side at the workspace page, eliminating client-side flash, and are edited via a modal with live canvas preview.
@@ -621,4 +623,4 @@ npm run build
 
 ---
 
-*Tracked in [[progress-tracker]]*
+*Tracked in [[progress]]*

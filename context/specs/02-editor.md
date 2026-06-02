@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "02 — Editor Chrome"
+type: spec
+id: 2
+title: Editor Chrome
+phase: 1
 status: shipped
 updated: 2026-05-06
 ---
 
-# Feature 02 — Editor Chrome
+# Spec 2 — Editor Chrome
 
 > [!abstract] Goal
 > Build the editor navbar and floating project sidebar shell that frames the editor workspace.
@@ -69,4 +71,4 @@ do not build actual dialogs yet.
 
 ---
 
-*Tracked in [[progress-tracker]]*
+*Tracked in [[progress]]*

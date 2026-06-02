@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "04 — Project Dialogs"
+type: spec
+id: 4
+title: Project Dialogs
+phase: 1
 status: shipped
 updated: 2026-05-06
 ---
 
-# Feature 04 — Project Dialogs
+# Spec 4 — Project Dialogs
 
 > [!abstract] Goal
 > Build the editor home screen and project dialog actions (create, rename, delete) using mock data only.
@@ -94,4 +96,4 @@ Use mock project data only. Do not add API calls or persistence.
 
 ---
 
-*Tracked in [[progress-tracker]]*
+*Tracked in [[progress]]*

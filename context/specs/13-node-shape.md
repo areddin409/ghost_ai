@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "13-node-shape — node-shape"
+type: spec
+id: 13
+title: Node Shape
+phase: 1
 status: shipped
 updated: 2026-05-29
 ---
 
-# Feature 13-node-shape — node-shape
+# Spec 13 — Node Shape
 
 > [!abstract] Goal
 > Replace the placeholder node renderer with proper shape rendering and a drag preview
@@ -46,4 +48,4 @@ updated: 2026-05-29
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

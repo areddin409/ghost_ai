@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "05 — Prisma Setup"
+type: spec
+id: 5
+title: Prisma Setup
+phase: 1
 status: shipped
 updated: 2026-05-06
 ---
 
-# Feature 05 — Prisma Setup
+# Spec 5 — Prisma Setup
 
 > [!abstract] Goal
 > Add the project data models, Prisma client singleton, and run the first migration.
@@ -76,4 +78,4 @@ Already installed:
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

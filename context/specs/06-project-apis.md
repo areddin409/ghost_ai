@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "06 — Project APIs"
+type: spec
+id: 6
+title: Project APIs
+phase: 1
 status: shipped
 updated: 2026-05-06
 ---
 
-# Feature 06 — Project APIs
+# Spec 6 — Project APIs
 
 > [!abstract] Goal
 > Build the authenticated REST endpoints for project list, create, rename, and delete.
@@ -114,4 +116,4 @@ Keep this backend only, do not wire the UI yet.
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

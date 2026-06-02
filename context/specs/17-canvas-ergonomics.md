@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "17-canvas-ergonomics — canvas-ergonomics"
+type: spec
+id: 17
+title: Canvas Ergonomics
+phase: 1
 status: shipped
 updated: 2026-05-30
 ---
 
-# Feature 17-canvas-ergonomics — canvas-ergonomics
+# Spec 17 — Canvas Ergonomics
 
 > [!abstract] Goal
 > Add a floating control bar for zoom and undo/redo, then wire the same actions to keyboard shortcuts.
@@ -62,4 +64,4 @@ updated: 2026-05-30
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

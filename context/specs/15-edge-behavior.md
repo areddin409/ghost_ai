@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "15-edge-behavior — edge-behavior"
+type: spec
+id: 15
+title: Edge Behavior
+phase: 1
 status: shipped
 updated: 2026-05-31
 ---
 
-# Feature 15-edge-behavior — edge-behavior
+# Spec 15 — Edge Behavior
 
 > [!abstract] Goal
 > Replace the default canvas edges with custom edges that are easier to follow, easier to click, and support inline labels.
@@ -52,4 +54,4 @@ updated: 2026-05-31
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

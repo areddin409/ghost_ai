@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "16 — nodes color toolbar"
+type: spec
+id: 16
+title: nodes color toolbar
+phase: 1
 status: shipped
 updated: 2026-05-30
 ---
 
-# Feature 16 — nodes color toolbar
+# Spec 16 — nodes color toolbar
 
 > [!abstract] Goal
 > Add a small floating color toolbar so selected nodes can change both their background and text color directly on the canvas.
@@ -245,4 +247,4 @@ updated: 2026-05-30
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

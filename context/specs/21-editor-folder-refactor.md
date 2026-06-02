@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "21 — Editor Folder Refactor"
-status: completed
+type: spec
+id: 21
+title: Editor Folder Refactor
+phase: 1
+status: shipped
 updated: 2026-06-01
 ---
 
-# Feature 21 — Editor Folder Refactor
+# Spec 21 — Editor Folder Refactor
 
 > [!abstract] Goal
 > Reorganize the flat `components/editor/` folder (23 files) into four subfolders — `canvas/`, `shell/`, `panels/`, `dialogs/` — and move `starter-templates.ts` to `lib/`.
@@ -402,4 +404,4 @@ git commit -m "fix: correct missed import paths after editor refactor"
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

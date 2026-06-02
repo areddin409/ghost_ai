@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "11 — Base Canvas"
+type: spec
+id: 11
+title: Base Canvas
+phase: 1
 status: shipped
 updated: 2026-05-23
 ---
 
-# Feature 11 — Base Canvas
+# Spec 11 — Base Canvas
 
 > [!abstract] Goal
 > Replace the canvas placeholder with a Liveblocks-backed React Flow canvas.
@@ -53,4 +55,4 @@ Do not add controls, custom node/edge rendering, persistence logic, or AI behavi
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "03 — Auth"
+type: spec
+id: 3
+title: Auth
+phase: 1
 status: shipped
 updated: 2026-05-06
 ---
 
-# Feature 03 — Auth
+# Spec 3 — Auth
 
 > [!abstract] Goal
 > Wire Clerk authentication into Next.js — provider, route protection, auth pages, and user menu.
@@ -110,4 +112,4 @@ install: @clerk/ui.
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "14-node-editing — node-editing"
+type: spec
+id: 14
+title: Node Editing
+phase: 1
 status: shipped
 updated: 2026-05-29
 ---
 
-# Feature 14-node-editing — node-editing
+# Spec 14 — Node Editing
 
 > [!abstract] Goal
 > Add resizing, ability to connect nodes, and inline label editing to canvas nodes.
@@ -57,4 +59,4 @@ updated: 2026-05-29
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

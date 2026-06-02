@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "19 — Edge Reconnect"
+type: spec
+id: 19
+title: Edge Reconnect
+phase: 1
 status: shipped
 updated: 2026-05-30
 ---
 
-# Feature 19 — Edge Reconnect
+# Spec 19 — Edge Reconnect
 
 > [!abstract] Goal
 > Let users drag an existing edge endpoint to a different node (reconnect) or drop it on empty canvas to delete the edge (undoable via Ctrl+Z).
@@ -232,4 +234,4 @@ git commit -m "style: show edge reconnect anchor dots on hover"
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

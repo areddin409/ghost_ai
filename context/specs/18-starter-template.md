@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "18-starter-template — starter-template"
+type: spec
+id: 18
+title: Starter Template
+phase: 1
 status: shipped
 updated: 2026-05-31
 ---
 
-# Feature 18-starter-template — starter-template
+# Spec 18 — Starter Template
 
 > [!abstract] Goal
 > Add a small starter template library so users can start a canvas from a pre-built diagram instead of building from scratch.
@@ -60,4 +62,4 @@ updated: 2026-05-31
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

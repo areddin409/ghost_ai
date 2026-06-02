@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "22 — Edge Enhancements"
+type: spec
+id: 22
+title: Edge Enhancements
+phase: 1
 status: planned
 updated: 2026-06-01
 ---
 
-# Feature 22 — Edge Enhancements
+# Spec 22 — Edge Enhancements
 
 > [!abstract] Goal
 > Add bezier routing, per-edge draggable midpoint handles (all routing types), and drop-onto-edge insertion with dashed-highlight feedback.
@@ -104,4 +106,4 @@ updated: 2026-06-01
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

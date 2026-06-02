@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "09 — Share Dialog"
+type: spec
+id: 9
+title: Share Dialog
+phase: 1
 status: shipped
 updated: 2026-05-16
 ---
 
-# Feature 09 — Share Dialog
+# Spec 9 — Share Dialog
 
 > [!abstract] Goal
 > Add a Share button and collaborator management dialog to the workspace navbar.
@@ -64,4 +66,4 @@ Do not add a local user table.
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

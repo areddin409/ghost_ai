@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "10 — Liveblocks Setup"
+type: spec
+id: 10
+title: Liveblocks Setup
+phase: 1
 status: shipped
 updated: 2026-05-23
 ---
 
-# Feature 10 — Liveblocks Setup
+# Spec 10 — Liveblocks Setup
 
 > [!abstract] Goal
 > Set up the Liveblocks realtime collaboration infrastructure with auth route and user metadata.
@@ -73,4 +75,4 @@ All required Liveblocks packages are already installed.
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

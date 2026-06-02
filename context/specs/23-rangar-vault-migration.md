@@ -139,7 +139,7 @@ Current state of each spec:
 - Missing `phase:` field → add `phase: 1`
 - `status: completed` (spec 21 only) → `status: shipped`
 - Header `# Feature NN — Title` → `# Spec NN — Title`
-- Footer `_Tracked in [[progress-tracker]]_` → `_Tracked in [[progress]]_`
+- Footer `_Tracked in [[progress]]_` → `_Tracked in [[progress]]_`
 
 - [ ] #spec **Task 3: Fix all spec frontmatter**
 
@@ -217,7 +217,7 @@ def fix_spec(path):
         )
 
     body = body.replace(
-        '_Tracked in [[progress-tracker]]_',
+        '_Tracked in [[progress]]_',
         '_Tracked in [[progress]]_'
     )
 

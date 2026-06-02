@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "12 — Shape Panel"
+type: spec
+id: 12
+title: Shape Panel
+phase: 1
 status: shipped
 updated: 2026-05-23
 ---
 
-# Feature 12 — Shape Panel
+# Spec 12 — Shape Panel
 
 > [!abstract] Goal
 > Add a floating shape panel that lets users drag shapes onto the canvas as new nodes.
@@ -50,4 +52,4 @@ updated: 2026-05-23
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

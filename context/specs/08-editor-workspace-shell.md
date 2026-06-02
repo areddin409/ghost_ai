@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "08 — Editor Workspace Shell"
+type: spec
+id: 8
+title: Editor Workspace Shell
+phase: 1
 status: shipped
 updated: 2026-05-16
 ---
 
-# Feature 08 — Editor Workspace Shell
+# Spec 8 — Editor Workspace Shell
 
 > [!abstract] Goal
 > Build the `/editor/[roomId]` workspace shell with server-side access checks. No canvas logic yet.
@@ -127,4 +129,4 @@ sequenceDiagram
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

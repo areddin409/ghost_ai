@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "01 — Design System"
+type: spec
+id: 1
+title: Design System
+phase: 1
 status: shipped
 updated: 2026-05-06
 ---
 
-# Feature 01 — Design System
+# Spec 1 — Design System
 
 > [!abstract] Goal
 > Configure shadcn/ui, install the seven core UI primitives, and establish the `cn()` utility.
@@ -47,4 +49,4 @@ Ensure all components match the existing dark theme in the `global.css` file.
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_

@@ -1,11 +1,13 @@
 ---
-type: feature-spec
-feature: "07 — Wire Editor Home"
+type: spec
+id: 7
+title: Wire Editor Home
+phase: 1
 status: shipped
 updated: 2026-05-06
 ---
 
-# Feature 07 — Wire Editor Home
+# Spec 7 — Wire Editor Home
 
 > [!abstract] Goal
 > Connect the editor home sidebar and dialogs to the real project API with server-side data fetching.
@@ -73,4 +75,4 @@ Connect the hook to the sidebar and dialogs
 
 ---
 
-_Tracked in [[progress-tracker]]_
+_Tracked in [[progress]]_
