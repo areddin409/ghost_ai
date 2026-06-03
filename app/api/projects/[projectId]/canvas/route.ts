@@ -27,9 +27,16 @@ export async function GET(_request: Request, context: RouteContext) {
     return NextResponse.json({ nodes: [], edges: [] }, { status: 200 })
   }
 
-  const blobRes = await fetch(project.canvasBlobUrl)
-  const data: unknown = await blobRes.json()
-  return NextResponse.json(data, { status: 200 })
+  try {
+    const blobRes = await fetch(project.canvasBlobUrl)
+    if (!blobRes.ok) {
+      return NextResponse.json({ nodes: [], edges: [] }, { status: 200 })
+    }
+    const data: unknown = await blobRes.json()
+    return NextResponse.json(data, { status: 200 })
+  } catch {
+    return NextResponse.json({ nodes: [], edges: [] }, { status: 200 })
+  }
 }
 
 export async function PUT(request: Request, context: RouteContext) {
@@ -49,12 +56,15 @@ export async function PUT(request: Request, context: RouteContext) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 })
   }
 
-  const body: unknown = await request.json()
+  const body: unknown = await request.json().catch(() => null)
+  if (body === null) {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 })
+  }
 
   const blob = await put(
     `canvas/${projectId}.json`,
     JSON.stringify(body),
-    { access: "public", contentType: "application/json" }
+    { access: "public", contentType: "application/json", allowOverwrite: true }
   )
 
   await prisma.project.update({
