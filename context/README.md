@@ -16,7 +16,7 @@ Welcome to the Rangar vault for ghost_ai. Start with [[rangar]] for current cont
 ```dataview
 TABLE title, status, phase, updated
 FROM "specs"
-WHERE type = "spec" AND status = "active"
+WHERE type = "spec" AND (status = "active" OR status = "planned")
 SORT updated DESC
 ```
 
@@ -25,7 +25,7 @@ SORT updated DESC
 ```dataview
 TABLE title, status, spec_ref, updated
 FROM "issues"
-WHERE type = "issue" AND (status = "open" OR status = "in-progress" OR status = "fix-implemented")
+WHERE type = "issue" AND (status = "Open" OR status = "In Progress" OR status = "Fix Implemented")
 SORT updated DESC
 ```
 

@@ -3,8 +3,8 @@ type: spec
 id: 22
 title: Edge Enhancements
 phase: 1
-status: planned
-updated: 2026-06-01
+status: shipped
+updated: 2026-06-02
 ---
 
 # Spec 22 — Edge Enhancements
@@ -47,7 +47,7 @@ updated: 2026-06-01
 
 ## Implementation
 
-- [ ] #spec **Task 1: Bezier routing option**
+- [x] #spec **Task 1: Bezier routing option** ✅ 2026-06-02
 
   1. Add `"bezier"` to `EDGE_ROUTING_OPTIONS` in `dialogs/user-settings-modal.tsx`
   2. Add `getBezierPath` import to `canvas-edge.tsx`
@@ -55,14 +55,14 @@ updated: 2026-06-01
   4. Add `bezier` to `connectionLineTypeMap` in `canvas.tsx`
   5. Build check · Commit
 
-- [ ] #spec **Task 2: CanvasEdgeData type + path helper**
+- [x] #spec **Task 2: CanvasEdgeData type + path helper** ✅ 2026-06-02
 
   1. Add `bendPoint` field to `CanvasEdgeData` in `types/canvas.ts`
   2. Add `resolvePath` helper above `CanvasEdgeRenderer`
   3. Replace path resolution block with `resolvePath` call
   4. Build check · Commit
 
-- [ ] #spec **Task 3: Midpoint drag handle**
+- [x] #spec **Task 3: Midpoint drag handle** ✅ 2026-06-02
 
   1. Add `screenToFlowPosition` to `useReactFlow` destructure
   2. Add `bendDragRef` state ref
@@ -87,7 +87,7 @@ updated: 2026-06-01
   7. [x] Add `onDragLeave` handler
   8. Manual verify · Commit
 
-- [ ] #spec **Task 6: Drop-onto-edge split logic**
+- [x] #spec **Task 6: Drop-onto-edge split logic**
 
   1. Add split logic to `onDrop` in `canvas.tsx`
   2. Build check
@@ -97,13 +97,19 @@ updated: 2026-06-01
 ## Check when done
 
 - [x] Settings modal shows four routing options: Smoothstep, Step, Straight, Bezier — all switch the canvas edges and the connection preview line ✅ 2026-06-02
-- [ ] Selecting an edge shows a cyan midpoint handle; dragging reshapes the path for all four routing types; double-clicking the handle resets the path
-- [ ] `bendPoint` persists in Liveblocks — a second browser tab sees the bent edge
-- [ ] Dragging a shape over an edge highlights it with a bright dashed stroke and "Insert here" label; releasing drops the shape and splits the edge into two
-- [ ] Both split edges carry the original edge's label
-- [ ] Ctrl+Z after a split restores the original edge
-- [ ] `npm run build` passes without type errors
+- [x] Selecting an edge shows a cyan midpoint handle; dragging reshapes the path for all four routing types; double-clicking the handle resets the path ✅ 2026-06-02
+- [x] `bendPoint` persists in Liveblocks — a second browser tab sees the bent edge ✅ 2026-06-02
+- [x] Dragging a shape over an edge highlights it with a bright dashed stroke and "Insert here" label; releasing drops the shape and splits the edge into two ✅ 2026-06-02
+- [x] Both split edges carry the original edge's label ✅ 2026-06-02
+- [x] Ctrl+Z after a split restores the original edge ✅ 2026-06-02
+- [x] `npm run build` passes without type errors ✅ 2026-06-02
 
+
+---
+
+## Shipped
+
+2026-06-02 — Four edge enhancements shipped. Bezier routing added as a fourth option alongside smoothstep/step/straight — wired into the settings modal, `connectionLineTypeMap`, and `CanvasEdgeRenderer`. `bendPoint` field added to `CanvasEdgeData`; `resolvePath` helper centralises path branching across all four types. Midpoint drag handle: cyan circle renders on selected edges, pointer events convert screen coords to flow coords via `screenToFlowPosition`, `updateEdgeData` persists the bent shape to Liveblocks (second tab sees the bend). `DragEdgeContext` tracks hover state for drag-over-edge without prop drilling. `@keyframes ghost-dash` animated dashed stroke highlights the target edge on drag; `data-edgeid` on each hit-area path enables `elementsFromPoint` detection in `onDragOver`. Drop-onto-edge split logic in `onDrop`: new node spliced between source and target with label inherited by both new edges, fully undoable via Ctrl+Z. Build passes.
 
 ---
 

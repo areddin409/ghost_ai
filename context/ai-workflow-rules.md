@@ -1,7 +1,7 @@
 ---
 type: context
 status: active
-updated: 2026-05-06
+updated: 2026-06-02
 ---
 
 # Development Workflow
@@ -99,6 +99,40 @@ Each issue must include:
 - Root Cause (once identified)
 - Fix Applied note with date (once implemented)
 - Verification Log table (Date / By / Result / Evidence)
+
+---
+
+## Git Branching
+
+`main` is the stable branch. No agent commits directly to `main`.
+
+### Rules
+
+- Every unit of work (feature, fix, chore, refactor) gets its own branch off `main`.
+- Agents create the branch and commit to it. The user merges.
+- Never `git push --force`, `git reset --hard`, or amend commits on `main`.
+
+### Branch Naming
+
+| Work type | Prefix | Example |
+|---|---|---|
+| Feature spec implementation | `feat/` | `feat/edge-enhancements` |
+| Bug fix | `fix/` | `fix/edge-ghost-indicator` |
+| Vault / docs / chore | `chore/` | `chore/rangar-vault-migration` |
+| Refactor | `refactor/` | `refactor/canvas-node-shapes` |
+
+Use the spec number when the branch maps to a spec: `feat/22-edge-enhancements`.
+
+### Workflow
+
+1. Before starting work, create a branch: `git checkout -b feat/<name>`
+2. Commit incrementally to the branch as work progresses.
+3. When the unit is complete, stop. Do not merge.
+4. Tell the user the branch is ready. The user reviews and merges.
+
+### What Does NOT Need a Branch
+
+- Fixing a broken vault entry (frontmatter, link) with no code change — commit directly to `main` only if the change is purely editorial and affects no source files.
 
 ---
 

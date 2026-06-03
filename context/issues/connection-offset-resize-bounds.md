@@ -1,7 +1,7 @@
 ---
 type: issue
 title: connection-offset-resize-bounds
-status: Fix Implemented
+status: Resolved
 priority: Medium
 opened: 2026-05-29
 updated: 2026-05-29

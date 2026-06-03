@@ -14,7 +14,7 @@ updated: 2026-06-02
 > **Phase 1 — Foundation**
 
 > [!todo] Current Goal
-> Define the immediate implementation goal here.
+> Verify spec 25 in browser (open two tabs, confirm avatars, cursors, divider logic). Then plan next spec.
 
 ---
 
@@ -47,14 +47,14 @@ stateDiagram-v2
 
 ```tasks
 not done
-path includes feature-specs
+path includes specs
 ```
 
 ---
 
 ## In Progress
 
-> [!todo] None
+_No active specs — awaiting browser verification of spec 25._
 
 ---
 
@@ -69,18 +69,36 @@ icon: file-plus
 tooltip: Creates a new spec from the standard template
 action:
   type: templaterCreateNote
-  templateFile: "templates/feature-spec.md"
-  folderPath: "feature-specs"
+  templateFile: "templates/tpl-spec.md"
+  folderPath: "specs"
   fileName: "_new-spec"
   openNote: true
 ```
 
-> [!todo] Feature 15 (TBD)
-> Next planned feature unit from the feature spec queue.
+> [!todo] Spec 26 (TBD)
+> Next planned feature spec. Use `rangar:new-spec` to create it.
 
 ---
 
 ## Completed
+
+> [!success] Spec 25 — [[specs/25-canvas-presence|Canvas Presence — Participant Avatars and Live Cursors]]
+> Liveblocks `Presence` type updated: `isThinking` renamed to `thinking`. `<PresenceAvatarGroup>` renders up to 5 collaborator avatars (photo or initials, `ring-2 ring-bg-base`, `+N` overflow chip) filtered by Clerk user ID, with a vertical divider and `<UserButton>` — mounted as `absolute right-3 top-3 z-50` inside the canvas container (not the navbar). `<LiveCursors>` reads `useOthers` cursor presence (flow coords), converts to canvas-relative pixels via `useStore(s => s.transform)`, and renders a colored SVG pointer + name badge per participant. Cursor broadcast uses `onMouseMove` / `onMouseLeave` on `<ReactFlow>` with `screenToFlowPosition`. Old `<Cursors />` from `@liveblocks/react-flow` removed. Editor home navbar and `EditorShell` untouched. Build passes.
+
+> [!success] Spec 22 — [[specs/22-edge-enhancements|Edge Enhancements]]
+> Bezier added as a fourth routing option alongside smoothstep/step/straight — wired into the settings modal, `connectionLineTypeMap`, and `CanvasEdgeRenderer`. `bendPoint` field added to `CanvasEdgeData`; `resolvePath` helper centralises path branching. Midpoint drag handle: cyan circle on selected edges, pointer events via `screenToFlowPosition`, `updateEdgeData` persists bend to Liveblocks. `DragEdgeContext` carries hover state without prop drilling. `@keyframes ghost-dash` animated dashed stroke highlights target edge on drag; `data-edgeid` + `elementsFromPoint` detection in `onDragOver`. Drop-onto-edge split logic in `onDrop`: new node spliced between source and target, label inherited by both new edges, fully undoable. Build passes.
+
+> [!success] Spec 24 — [[specs/24-rangar-skills-package|Rangar Skills Package]]
+> 13 Claude Code skills built in `rangar-skills/skills/`: `session-start`, `new-spec`, `new-issue`, `close-spec`, `ship`, `review` (parent), and six review sub-skills (`specs`, `issues`, `links`, `sync`, `drift`, `debt`), plus `init` for new-project initialization. Skills installed into `.claude/skills/rangar/`. `rangar.md` is the single source of truth read by all skills. Build passes.
+
+> [!success] Spec 23 — [[specs/23-rangar-vault-migration|Rangar Vault Migration]]
+> Vault migrated to Rangar v1.0: 22 spec files moved from `feature-specs/` to `specs/`, frontmatter normalized (`type: spec`, `feature` split into `id`+`title`, `phase` added, status vocabulary fixed). `progress-tracker.md` → `progress.md`, `current-issues.md` → `active-issues.md` with governance callout. Screenshots merged into `assets/`. Templates replaced with `tpl-spec`, `tpl-issue`, `tpl-context`. `rangar.md` living log and `README.md` Dataview hub created. `AGENTS.md` updated with Rangar identity block. Build passes.
+
+> [!success] Spec 21 — [[specs/21-editor-folder-refactor|Editor Folder Refactor]]
+> Pure structural refactor — no logic changes. `components/editor/` reorganized into four subfolders: `canvas/` (7 files), `shell/` (5 files), `panels/` (3 files), `dialogs/` (6 files). `starter-templates.ts` moved to `lib/`. `libs/utils.ts` consolidated into `lib/utils.ts`, eliminating the redundant `libs/` directory; all 10 `components/ui/` files updated. All imports updated to new paths. Build passes.
+
+> [!success] Spec 20 — [[specs/20-user-settings|User Settings]]
+> `UserSettings` Prisma model (one row per Clerk user, upserted on first fetch) with seven fields: edge routing, minimap visibility, background variant/color, snap-to-grid, default node shape/color. `lib/user-settings.ts` helper, GET/PATCH API routes at `/api/user-settings`. `UserSettingsContext` wraps `WorkspaceShell` with a saved/pending split so the canvas reflects live modal edits. `UserSettingsModal` has three sections (Canvas, Connections, Node Defaults) — all controls call `updatePending` for real-time preview; Save commits to DB, Cancel reverts. Navbar Settings icon replaces the old Map button. Canvas reads all settings from context. Initial settings fetched server-side via `Promise.all` in the workspace page — no client-side flash. Build passes.
 
 > [!success] Feature 19 — [[19-edge-reconnect|Edge Reconnect]]
 > `edgesReconnectable` enabled on `<ReactFlow>` with three callbacks (`onReconnectStart`, `onReconnect`, `onReconnectEnd`) in `canvas.tsx`. A `useRef<boolean>` tracks whether the drag landed on a valid handle; missing a valid target deletes the edge via `onEdgesChange`. Reconnect builds a new edge object preserving label and data, removes the old edge, and adds the new one — both routed through `useLiveblocksFlow` so rewire and delete are in undo history. `.react-flow__edgeupdater` styled in `globals.css`: subtle dot appears on `.updating`, brightens on `:hover`. Build passes.

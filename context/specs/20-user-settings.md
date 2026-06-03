@@ -3,8 +3,8 @@ type: spec
 id: 20
 title: User Settings
 phase: 1
-status: planned
-updated: 2026-05-31
+status: shipped
+updated: 2026-06-02
 ---
 
 # Spec 20 — User Settings
@@ -620,6 +620,12 @@ npm run build
 - [x] Clicking Cancel reverts pending changes and closes the modal without a DB write ✅ 2026-05-31
 - [x] Settings persist across a full page reload ✅ 2026-05-31
 - [x] `npm run build` passes without type errors ✅ 2026-05-31
+
+---
+
+## Shipped
+
+2026-05-31 — `UserSettings` Prisma model (one row per Clerk user, upserted on first fetch) with seven fields: edge routing, minimap visibility, background variant/color, snap-to-grid, default node shape/color. `lib/user-settings.ts` helper, GET/PATCH API routes at `/api/user-settings`. `UserSettingsContext` wraps `WorkspaceShell` with a saved/pending split so the canvas reflects live modal edits. `UserSettingsModal` has three sections (Canvas, Connections, Node Defaults) — all controls call `updatePending` for real-time preview; Save commits to DB, Cancel reverts. Navbar Settings icon replaces the old Map button. Canvas reads all settings from context. Initial settings fetched server-side via `Promise.all` in the workspace page — no client-side flash. Build passes.
 
 ---
 
