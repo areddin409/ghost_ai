@@ -10,7 +10,7 @@ shape_rendering_verified_evidence: ""
 minimap_verified: Pending
 minimap_verified_date: ""
 minimap_verified_evidence: ""
-edge_insert_status: Resolved
+edge_insert_status: Fix Implemented
 exampleProperty: false
 ---
 

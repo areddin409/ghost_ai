@@ -331,7 +331,7 @@ export function Canvas() {
   }, [])
 
   const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+    (e: React.MouseEvent) => {
       const pos = screenToFlowPosition({ x: e.clientX, y: e.clientY })
       updateMyPresence({ cursor: pos })
     },
@@ -351,6 +351,7 @@ export function Canvas() {
       const allCurrentEdges = edgesRef.current
       const edgesToDelete = [...explicitEdges]
       const reconnectEdges: CanvasEdge[] = []
+      const deletedIds = new Set(nodesToDelete.map((n) => n.id))
 
       for (const node of nodesToDelete) {
         const incoming = allCurrentEdges.filter((e) => e.target === node.id && !seenEdgeIds.has(e.id))
@@ -366,6 +367,8 @@ export function Canvas() {
         for (const inEdge of incoming) {
           for (const outEdge of outgoing) {
             if (inEdge.source === outEdge.target) continue // skip self-loop
+            // Skip bridge if either endpoint is itself being deleted
+            if (deletedIds.has(inEdge.source) || deletedIds.has(outEdge.target)) continue
             reconnectEdges.push({
               id: crypto.randomUUID(),
               type: "canvasEdge",
@@ -633,8 +636,8 @@ export function Canvas() {
         onDelete={onDelete}
         onEdgeClick={handleEdgeClick}
         onPaneClick={handlePaneClick}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        onPaneMouseMove={handleMouseMove}
+        onPaneMouseLeave={handleMouseLeave}
         edgesReconnectable
         onReconnectStart={handleReconnectStart}
         onReconnect={handleReconnect}

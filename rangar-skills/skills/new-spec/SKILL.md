@@ -52,13 +52,13 @@ _Tracked in [[progress]]_
 ```
 
 6. Create a feature branch for this spec:
-   ```
+   ```bash
    git checkout -b spec/NN-slug
    ```
    Branch naming: `spec/` prefix + the same slug used for the filename.
 
 7. Report:
-   ```
+   ```text
    Created context/specs/NN-slug.md
    Branch: spec/NN-slug
    ```

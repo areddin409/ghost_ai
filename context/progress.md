@@ -54,7 +54,7 @@ path includes specs
 
 ## In Progress
 
-_No active specs — awaiting browser verification of spec 25._
+_No active specs._
 
 ---
 

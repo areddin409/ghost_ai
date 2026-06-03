@@ -1,7 +1,7 @@
 ---
 type: issue
 title: Edge Insert — "Insert Here" Persists and Shape Not Always Inserted Between Nodes
-status: Resolved
+status: Fix Implemented
 priority: High
 spec_ref: "22"
 opened: 2026-06-02

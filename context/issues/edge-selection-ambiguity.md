@@ -1,12 +1,12 @@
 ---
 type: issue
 title: Edge Selection Ambiguity — Shared Handle Point
-status: Resolved
+status: Fix Implemented
 priority: Medium
 opened: 2026-05-30
 updated: 2026-05-30
 description: When two edges share the same source handle on a node, only one edge can be selected or interacted with — the other is permanently occluded and cannot be deleted, relabeled, or reconnected.
-verified_result: Pass
+verified_result: Pending
 verified_date: ""
 verified_evidence: ""
 ---

@@ -176,7 +176,7 @@ updated: YYYY-MM-DD
 
 ## Tasks
 
-- [x] #spec **Task 1: **
+- [ ] #spec **Task 1: **
   1. 
 
 ## Open Questions
@@ -659,12 +659,12 @@ description: Compare spec statuses in frontmatter against task completion state 
 
 For each spec in `context/specs/`:
 1. Read the `status` field from frontmatter
-2. Count open tasks (`- [x] #spec`) and closed tasks (`- [x] #spec`) in the file body
+2. Count open tasks (`- [ ] #spec`) and closed tasks (`- [x] #spec`) in the file body
 
 Run these checks:
 
 **Check 1 — Shipped spec with open tasks**
-If `status: shipped` AND any `- [x] #spec` lines remain in the file body, flag: "Shipped spec has N open tasks — tasks may need closing"
+If `status: shipped` AND any `- [ ] #spec` lines remain in the file body, flag: "Shipped spec has N open tasks — tasks may need closing"
 
 **Check 2 — Planned spec with closed tasks**
 If `status: planned` AND any `- [x] #spec` lines exist, flag: "Planned spec has N closed tasks — status may need updating to active"

@@ -459,7 +459,7 @@ updated: <% tp.date.now("YYYY-MM-DD") %>
 
 ## Tasks
 
-- [x] #spec **Task 1: **
+- [ ] #spec **Task 1: **
   1. 
 
 ## Open Questions
