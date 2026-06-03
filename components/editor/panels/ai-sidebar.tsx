@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useRef } from "react"
 import { Bot, X, Send, FileText, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
@@ -31,12 +31,16 @@ const STARTER_PROMPTS = [
 export function AiSidebar({ isOpen, onClose }: AiSidebarProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleSend = useCallback(() => {
     const trimmed = input.trim()
     if (!trimmed) return
     setMessages((prev) => [...prev, { role: "user", content: trimmed }])
     setInput("")
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto"
+    }
   }, [input])
 
   const handleKeyDown = useCallback(
@@ -157,9 +161,15 @@ export function AiSidebar({ isOpen, onClose }: AiSidebarProps) {
           <div className="shrink-0 border-t border-border-default p-3">
             <div className="relative">
               <Textarea
+                ref={textareaRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
+                onInput={(e) => {
+                  const el = e.currentTarget
+                  el.style.height = "auto"
+                  el.style.height = `${el.scrollHeight}px`
+                }}
                 placeholder="Describe a system to design…"
                 style={{ minHeight: "72px", maxHeight: "160px" }}
                 className="resize-none overflow-y-auto border-border-default bg-bg-elevated pb-10 text-sm text-text-primary placeholder:text-text-faint [scrollbar-color:var(--border-default)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-border-default [&::-webkit-scrollbar-track]:bg-transparent hover:[&::-webkit-scrollbar-thumb]:bg-border-subtle"
@@ -168,6 +178,7 @@ export function AiSidebar({ isOpen, onClose }: AiSidebarProps) {
                 onClick={handleSend}
                 disabled={!input.trim()}
                 size="icon-sm"
+                aria-label="Send"
                 className="absolute bottom-2 right-2 bg-accent-ai text-white hover:bg-accent-ai/90 disabled:opacity-40"
               >
                 <Send className="h-3.5 w-3.5" />
