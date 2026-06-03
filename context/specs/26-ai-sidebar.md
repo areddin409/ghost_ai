@@ -2,7 +2,7 @@
 type: spec
 id: 26
 title: AI Sidebar
-status: active
+status: shipped
 phase: 2
 updated: 2026-06-02
 ---
@@ -70,5 +70,9 @@ updated: 2026-06-02
 _None_
 
 ---
+
+## Shipped
+
+2026-06-02 — Replaced the placeholder AI sidebar with a full-featured panel: bot icon header with title, subtitle, and close button; shadcn `Tabs` for "AI Architect" and "Specs" tabs; scrollable chat area with empty state, starter prompt chips, and right/left-aligned message bubbles; auto-resizing textarea with Enter-to-submit / Shift+Enter newline; and a Specs tab with a Generate Spec button and demo spec card. `onClose` prop wired into `WorkspaceShell`.
 
 _Tracked in [[progress]]_

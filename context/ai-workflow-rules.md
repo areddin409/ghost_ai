@@ -139,8 +139,8 @@ Use the spec number when the branch maps to a spec: `feat/22-edge-enhancements`.
 ## Before Moving To The Next Unit
 
 1. The current unit works end to end within its defined scope.
-2. No invariant defined in `architecture-context.md` was violated.
-3. `progress-tracker.md` reflects the completed work.
+2. No invariant defined in [[architecture-context]] was violated.
+3. [[progress]] reflects the completed work.
 
 ---
 

@@ -2,7 +2,7 @@
 type: spec
 id: 25
 title: Canvas Presence — Participant Avatars and Live Cursors
-status: active
+status: shipped
 phase: 1
 updated: 2026-06-02
 ---
@@ -75,5 +75,9 @@ updated: 2026-06-02
 _None_
 
 ---
+
+## Shipped
+
+2026-06-02 — Implemented Liveblocks real-time presence for the canvas editor. `PresenceAvatarGroup` shows overlapping avatars for all connected participants using `useSelf()` + `useOthers()`, renders nothing when solo, and includes shadcn `Tooltip` name labels on hover — matching Google Docs/Figma conventions. `LiveCursors` renders a color-coded SVG pointer and name badge per other participant. Cursor broadcast wired via `onMouseMove`/`onMouseLeave` on the ReactFlow canvas with flow-coordinate conversion.
 
 _Tracked in [[progress]]_
