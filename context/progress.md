@@ -1,6 +1,6 @@
 ---
 type: progress
-updated: 2026-06-02
+updated: 2026-06-02 (spec 26 shipped)
 ---
 
 # Progress Tracker
@@ -11,10 +11,10 @@ updated: 2026-06-02
 ---
 
 > [!info] Current Phase
-> **Phase 1 — Foundation**
+> **Phase 2 — AI Features**
 
 > [!todo] Current Goal
-> Verify spec 25 in browser (open two tabs, confirm avatars, cursors, divider logic). Then plan next spec.
+> Spec 26 (AI Sidebar) shipped. Plan next spec — likely AI generation wiring or spec management backend.
 
 ---
 
@@ -75,12 +75,15 @@ action:
   openNote: true
 ```
 
-> [!todo] Spec 26 (TBD)
+> [!todo] Spec 27 (TBD)
 > Next planned feature spec. Use `rangar:new-spec` to create it.
 
 ---
 
 ## Completed
+
+> [!success] Spec 26 — [[specs/26-ai-sidebar|AI Sidebar]]
+> Replaced the placeholder AI sidebar with a full-featured panel: bot icon header with title, subtitle, and close button; shadcn `Tabs` for "AI Architect" and "Specs" tabs; scrollable chat area with empty state, starter prompt chips, and right/left-aligned message bubbles with themed scrollbar; auto-resizing textarea with send button inset inside, Enter-to-submit / Shift+Enter newline; and a Specs tab with a Generate Spec button and demo spec card. `onClose` wired into `WorkspaceShell`. Build passes.
 
 > [!success] Spec 25 — [[specs/25-canvas-presence|Canvas Presence — Participant Avatars and Live Cursors]]
 > Liveblocks `Presence` type updated: `isThinking` renamed to `thinking`. `<PresenceAvatarGroup>` renders up to 5 collaborator avatars (photo or initials, `ring-2 ring-bg-base`, `+N` overflow chip) filtered by Clerk user ID, with a vertical divider and `<UserButton>` — mounted as `absolute right-3 top-3 z-50` inside the canvas container (not the navbar). `<LiveCursors>` reads `useOthers` cursor presence (flow coords), converts to canvas-relative pixels via `useStore(s => s.transform)`, and renders a colored SVG pointer + name badge per participant. Cursor broadcast uses `onMouseMove` / `onMouseLeave` on `<ReactFlow>` with `screenToFlowPosition`. Old `<Cursors />` from `@liveblocks/react-flow` removed. Editor home navbar and `EditorShell` untouched. Build passes.

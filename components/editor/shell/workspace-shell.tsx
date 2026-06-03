@@ -73,7 +73,7 @@ export function WorkspaceShell({
           <CanvasWrapper roomId={project.id} />
         </div>
         <ShapePanel />
-        <AiSidebar isOpen={aiOpen} />
+        <AiSidebar isOpen={aiOpen} onClose={() => setAiOpen(false)} />
         <ShareDialog
           projectId={project.id}
           projectName={project.name}
