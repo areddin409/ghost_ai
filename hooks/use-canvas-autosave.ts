@@ -24,22 +24,27 @@ export function useCanvasAutosave({
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isMountedRef = useRef(false)
+  const abortControllerRef = useRef<AbortController | null>(null)
 
   const save = useCallback(
-    async (nodesToSave: CanvasNode[], edgesToSave: CanvasEdge[]) => {
+    async (nodesToSave: CanvasNode[], edgesToSave: CanvasEdge[], signal: AbortSignal) => {
       setSaveStatus("saving")
       try {
         const response = await fetch(`/api/projects/${projectId}/canvas`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ nodes: nodesToSave, edges: edgesToSave }),
+          signal,
         })
         if (!response.ok) {
           setSaveStatus("error")
         } else {
           setSaveStatus("saved")
         }
-      } catch {
+      } catch (err) {
+        if (err instanceof DOMException && err.name === "AbortError") {
+          return
+        }
         setSaveStatus("error")
       }
     },
@@ -59,7 +64,9 @@ export function useCanvasAutosave({
 
     timerRef.current = setTimeout(() => {
       timerRef.current = null
-      save(nodes, edges)
+      abortControllerRef.current?.abort()
+      abortControllerRef.current = new AbortController()
+      save(nodes, edges, abortControllerRef.current.signal)
     }, 1500)
 
     return () => {
@@ -67,6 +74,7 @@ export function useCanvasAutosave({
         clearTimeout(timerRef.current)
         timerRef.current = null
       }
+      abortControllerRef.current?.abort()
     }
   }, [nodes, edges, save])
 
