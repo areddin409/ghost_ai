@@ -14,8 +14,8 @@ import {
   type MiniMapNodeProps,
   type Connection,
 } from "@xyflow/react"
-import { useLiveblocksFlow, Cursors } from "@liveblocks/react-flow"
-import { useHistory, useCanUndo, useCanRedo } from "@liveblocks/react"
+import { useLiveblocksFlow } from "@liveblocks/react-flow"
+import { useHistory, useCanUndo, useCanRedo, useMyPresence } from "@liveblocks/react"
 import "@xyflow/react/dist/style.css"
 import "@liveblocks/react-ui/styles.css"
 import "@liveblocks/react-flow/styles.css"
@@ -31,6 +31,8 @@ import type { CanvasTemplate } from "@/lib/starter-templates"
 import { CanvasNodeRenderer } from "./canvas-node"
 import { CanvasEdgeRenderer } from "./canvas-edge"
 import { CanvasControlBar } from "./canvas-control-bar"
+import { PresenceAvatarGroup } from "./presence-avatar-group"
+import { LiveCursors } from "./live-cursors"
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts"
 import { useUserSettings } from "@/components/editor/dialogs/user-settings-context"
 import { useDragEdge } from "./drag-edge-context"
@@ -198,8 +200,7 @@ export function Canvas() {
   const { undo, redo } = useHistory()
   const canUndo = useCanUndo()
   const canRedo = useCanRedo()
-
-  useKeyboardShortcuts({ instance, undo, redo })
+  const [, updateMyPresence] = useMyPresence()
 
   const { setDragOverEdgeId } = useDragEdge()
   const dragOverEdgeIdRef = useRef<string | null>(null)
@@ -329,6 +330,68 @@ export function Canvas() {
     edgeGroupCycleRef.current = null
   }, [])
 
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      const pos = screenToFlowPosition({ x: e.clientX, y: e.clientY })
+      updateMyPresence({ cursor: pos })
+    },
+    [screenToFlowPosition, updateMyPresence]
+  )
+
+  const handleMouseLeave = useCallback(() => {
+    updateMyPresence({ cursor: null })
+  }, [updateMyPresence])
+
+  // When a node with through-flow is deleted, bridge its incoming and outgoing edges.
+  // Works for both ReactFlow's onDelete (which passes connected edges) and the
+  // keyboard shortcut path (which may only pass selected edges, so we look them up).
+  const handleDelete = useCallback(
+    ({ nodes: nodesToDelete, edges: explicitEdges }: { nodes: CanvasNode[], edges: CanvasEdge[] }) => {
+      const seenEdgeIds = new Set(explicitEdges.map((e) => e.id))
+      const allCurrentEdges = edgesRef.current
+      const edgesToDelete = [...explicitEdges]
+      const reconnectEdges: CanvasEdge[] = []
+      const deletedIds = new Set(nodesToDelete.map((n) => n.id))
+
+      for (const node of nodesToDelete) {
+        const incoming = allCurrentEdges.filter((e) => e.target === node.id && !seenEdgeIds.has(e.id))
+        const outgoing = allCurrentEdges.filter((e) => e.source === node.id && !seenEdgeIds.has(e.id))
+
+        // Collect connected edges not already in the delete list
+        ;[...incoming, ...outgoing].forEach((e) => {
+          edgesToDelete.push(e)
+          seenEdgeIds.add(e.id)
+        })
+
+        // Bridge each incoming source to each outgoing target
+        for (const inEdge of incoming) {
+          for (const outEdge of outgoing) {
+            if (inEdge.source === outEdge.target) continue // skip self-loop
+            // Skip bridge if either endpoint is itself being deleted
+            if (deletedIds.has(inEdge.source) || deletedIds.has(outEdge.target)) continue
+            reconnectEdges.push({
+              id: crypto.randomUUID(),
+              type: "canvasEdge",
+              source: inEdge.source,
+              target: outEdge.target,
+              sourceHandle: inEdge.sourceHandle ?? null,
+              targetHandle: outEdge.targetHandle ?? null,
+              data: { label: inEdge.data?.label ?? outEdge.data?.label },
+            })
+          }
+        }
+      }
+
+      onDelete({ nodes: nodesToDelete, edges: edgesToDelete })
+      if (reconnectEdges.length > 0) {
+        onEdgesChangeRef.current(reconnectEdges.map((e) => ({ type: "add" as const, item: e })))
+      }
+    },
+    [onDelete]
+  )
+
+  useKeyboardShortcuts({ instance, undo, redo, onDelete: handleDelete })
+
   // Stable refs so the native event listeners never go stale
   const screenToFlowPositionRef = useRef(screenToFlowPosition)
   useEffect(() => {
@@ -392,6 +455,12 @@ export function Canvas() {
 
     function onDrop(e: DragEvent) {
       e.preventDefault()
+
+      // Capture and immediately clear — no dragleave fires after a drop
+      const targetEdgeId = dragOverEdgeIdRef.current
+      dragOverEdgeIdRef.current = null
+      setDragOverEdgeId(null)
+
       const raw = e.dataTransfer?.getData("application/ghost-shape")
       if (!raw) return
 
@@ -436,9 +505,58 @@ export function Canvas() {
         height: h
       }
 
-      // Route through useLiveblocksFlow's own onNodesChange so the node is
-      // written to storage["flow"]["nodes"] — the path the hook actually reads.
       onNodesChangeRef.current([{ type: "add", item: newNode }])
+
+      // If dropped onto an edge, delete it and bridge through the new node
+      if (targetEdgeId) {
+        const targetEdge = edgesRef.current.find((ed) => ed.id === targetEdgeId)
+        if (targetEdge) {
+          // Compute flow direction to assign facing handles on the new node
+          const srcNode = nodesRef.current.find((n) => n.id === targetEdge.source)
+          const tgtNode = nodesRef.current.find((n) => n.id === targetEdge.target)
+          let newNodeInHandle: string | null = null
+          let newNodeOutHandle: string | null = null
+          if (srcNode && tgtNode) {
+            const srcCx = srcNode.position.x + (srcNode.width ?? 160) / 2
+            const srcCy = srcNode.position.y + (srcNode.height ?? 80) / 2
+            const tgtCx = tgtNode.position.x + (tgtNode.width ?? 160) / 2
+            const tgtCy = tgtNode.position.y + (tgtNode.height ?? 80) / 2
+            const dx = tgtCx - srcCx
+            const dy = tgtCy - srcCy
+            if (Math.abs(dx) >= Math.abs(dy)) {
+              newNodeInHandle = dx >= 0 ? "left" : "right"
+              newNodeOutHandle = dx >= 0 ? "right" : "left"
+            } else {
+              newNodeInHandle = dy >= 0 ? "top" : "bottom"
+              newNodeOutHandle = dy >= 0 ? "bottom" : "top"
+            }
+          }
+          onDeleteRef.current({ nodes: [], edges: [targetEdge] })
+          const sharedLabel = targetEdge.data?.label
+          const edgeA: CanvasEdge = {
+            id: crypto.randomUUID(),
+            type: "canvasEdge",
+            source: targetEdge.source,
+            target: id,
+            sourceHandle: targetEdge.sourceHandle ?? null,
+            targetHandle: newNodeInHandle,
+            data: { label: sharedLabel },
+          }
+          const edgeB: CanvasEdge = {
+            id: crypto.randomUUID(),
+            type: "canvasEdge",
+            source: id,
+            target: targetEdge.target,
+            sourceHandle: newNodeOutHandle,
+            targetHandle: targetEdge.targetHandle ?? null,
+            data: { label: sharedLabel },
+          }
+          onEdgesChangeRef.current([
+            { type: "add", item: edgeA },
+            { type: "add", item: edgeB },
+          ])
+        }
+      }
     }
 
     function onInsertShape(e: Event) {
@@ -506,6 +624,9 @@ export function Canvas() {
         onUndo={undo}
         onRedo={redo}
       />
+      <div className="absolute right-3 top-3 z-50">
+        <PresenceAvatarGroup />
+      </div>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -515,6 +636,8 @@ export function Canvas() {
         onDelete={onDelete}
         onEdgeClick={handleEdgeClick}
         onPaneClick={handlePaneClick}
+        onPaneMouseMove={handleMouseMove}
+        onPaneMouseLeave={handleMouseLeave}
         edgesReconnectable
         onReconnectStart={handleReconnectStart}
         onReconnect={handleReconnect}
@@ -530,7 +653,6 @@ export function Canvas() {
         colorMode="dark"
         fitView
       >
-        <Cursors />
         {settings.minimapVisible && (
           <MiniMap
             nodeComponent={MiniMapNodeRenderer}
@@ -550,6 +672,7 @@ export function Canvas() {
           />
         )}
       </ReactFlow>
+      <LiveCursors />
     </div>
   )
 }

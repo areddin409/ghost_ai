@@ -51,4 +51,44 @@ _None_
 _Tracked in [[progress]]_
 ```
 
-6. Report: "Created `context/specs/NN-slug.md`"
+6. Create a feature branch for this spec:
+   ```bash
+   git checkout -b spec/NN-slug
+   ```
+   Branch naming: `spec/` prefix + the same slug used for the filename.
+
+7. Report:
+   ```text
+   Created context/specs/NN-slug.md
+   Branch: spec/NN-slug
+   ```
+
+---
+
+## Development Standards
+
+Once a spec branch exists, follow these rules for the entire development session:
+
+**Git workflow**
+- All implementation work happens on `spec/NN-slug` — never commit spec work directly to `main`
+- No intermediate commits during active development — commit only at meaningful, working checkpoints (or at completion)
+- No code review until implementation is complete and the branch is ready to merge
+
+**Skill sequence for implementation**
+Use the following superpowers skills in order as work progresses:
+
+| When | Skill |
+|---|---|
+| Before planning implementation | `superpowers:writing-plans` |
+| Before any creative/feature design work | `superpowers:brainstorming` |
+| While executing an existing plan | `superpowers:subagent-driven-development` or `superpowers:executing-plans` |
+| When hitting a bug or unexpected behavior | `superpowers:systematic-debugging` |
+| Before marking any task done | `superpowers:verification-before-completion` |
+| When implementation is complete | `superpowers:finishing-a-development-branch` |
+| After finishing-a-development-branch | `superpowers:requesting-code-review` |
+| When review feedback arrives | `superpowers:receiving-code-review` |
+
+**Other available skills (invoke when relevant)**
+- `superpowers:test-driven-development` — when writing tests
+- `superpowers:dispatching-parallel-agents` — when multiple independent tasks can run in parallel
+- `superpowers:using-git-worktrees` — when isolating parallel work in separate worktrees

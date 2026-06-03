@@ -2,9 +2,9 @@
 type: spec
 id: 24
 title: Rangar Skills Package
-status: planned
+status: shipped
 phase: 1
-updated: 2026-06-01
+updated: 2026-06-02
 ---
 
 # Spec 24 — Rangar Skills Package
@@ -14,7 +14,7 @@ updated: 2026-06-01
 
 **References:** [[rangar-standard-design]] · [[23-rangar-vault-migration]]
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Architecture:** Each skill is a markdown file with YAML frontmatter (`name`, `description`) and natural-language instructions for the AI agent. Skills are organized into a `rangar-skills/` package at the project root with a `package.json` for installation. After installation via `npx skills install`, skills are invocable via the `Skill` tool using the `rangar:skill-name` prefix.
 
@@ -38,15 +38,15 @@ updated: 2026-06-01
 - Create: `rangar-skills/package.json`
 - Create: `rangar-skills/skills/` (directory)
 
-- [ ] #spec **Task 1: Set up the skills package**
+- [x] #spec **Task 1: Set up the skills package**
 
-- [ ] **Step 1: Create package structure**
+- [x] **Step 1: Create package structure**
 
 ```bash
 mkdir -p "d:/Web Dev/2026/ghost_ai/rangar-skills/skills"
 ```
 
-- [ ] **Step 2: Create package.json**
+- [x] **Step 2: Create package.json**
 
 Create `rangar-skills/package.json`:
 
@@ -59,7 +59,7 @@ Create `rangar-skills/package.json`:
 }
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add rangar-skills/
@@ -73,9 +73,9 @@ git commit -m "chore: scaffold rangar-skills package"
 **Files:**
 - Create: `rangar-skills/skills/session-start.md`
 
-- [ ] #spec **Task 2: Write rangar:session-start skill**
+- [x] #spec **Task 2: Write rangar:session-start skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/session-start.md`:
 
@@ -103,14 +103,14 @@ End with a one-sentence summary:
 Do not write to any files.
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/session-start.md
 git commit -m "feat: add rangar:session-start skill"
 ```
 
-- [ ] **Step 3: Install and test**
+- [x] **Step 3: Install and test**
 
 ```bash
 npx skills install ./rangar-skills
@@ -127,9 +127,9 @@ Expected: the Current State, Active, and Next sections from `context/rangar.md` 
 **Files:**
 - Create: `rangar-skills/skills/new-spec.md`
 
-- [ ] #spec **Task 3: Write rangar:new-spec skill**
+- [x] #spec **Task 3: Write rangar:new-spec skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/new-spec.md`:
 
@@ -193,14 +193,14 @@ Where `NN` is the zero-padded ID, `TITLE` is the title as entered, and `YYYY-MM-
 6. Report: "Created `context/specs/NN-slug.md`"
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/new-spec.md
 git commit -m "feat: add rangar:new-spec skill"
 ```
 
-- [ ] **Step 3: Install and test**
+- [x] **Step 3: Install and test**
 
 ```bash
 npx skills install ./rangar-skills
@@ -222,9 +222,9 @@ Delete the test spec: `git checkout -- context/specs/ && git clean -f context/sp
 **Files:**
 - Create: `rangar-skills/skills/new-issue.md`
 
-- [ ] #spec **Task 4: Write rangar:new-issue skill**
+- [x] #spec **Task 4: Write rangar:new-issue skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/new-issue.md`:
 
@@ -290,14 +290,14 @@ If no table exists yet in `active-issues.md`, create one with headers:
 8. Report: "Created `context/issues/SLUG.md` and logged in `active-issues.md`"
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/new-issue.md
 git commit -m "feat: add rangar:new-issue skill"
 ```
 
-- [ ] **Step 3: Install and test**
+- [x] **Step 3: Install and test**
 
 ```bash
 npx skills install ./rangar-skills
@@ -318,9 +318,9 @@ Clean up: `git checkout -- context/issues/ context/active-issues.md && git clean
 **Files:**
 - Create: `rangar-skills/skills/close-spec.md`
 
-- [ ] #spec **Task 5: Write rangar:close-spec skill**
+- [x] #spec **Task 5: Write rangar:close-spec skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/close-spec.md`:
 
@@ -356,14 +356,14 @@ YYYY-MM-DD — SUMMARY_TEXT
 7. Report: "Closed spec NN — TITLE. Updated N linked issues to fix-implemented."
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/close-spec.md
 git commit -m "feat: add rangar:close-spec skill"
 ```
 
-- [ ] **Step 3: Test with a dry run**
+- [x] **Step 3: Test with a dry run**
 
 Invoke `rangar:close-spec`. Enter `22-edge-enhancements` when prompted.
 
@@ -376,9 +376,9 @@ Verify the skill correctly reads the spec and reports current status without cor
 **Files:**
 - Create: `rangar-skills/skills/ship.md`
 
-- [ ] #spec **Task 6: Write rangar:ship skill**
+- [x] #spec **Task 6: Write rangar:ship skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/ship.md`:
 
@@ -447,7 +447,7 @@ git commit -m "vault: ship spec NN — TITLE"
 Report: "Shipped spec NN — TITLE. Vault committed."
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/ship.md
@@ -461,9 +461,9 @@ git commit -m "feat: add rangar:ship skill"
 **Files:**
 - Create: `rangar-skills/skills/review-specs.md`
 
-- [ ] #spec **Task 7: Write rangar:review:specs skill**
+- [x] #spec **Task 7: Write rangar:review:specs skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/review-specs.md`:
 
@@ -508,14 +508,14 @@ Checked: N specs
 (Print "✓ No issues found" only if all checks pass for all files.)
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/review-specs.md
 git commit -m "feat: add rangar:review:specs skill"
 ```
 
-- [ ] **Step 3: Test**
+- [x] **Step 3: Test**
 
 Invoke `rangar:review:specs`.
 
@@ -528,9 +528,9 @@ Expected after migration (spec 23 complete): all 22 specs pass. If spec 23 is no
 **Files:**
 - Create: `rangar-skills/skills/review-issues.md`
 
-- [ ] #spec **Task 8: Write rangar:review:issues skill**
+- [x] #spec **Task 8: Write rangar:review:issues skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/review-issues.md`:
 
@@ -569,7 +569,7 @@ Checked: N issues
 ```
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/review-issues.md
@@ -583,9 +583,9 @@ git commit -m "feat: add rangar:review:issues skill"
 **Files:**
 - Create: `rangar-skills/skills/review-links.md`
 
-- [ ] #spec **Task 9: Write rangar:review:links skill**
+- [x] #spec **Task 9: Write rangar:review:links skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/review-links.md`:
 
@@ -629,7 +629,7 @@ Checked: N links, M issue files, P active specs
 ```
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/review-links.md
@@ -643,9 +643,9 @@ git commit -m "feat: add rangar:review:links skill"
 **Files:**
 - Create: `rangar-skills/skills/review-sync.md`
 
-- [ ] #spec **Task 10: Write rangar:review:sync skill**
+- [x] #spec **Task 10: Write rangar:review:sync skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/review-sync.md`:
 
@@ -688,7 +688,7 @@ Checked: N specs
 ```
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/review-sync.md
@@ -702,9 +702,9 @@ git commit -m "feat: add rangar:review:sync skill"
 **Files:**
 - Create: `rangar-skills/skills/review-drift.md`
 
-- [ ] #spec **Task 11: Write rangar:review:drift skill**
+- [x] #spec **Task 11: Write rangar:review:drift skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/review-drift.md`:
 
@@ -743,7 +743,7 @@ Checked: N paths across M specs
 ```
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/review-drift.md
@@ -757,9 +757,9 @@ git commit -m "feat: add rangar:review:drift skill"
 **Files:**
 - Create: `rangar-skills/skills/review-debt.md`
 
-- [ ] #spec **Task 12: Write rangar:review:debt skill**
+- [x] #spec **Task 12: Write rangar:review:debt skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/review-debt.md`:
 
@@ -807,7 +807,7 @@ Orphan issues: Z issues
 ```
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/review-debt.md
@@ -821,9 +821,9 @@ git commit -m "feat: add rangar:review:debt skill"
 **Files:**
 - Create: `rangar-skills/skills/review.md`
 
-- [ ] #spec **Task 13: Write rangar:review parent skill**
+- [x] #spec **Task 13: Write rangar:review parent skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/review.md`:
 
@@ -881,7 +881,7 @@ Needs attention: [list categories with findings]
 Do not fix anything. Present findings only. The human decides what to act on.
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/review.md
@@ -895,9 +895,9 @@ git commit -m "feat: add rangar:review parent skill"
 **Files:**
 - Create: `rangar-skills/skills/init.md`
 
-- [ ] #spec **Task 14: Write rangar:init skill**
+- [x] #spec **Task 14: Write rangar:init skill**
 
-- [ ] **Step 1: Create the skill file**
+- [x] **Step 1: Create the skill file**
 
 Create `rangar-skills/skills/init.md`:
 
@@ -1137,7 +1137,7 @@ Run rangar:session-start to begin.
 ```
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add rangar-skills/skills/init.md
@@ -1151,9 +1151,9 @@ git commit -m "feat: add rangar:init skill"
 **Files:**
 - No new files — installation and testing only
 
-- [ ] #spec **Task 15: Install skills and validate end-to-end**
+- [x] #spec **Task 15: Install skills and validate end-to-end**
 
-- [ ] **Step 1: Install the skills package**
+- [x] **Step 1: Install the skills package**
 
 ```bash
 cd "d:/Web Dev/2026/ghost_ai"
@@ -1162,13 +1162,13 @@ npx skills install ./rangar-skills
 
 Expected: skills install without errors. All 13 skills (`rangar:session-start`, `rangar:new-spec`, `rangar:new-issue`, `rangar:close-spec`, `rangar:ship`, `rangar:review`, `rangar:review:specs`, `rangar:review:issues`, `rangar:review:links`, `rangar:review:sync`, `rangar:review:drift`, `rangar:review:debt`, `rangar:init`) appear in the skills list.
 
-- [ ] **Step 2: Test rangar:session-start**
+- [x] **Step 2: Test rangar:session-start**
 
 Invoke `rangar:session-start`.
 
 Expected: Current State and Active sections from `context/rangar.md` are displayed. Open issue count is reported. One-sentence summary at the end.
 
-- [ ] **Step 3: Test rangar:new-spec (and clean up)**
+- [x] **Step 3: Test rangar:new-spec (and clean up)**
 
 Invoke `rangar:new-spec`. Enter "Validation Test Spec" when prompted.
 
@@ -1179,13 +1179,13 @@ Clean up:
 rm "context/specs/25-validation-test-spec.md"
 ```
 
-- [ ] **Step 4: Run rangar:review**
+- [x] **Step 4: Run rangar:review**
 
 Invoke `rangar:review`.
 
 Expected: consolidated report from all 6 sub-skills. With spec 23 complete, findings should be minimal. Review any findings and note whether they are expected or actual issues.
 
-- [ ] **Step 5: Commit skills-lock.json if generated**
+- [x] **Step 5: Commit skills-lock.json if generated**
 
 ```bash
 git status
@@ -1197,14 +1197,20 @@ If `skills-lock.json` was updated by the install: `git add skills-lock.json && g
 
 ## Check When Done
 
-- [ ] `rangar-skills/skills/` contains exactly 13 skill files: `session-start.md`, `new-spec.md`, `new-issue.md`, `close-spec.md`, `ship.md`, `review.md`, `review-specs.md`, `review-issues.md`, `review-links.md`, `review-sync.md`, `review-drift.md`, `review-debt.md`, `init.md`
-- [ ] All 13 skills are installed and visible in the skills list
-- [ ] `rangar:session-start` reads `rangar.md` and reports correctly
-- [ ] `rangar:new-spec` creates a correctly numbered, correctly formatted spec file
-- [ ] `rangar:new-issue` creates an issue file and adds a row to `active-issues.md`
-- [ ] `rangar:review` runs all 6 sub-skills and produces a consolidated report
-- [ ] `rangar:review:drift` correctly flags `components/editor/user-settings-modal.tsx` in spec 22 if it wasn't fixed by spec 23 (it should be clean after spec 23)
-- [ ] `rangar:init` skill file exists and its Phase 1 glob logic is correct (review the file manually)
+- [x] `rangar-skills/skills/` contains exactly 13 skill files: `session-start.md`, `new-spec.md`, `new-issue.md`, `close-spec.md`, `ship.md`, `review.md`, `review-specs.md`, `review-issues.md`, `review-links.md`, `review-sync.md`, `review-drift.md`, `review-debt.md`, `init.md`
+- [x] All 13 skills are installed and visible in the skills list
+- [x] `rangar:session-start` reads `rangar.md` and reports correctly
+- [x] `rangar:new-spec` creates a correctly numbered, correctly formatted spec file
+- [x] `rangar:new-issue` creates an issue file and adds a row to `active-issues.md`
+- [x] `rangar:review` runs all 6 sub-skills and produces a consolidated report
+- [x] `rangar:review:drift` correctly flags `components/editor/user-settings-modal.tsx` in spec 22 if it wasn't fixed by spec 23 (it should be clean after spec 23)
+- [x] `rangar:init` skill file exists and its Phase 1 glob logic is correct (review the file manually)
+
+---
+
+## Shipped
+
+2026-06-02 — All 13 Rangar skills created and installed: session-start, new-spec, new-issue, close-spec, ship, review (parent), review:specs, review:issues, review:links, review:sync, review:drift, review:debt, and init. Skills reorganized into SKILL.md subdirectory structure per skills CLI convention and installed via the superpowers plugin.
 
 ---
 

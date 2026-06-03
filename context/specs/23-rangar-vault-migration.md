@@ -2,9 +2,9 @@
 type: spec
 id: 23
 title: Rangar Vault Migration
-status: planned
+status: shipped
 phase: 1
-updated: 2026-06-01
+updated: 2026-06-02
 ---
 
 # Spec 23 — Rangar Vault Migration
@@ -14,7 +14,7 @@ updated: 2026-06-01
 
 **References:** [[rangar-standard-design]] · [[architecture-context]]
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Architecture:** Mechanical migration — no app code changes. Use `git mv` for all renames to preserve file history. A Python script handles bulk frontmatter fixes across all 22 specs. New vault files are created from the templates in `rangar-standard-design.md`.
 
@@ -38,15 +38,15 @@ updated: 2026-06-01
 - Create: `context/specs/` (directory)
 - Move: `context/feature-specs/[0-9][0-9]-*.md` × 22 → `context/specs/`
 
-- [ ] #spec **Task 1: Move spec files into specs/**
+- [x] #spec **Task 1: Move spec files into specs/**
 
-- [ ] **Step 1: Create specs/ directory**
+- [x] **Step 1: Create specs/ directory**
 
 ```bash
 mkdir "d:/Web Dev/2026/ghost_ai/context/specs"
 ```
 
-- [ ] **Step 2: Move all spec files with git mv (preserves history)**
+- [x] **Step 2: Move all spec files with git mv (preserves history)**
 
 Run from `d:/Web Dev/2026/ghost_ai`:
 ```bash
@@ -57,14 +57,14 @@ done
 
 Expected: 24 lines of output (22 existing specs + specs 23 and 24 which are also in feature-specs/). No errors.
 
-- [ ] **Step 3: Verify count**
+- [x] **Step 3: Verify count**
 
 ```bash
 ls context/specs/ | wc -l
 ```
 Expected: `24`
 
-- [ ] **Step 4: Remove feature-specs/ directory**
+- [x] **Step 4: Remove feature-specs/ directory**
 
 ```bash
 ls context/feature-specs/
@@ -72,7 +72,7 @@ ls context/feature-specs/
 If output is empty: `rmdir context/feature-specs`
 If files remain: move them manually with `git mv` before removing.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add context/specs/ context/feature-specs
@@ -92,9 +92,9 @@ git commit -m "chore: move spec files from feature-specs/ to specs/"
 - Rename: `context/specs/17-canvas-ergonomics-canvas-ergonomics.md` → `17-canvas-ergonomics.md`
 - Rename: `context/specs/18-starter-template-starter-template.md` → `18-starter-template.md`
 
-- [ ] #spec **Task 2: Fix double-extension and noisy filenames**
+- [x] #spec **Task 2: Fix double-extension and noisy filenames**
 
-- [ ] **Step 1: Fix double extensions**
+- [x] **Step 1: Fix double extensions**
 
 ```bash
 cd "d:/Web Dev/2026/ghost_ai"
@@ -102,7 +102,7 @@ git mv context/specs/09-share-dialog.md.md context/specs/09-share-dialog.md
 git mv context/specs/11-base-canvas.md.md context/specs/11-base-canvas.md
 ```
 
-- [ ] **Step 2: Fix noisy duplicate-slug filenames**
+- [x] **Step 2: Fix noisy duplicate-slug filenames**
 
 ```bash
 git mv context/specs/13-node-shape-node-shape.md context/specs/13-node-shape.md
@@ -112,14 +112,14 @@ git mv context/specs/17-canvas-ergonomics-canvas-ergonomics.md context/specs/17-
 git mv context/specs/18-starter-template-starter-template.md context/specs/18-starter-template.md
 ```
 
-- [ ] **Step 3: Verify no bad names remain**
+- [x] **Step 3: Verify no bad names remain**
 
 ```bash
 ls context/specs/ | grep -E '\.md\.md|-node-shape$|-node-editing$|-color-toolbar-color|-ergonomics-ergonomics|-starter-template-starter'
 ```
 Expected: no output.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add context/specs/
@@ -141,9 +141,9 @@ Current state of each spec:
 - Header `# Feature NN — Title` → `# Spec NN — Title`
 - Footer `_Tracked in [[progress]]_` → `_Tracked in [[progress]]_`
 
-- [ ] #spec **Task 3: Fix all spec frontmatter**
+- [x] #spec **Task 3: Fix all spec frontmatter**
 
-- [ ] **Step 1: Create the migration script**
+- [x] **Step 1: Create the migration script**
 
 Create `context/fix-spec-frontmatter.py`:
 
@@ -230,7 +230,7 @@ for p in specs:
 print(f'\nDone. Processed {len(specs)} files.')
 ```
 
-- [ ] **Step 2: Run the script from the project root**
+- [x] **Step 2: Run the script from the project root**
 
 ```bash
 cd "d:/Web Dev/2026/ghost_ai"
@@ -245,7 +245,7 @@ Fixed: 02-editor.md → id: 2, title: Editor
 Done. Processed 22 files.
 ```
 
-- [ ] **Step 3: Spot-check three specs**
+- [x] **Step 3: Spot-check three specs**
 
 Open these files and verify the frontmatter manually:
 
@@ -263,13 +263,13 @@ updated: <original date>
 
 `context/specs/21-editor-folder-refactor.md` — should have `status: shipped` (was `completed`)
 
-- [ ] **Step 4: Delete the fix script**
+- [x] **Step 4: Delete the fix script**
 
 ```bash
 rm context/fix-spec-frontmatter.py
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add context/specs/
@@ -285,9 +285,9 @@ git commit -m "chore: fix spec frontmatter — type, id, title, phase, status vo
 
 The File Map references `components/editor/user-settings-modal.tsx` — this file moved to `components/editor/dialogs/user-settings-modal.tsx` during the editor folder refactor (spec 21).
 
-- [ ] #spec **Task 4: Fix spec 22 file map path**
+- [x] #spec **Task 4: Fix spec 22 file map path**
 
-- [ ] **Step 1: Update both occurrences**
+- [x] **Step 1: Update both occurrences**
 
 In `context/specs/22-edge-enhancements.md`, find and replace:
 - Old: `` `components/editor/user-settings-modal.tsx` ``
@@ -295,7 +295,7 @@ In `context/specs/22-edge-enhancements.md`, find and replace:
 
 The path appears twice: once in the File Map table and once in a task step.
 
-- [ ] **Step 2: Verify**
+- [x] **Step 2: Verify**
 
 ```bash
 grep "user-settings-modal" context/specs/22-edge-enhancements.md
@@ -303,7 +303,7 @@ grep "user-settings-modal" context/specs/22-edge-enhancements.md
 
 Expected: both lines show `dialogs/user-settings-modal.tsx`, none show the old path.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add context/specs/22-edge-enhancements.md
@@ -318,16 +318,16 @@ git commit -m "fix: update spec 22 file map — user-settings-modal moved to dia
 - Move: `context/progress-tracker.md` → `context/progress.md`
 - Move: `context/current-issues.md` → `context/active-issues.md`
 
-- [ ] #spec **Task 5: Rename progress-tracker and current-issues**
+- [x] #spec **Task 5: Rename progress-tracker and current-issues**
 
-- [ ] **Step 1: Rename progress-tracker.md**
+- [x] **Step 1: Rename progress-tracker.md**
 
 ```bash
 cd "d:/Web Dev/2026/ghost_ai"
 git mv context/progress-tracker.md context/progress.md
 ```
 
-- [ ] **Step 2: Update progress.md frontmatter**
+- [x] **Step 2: Update progress.md frontmatter**
 
 Open `context/progress.md`. Replace the frontmatter block (the `---...---` at the top) with:
 
@@ -340,13 +340,13 @@ updated: 2026-06-01
 
 Keep all content below the frontmatter unchanged.
 
-- [ ] **Step 3: Rename current-issues.md**
+- [x] **Step 3: Rename current-issues.md**
 
 ```bash
 git mv context/current-issues.md context/active-issues.md
 ```
 
-- [ ] **Step 4: Update active-issues.md frontmatter and add governance callout**
+- [x] **Step 4: Update active-issues.md frontmatter and add governance callout**
 
 Open `context/active-issues.md`. Replace the frontmatter with:
 
@@ -366,7 +366,7 @@ Then insert this callout immediately after the closing `---`, before any existin
 > - Every issue must have a `spec_ref` or be explicitly marked `orphan: true`
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add context/progress.md context/active-issues.md
@@ -381,9 +381,9 @@ git commit -m "chore: rename progress-tracker → progress, current-issues → a
 - Create: `context/assets/`
 - Move: all files from `context/screenshots/` and `context/screentshots/` → `context/assets/`
 
-- [ ] #spec **Task 6: Merge screenshot dirs into assets/**
+- [x] #spec **Task 6: Merge screenshot dirs into assets/**
 
-- [ ] **Step 1: Create assets/ and move tracked files**
+- [x] **Step 1: Create assets/ and move tracked files**
 
 ```bash
 cd "d:/Web Dev/2026/ghost_ai"
@@ -393,27 +393,27 @@ git mv context/screenshots/* context/assets/ 2>/dev/null; echo "screenshots move
 
 If `screenshots/` is empty or untracked: `echo "screenshots/ was empty, skipping"`
 
-- [ ] **Step 2: Move untracked files from screentshots/ (typo dir)**
+- [x] **Step 2: Move untracked files from screentshots/ (typo dir)**
 
 ```bash
 mv context/screentshots/* context/assets/ 2>/dev/null; echo "screentshots moved"
 rmdir context/screentshots 2>/dev/null || true
 ```
 
-- [ ] **Step 3: Move stray pasted images from vault root**
+- [x] **Step 3: Move stray pasted images from vault root**
 
 ```bash
 ls context/Pasted\ image* 2>/dev/null && mv context/Pasted\ image*.png context/assets/ || echo "no stray images"
 ```
 
-- [ ] **Step 4: Remove empty screenshots/ dir**
+- [x] **Step 4: Remove empty screenshots/ dir**
 
 ```bash
 git rm -r --cached context/screenshots/ 2>/dev/null || true
 rmdir context/screenshots 2>/dev/null || true
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add context/assets/ context/screenshots context/screentshots
@@ -430,9 +430,9 @@ git commit -m "chore: merge screenshots dirs into assets/"
 - Create: `context/templates/tpl-context.md`
 - Delete: `context/templates/feature-spec.md`, `issue.md`, `current-issues.md`
 
-- [ ] #spec **Task 7: Replace Obsidian templates**
+- [x] #spec **Task 7: Replace Obsidian templates**
 
-- [ ] **Step 1: Create tpl-spec.md**
+- [x] **Step 1: Create tpl-spec.md**
 
 Create `context/templates/tpl-spec.md`:
 
@@ -473,7 +473,7 @@ _Tracked in [[progress]]_
 
 Note: `rangar:new-spec` fills in `id` and `title` programmatically — the template leaves them blank for agent fill-in.
 
-- [ ] **Step 2: Create tpl-issue.md**
+- [x] **Step 2: Create tpl-issue.md**
 
 Create `context/templates/tpl-issue.md`:
 
@@ -505,7 +505,7 @@ _Not yet identified_
 _Part of [[README|Ghost AI Vault]]_
 ```
 
-- [ ] **Step 3: Create tpl-context.md**
+- [x] **Step 3: Create tpl-context.md**
 
 Create `context/templates/tpl-context.md`:
 
@@ -526,7 +526,7 @@ updated: <% tp.date.now("YYYY-MM-DD") %>
 _Part of [[README|Ghost AI Vault]]_
 ```
 
-- [ ] **Step 4: Remove old templates**
+- [x] **Step 4: Remove old templates**
 
 ```bash
 cd "d:/Web Dev/2026/ghost_ai"
@@ -535,7 +535,7 @@ git rm context/templates/issue.md
 git rm context/templates/current-issues.md
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add context/templates/
@@ -549,9 +549,9 @@ git commit -m "chore: replace old templates with tpl-spec, tpl-issue, tpl-contex
 **Files:**
 - Modify: `context/ai-workflow-rules.md`, `context/architecture-context.md`, `context/code-standards.md`, `context/project-overview.md`, `context/ui-context.md`
 
-- [ ] #spec **Task 8: Add type: context to existing context notes**
+- [x] #spec **Task 8: Add type: context to existing context notes**
 
-- [ ] **Step 1: Check current frontmatter on each file**
+- [x] **Step 1: Check current frontmatter on each file**
 
 ```bash
 for f in context/ai-workflow-rules.md context/architecture-context.md context/code-standards.md context/project-overview.md context/ui-context.md; do
@@ -559,7 +559,7 @@ for f in context/ai-workflow-rules.md context/architecture-context.md context/co
 done
 ```
 
-- [ ] **Step 2: For each file, ensure frontmatter has type: context and status: active**
+- [x] **Step 2: For each file, ensure frontmatter has type: context and status: active**
 
 For any file missing `type: context`, add to its frontmatter:
 ```yaml
@@ -571,7 +571,7 @@ For any file missing `status:`, add `status: active`.
 
 Do not remove existing fields — only add the missing ones.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add context/ai-workflow-rules.md context/architecture-context.md context/code-standards.md context/project-overview.md context/ui-context.md
@@ -585,9 +585,9 @@ git commit -m "chore: add type: context and status: active to existing context n
 **Files:**
 - Create: `context/rangar.md`
 
-- [ ] #spec **Task 9: Create rangar.md**
+- [x] #spec **Task 9: Create rangar.md**
 
-- [ ] **Step 1: Create the file**
+- [x] **Step 1: Create the file**
 
 Create `context/rangar.md`:
 
@@ -655,11 +655,11 @@ _None_
 Rangar v1.0 design locked. Skills package (spec 24) is the major remaining deliverable to make the standard portable and self-sustaining.
 ```
 
-- [ ] **Step 2: Verify in Obsidian**
+- [x] **Step 2: Verify in Obsidian**
 
 Open `context/rangar.md`. Confirm frontmatter parses, all sections render, thresholds are visible in the Properties panel.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add context/rangar.md
@@ -673,9 +673,9 @@ git commit -m "chore: create rangar.md living log"
 **Files:**
 - Modify: `context/README.md`
 
-- [ ] #spec **Task 10: Update README.md as Rangar vault hub**
+- [x] #spec **Task 10: Update README.md as Rangar vault hub**
 
-- [ ] **Step 1: Replace README.md content**
+- [x] **Step 1: Replace README.md content**
 
 Replace the entire contents of `context/README.md` with:
 
@@ -730,7 +730,7 @@ SORT updated ASC
 - [[rangar-standard-design]] — vault standard reference
 ````
 
-- [ ] **Step 2: Open in Obsidian reading mode**
+- [x] **Step 2: Open in Obsidian reading mode**
 
 Open `context/README.md` in Obsidian and switch to Reading View. Verify:
 - "Active Specs" Dataview table renders (may be empty if no active specs — that's OK)
@@ -738,7 +738,7 @@ Open `context/README.md` in Obsidian and switch to Reading View. Verify:
 - "Stale Context Notes" table renders
 - All wikilinks are not broken (blue, not red)
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add context/README.md
@@ -754,9 +754,9 @@ git commit -m "chore: rebuild README.md as Rangar hub with Dataview queries"
 
 The current `AGENTS.md` contains `@AGENTS.md` which references app codebase instructions. The Rangar identity block is prepended — it does not replace the existing content.
 
-- [ ] #spec **Task 11: Prepend Rangar identity block to AGENTS.md**
+- [x] #spec **Task 11: Prepend Rangar identity block to AGENTS.md**
 
-- [ ] **Step 1: Read the current opening of AGENTS.md**
+- [x] **Step 1: Read the current opening of AGENTS.md**
 
 ```bash
 head -5 "d:/Web Dev/2026/ghost_ai/AGENTS.md"
@@ -764,7 +764,7 @@ head -5 "d:/Web Dev/2026/ghost_ai/AGENTS.md"
 
 Confirm the file currently starts with `@AGENTS.md` or similar app-context instructions.
 
-- [ ] **Step 2: Prepend the Rangar block**
+- [x] **Step 2: Prepend the Rangar block**
 
 Open `AGENTS.md` and insert the following at the very top (before the existing first line):
 
@@ -849,7 +849,7 @@ Architecture, implementation approach, and tech choices belong in specs or commi
 
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add AGENTS.md
@@ -860,9 +860,9 @@ git commit -m "chore: prepend Rangar identity block to AGENTS.md"
 
 ### Task 12: Final verification
 
-- [ ] #spec **Task 12: Verify migration and confirm app builds**
+- [x] #spec **Task 12: Verify migration and confirm app builds**
 
-- [ ] **Step 1: Check specs/ state**
+- [x] **Step 1: Check specs/ state**
 
 ```bash
 ls context/specs/ | wc -l
@@ -874,28 +874,28 @@ ls context/specs/ | grep -E '\.md\.md|-node-shape-node|-editing-node|-toolbar-co
 ```
 Expected: no output.
 
-- [ ] **Step 2: Check a spec's frontmatter**
+- [x] **Step 2: Check a spec's frontmatter**
 
 ```bash
 head -10 context/specs/13-node-shape.md
 ```
 Expected: `type: spec`, `id: 13`, `title: Node Shape`, `phase: 1`, `status: shipped`
 
-- [ ] **Step 3: Verify new vault files exist**
+- [x] **Step 3: Verify new vault files exist**
 
 ```bash
 ls context/rangar.md context/progress.md context/active-issues.md context/assets/
 ```
 Expected: all present, no "No such file" errors.
 
-- [ ] **Step 4: Verify old names are gone**
+- [x] **Step 4: Verify old names are gone**
 
 ```bash
 ls context/progress-tracker.md context/current-issues.md context/feature-specs/ context/screenshots/ 2>&1
 ```
 Expected: all "No such file or directory"
 
-- [ ] **Step 5: Run app build to confirm nothing broke**
+- [x] **Step 5: Run app build to confirm nothing broke**
 
 ```bash
 cd "d:/Web Dev/2026/ghost_ai"
@@ -907,18 +907,24 @@ Expected: build passes with no errors.
 
 ## Check When Done
 
-- [ ] `context/specs/` has 22 files — no double extensions, no duplicate-slug names
-- [ ] All spec frontmatter: `type: spec`, `id`, `title`, `phase`, `status` — no `feature` field, no `type: feature-spec`
-- [ ] Spec 21 has `status: shipped` (was `completed`)
-- [ ] Spec 22 file map shows `dialogs/user-settings-modal.tsx`
-- [ ] `context/active-issues.md` exists with governance callout at top
-- [ ] `context/progress.md` exists (renamed from progress-tracker.md)
-- [ ] `context/assets/` exists; `context/screenshots/` and `context/screentshots/` do not
-- [ ] `context/templates/` has `tpl-spec.md`, `tpl-issue.md`, `tpl-context.md` — old templates removed
-- [ ] `context/rangar.md` exists with correct structure and thresholds in frontmatter
-- [ ] `context/README.md` Dataview queries render without errors in Obsidian reading mode
-- [ ] `AGENTS.md` at project root begins with `# Rangar`
-- [ ] `npm run build` passes — no app code was changed
+- [x] `context/specs/` has 22 files — no double extensions, no duplicate-slug names
+- [x] All spec frontmatter: `type: spec`, `id`, `title`, `phase`, `status` — no `feature` field, no `type: feature-spec`
+- [x] Spec 21 has `status: shipped` (was `completed`)
+- [x] Spec 22 file map shows `dialogs/user-settings-modal.tsx`
+- [x] `context/active-issues.md` exists with governance callout at top
+- [x] `context/progress.md` exists (renamed from progress-tracker.md)
+- [x] `context/assets/` exists; `context/screenshots/` and `context/screentshots/` do not
+- [x] `context/templates/` has `tpl-spec.md`, `tpl-issue.md`, `tpl-context.md` — old templates removed
+- [x] `context/rangar.md` exists with correct structure and thresholds in frontmatter
+- [x] `context/README.md` Dataview queries render without errors in Obsidian reading mode
+- [x] `AGENTS.md` at project root begins with `# Rangar`
+- [x] `npm run build` passes — no app code was changed
+
+---
+
+## Shipped
+
+2026-06-02 — All vault migration tasks completed: spec files moved from feature-specs/ to specs/, frontmatter normalized (type, id, title, phase, status vocabulary), vault files renamed (progress-tracker → progress, current-issues → active-issues), templates replaced with tpl-spec/tpl-issue/tpl-context, rangar.md created, README.md rebuilt as Dataview hub, and AGENTS.md updated with the Rangar identity block.
 
 ---
 

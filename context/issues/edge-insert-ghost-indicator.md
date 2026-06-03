@@ -1,7 +1,7 @@
 ---
 type: issue
 title: Edge Insert — "Insert Here" Persists and Shape Not Always Inserted Between Nodes
-status: Open
+status: Fix Implemented
 priority: High
 spec_ref: "22"
 opened: 2026-06-02
@@ -30,11 +30,15 @@ When dragging a shape from the panel and hovering over an edge, the dashed "Inse
 
 ## Root Cause
 
-_Under investigation_
+Two separate issues:
+1. `onDrop` in `canvas.tsx` never cleared `dragOverEdgeIdRef.current` or called `setDragOverEdgeId(null)` — no `dragleave` event fires after a drop, so the indicator stayed permanently.
+2. `onDrop` had no logic to read `dragOverEdgeIdRef.current` and perform an edge split — Task 6 of spec 22 was unimplemented.
 
 ## Fix
 
-_Not yet identified_
+Fixed in `components/editor/canvas/canvas.tsx` `onDrop`:
+1. At the very top of `onDrop`, capture the current edge ID and immediately clear both `dragOverEdgeIdRef.current` and `setDragOverEdgeId(null)`.
+2. After adding the new node, if `targetEdgeId` was set: delete the original edge via `onDelete`, then create two replacement edges (`source → newNode`, `newNode → target`) both inheriting the original label.
 
 ---
 

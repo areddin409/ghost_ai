@@ -10,6 +10,8 @@ shape_rendering_verified_evidence: ""
 minimap_verified: Pending
 minimap_verified_date: ""
 minimap_verified_evidence: ""
+edge_insert_status: Fix Implemented
+exampleProperty: false
 ---
 
 > [!warning] Governance Rules
@@ -43,7 +45,7 @@ minimap_verified_evidence: ""
 
 ### Edge Insert — "Insert Here" Persists and Shape Not Always Inserted Between Nodes
 
-**Status:** `INPUT[inlineSelect(option(Open), option(Fix Implemented), option(Resolved)):edge_insert_status]` · **Spec:** [[specs/22-edge-enhancements|Spec 22 — Edge Enhancements]] · **Opened:** 2026-06-02
+**Status:** `INPUT[inlineSelect(option(Open), option(Fix Implemented), option(Resolved)):edge_insert_status]` · **Spec:** [[specs/22-edge-enhancements|Spec 22 — Edge Enhancements]] · **Opened:** 2026-06-02 · **Fixed:** 2026-06-02
 
 **Description:** After dropping a shape onto an edge, the "Insert here" dashed indicator is never cleared and remains on the canvas permanently. The dropped node is also not consistently spliced between the source and target nodes (existing edge is not always split into two edges through the new node).
 
