@@ -8,7 +8,7 @@ interface RawProject {
   name: string
   description: string | null
   status: string
-  canvasJsonPath: string | null
+  canvasBlobUrl: string | null
   createdAt: Date
   updatedAt: Date
 }
@@ -20,7 +20,7 @@ function serialize(p: RawProject): Project {
     name: p.name,
     description: p.description,
     status: p.status,
-    canvasJsonPath: p.canvasJsonPath,
+    canvasBlobUrl: p.canvasBlobUrl,
     createdAt: p.createdAt.toISOString(),
     updatedAt: p.updatedAt.toISOString()
   }

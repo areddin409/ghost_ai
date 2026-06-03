@@ -9,7 +9,7 @@ export interface Project {
   name: string
   description: string | null
   status: string
-  canvasJsonPath: string | null
+  canvasBlobUrl: string | null
   createdAt: string
   updatedAt: string
 }
