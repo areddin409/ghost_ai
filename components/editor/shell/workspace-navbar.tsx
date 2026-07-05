@@ -16,6 +16,8 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from "@/components/ui/tooltip"
+import { SaveStatusIndicator } from "@/components/editor/canvas/save-status-indicator"
+import type { SaveStatus } from "@/components/editor/canvas/save-status-indicator"
 
 interface WorkspaceNavbarProps {
   projectName: string
@@ -26,6 +28,7 @@ interface WorkspaceNavbarProps {
   onShare: () => void
   onOpenSettings: () => void
   onOpenTemplates: () => void
+  saveStatus?: SaveStatus
 }
 
 export function WorkspaceNavbar({
@@ -37,6 +40,7 @@ export function WorkspaceNavbar({
   onShare,
   onOpenSettings,
   onOpenTemplates,
+  saveStatus = "idle",
 }: WorkspaceNavbarProps) {
   return (
     <nav className="fixed inset-x-0 top-0 z-50 flex h-14 items-center gap-3 border-b border-border-default bg-bg-surface px-3">
@@ -63,6 +67,7 @@ export function WorkspaceNavbar({
       </div>
 
       <div className="flex flex-1 items-center justify-end gap-2">
+        <SaveStatusIndicator saveStatus={saveStatus} />
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
