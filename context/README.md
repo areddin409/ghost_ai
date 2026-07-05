@@ -1,6 +1,6 @@
 ---
 type: hub
-updated: 2026-06-02
+updated: 2026-07-05
 ---
 
 # Ghost AI Vault
@@ -25,7 +25,7 @@ SORT updated DESC
 ```dataview
 TABLE title, status, spec_ref, updated
 FROM "issues"
-WHERE type = "issue" AND (status = "Open" OR status = "In Progress" OR status = "Fix Implemented")
+WHERE type = "issue" AND (status = "open" OR status = "in-progress" OR status = "fix-implemented")
 SORT updated DESC
 ```
 

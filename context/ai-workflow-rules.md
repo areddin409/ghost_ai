@@ -34,7 +34,7 @@ If a change cannot be verified end to end quickly, the scope is too broad — sp
 
 - Do not invent product behavior that is not defined in the context files.
 - If a requirement is ambiguous, resolve it in the relevant context file before implementing.
-- If a requirement is missing, add it as an open question in `progress-tracker.md` before continuing.
+- If a requirement is missing, add it as an open question in [[progress.md]] before continuing.
 
 ## Protected Foundation Components
 
@@ -64,41 +64,39 @@ Progress state must reflect the actual state of the implementation, not the inte
 
 ## Issue Lifecycle
 
-Issues are tracked in `context/current-issues.md`. Follow these rules exactly.
+Issues are tracked in `context/active-issues.md` (operational log) and archived in `context/issues/`. Follow these rules exactly.
 
 ### States
 
-`Open` → `Fix Implemented (Pending Verification)` → `Resolved`
+`open` → `fix-implemented` → `resolved`
 
-### Moving Open → Fix Implemented
+### Moving open → fix-implemented
 
 An agent may do this only after:
 
 1. Running the app and observing the fix working with their own eyes
-2. Adding a row to the issue's **Verification Log** with: date, what was run, what was observed
-3. Checking off the relevant investigation checklist items with the date
+2. Filling the issue's **Verification** fields (result, date, evidence) in `active-issues.md`
 
-Do not move an issue to Fix Implemented just because code was written.
+Do not move an issue to `fix-implemented` just because code was written.
 
-### Moving Fix Implemented → Resolved
+### Moving fix-implemented → resolved
 
-- **Only the user may do this.** The agent must wait for explicit user confirmation.
-- Once confirmed, the agent updates the Status field to `Resolved`, adds the resolution date, and moves the entry under `## Resolved`.
+- **Only the user may do this** by setting the Verification result to `Pass` and confirming.
+- Once confirmed, the agent updates the status to `resolved`, adds the resolution date, and moves the entry under `## Resolved`.
 
 ### If Verification Fails
 
-Move the issue back to `Open` and add a `Verification failed: <reason>` row to the Verification Log with the date.
+Move the issue back to `open` and record `Verification failed: <reason>` with the date in the issue entry.
 
 ### Issue Entry Format
 
 Each issue must include:
 
-- Status, Opened date, Updated date
+- Status, Opened date, spec reference (`spec_ref`, or `orphan: true`)
 - Description of the problem
-- Investigation checklist with completion dates on each item
 - Root Cause (once identified)
 - Fix Applied note with date (once implemented)
-- Verification Log table (Date / By / Result / Evidence)
+- Verification fields: result (Pending/Pass/Fail), date, evidence
 
 ---
 
@@ -140,7 +138,7 @@ Use the spec number when the branch maps to a spec: `feat/22-edge-enhancements`.
 
 1. The current unit works end to end within its defined scope.
 2. No invariant defined in `architecture-context.md` was violated.
-3. `progress-tracker.md` reflects the completed work.
+3. `progress.md` reflects the completed work.
 
 ---
 

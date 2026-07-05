@@ -2,9 +2,9 @@
 type: spec
 id: 25
 title: Canvas Presence — Participant Avatars and Live Cursors
-status: active
+status: shipped
 phase: 1
-updated: 2026-06-02
+updated: 2026-07-05
 ---
 
 # Spec 25 — Canvas Presence — Participant Avatars and Live Cursors
@@ -73,6 +73,12 @@ updated: 2026-06-02
 ## Open Questions
 
 _None_
+
+---
+
+## Shipped
+
+2026-06-03 — Liveblocks `Presence` type gained `cursor` and `thinking`. `<PresenceAvatarGroup>` renders up to 5 collaborator avatars (photo or initials, `+N` overflow chip) filtered by Clerk user ID, with divider and `<UserButton>`, mounted `absolute right-3 top-3 z-50` inside the canvas container. `<LiveCursors>` converts flow coords to canvas-relative pixels via `useStore(s => s.transform)` and renders a colored SVG pointer + name badge per participant; cursor broadcast via `onMouseMove`/`onMouseLeave` on `<ReactFlow>` with `screenToFlowPosition`. Editor home navbar untouched. Build passes. _(Close ritual ran 2026-07-05 during vault reconciliation — spec had shipped in session 4 without `rangar:close-spec`.)_
 
 ---
 
