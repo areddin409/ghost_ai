@@ -55,7 +55,7 @@ path includes specs
 ## In Progress
 
 > [!todo] Spec 26 — [[specs/26-canvas-autosave|Canvas Autosave]]
-> Tasks 1–2 done (blob install, Prisma rename + recovered migration) on `feat/26-canvas-autosave`. Remaining: canvas GET/PUT routes, autosave hook, load-on-empty-room logic, save status indicator, verify.
+> Tasks 1–8 implemented (2026-06-03) on the **unmerged branch** `worktree-spec+26-canvas-autosave` — GET/PUT canvas routes, debounced autosave hook with in-flight abort, load-on-empty-room, save status indicator, navbar wiring. Remaining: human review + merge, then Task 9 verification.
 
 ---
 

@@ -14,7 +14,7 @@ thresholds:
 
 ## Current State
 
-ghost_ai is a Next.js AI canvas editor. Phase 1 (Foundation) is complete — all canvas features shipped through spec 25 (Canvas Presence). Phase 2 is underway: spec 26 (Canvas Autosave) is active with tasks 1–2 done (blob install, Prisma rename + migration); tasks 3–9 remain. A 2026-07-05 audit found tasks 3–5 had been checked but their files were lost uncommitted — the vault was reconciled and the code work now lives on `feat/26-canvas-autosave`.
+ghost_ai is a Next.js AI canvas editor. Phase 1 (Foundation) is complete — all canvas features shipped through spec 25 (Canvas Presence). Phase 2 is underway: spec 26 (Canvas Autosave) is active with tasks 1–8 **implemented on the unmerged branch `worktree-spec+26-canvas-autosave`** (2026-06-03). The implementing session ended without merging or logging, which a 2026-07-05 audit uncovered and reconciled. Remaining: human review + merge of that branch, then Task 9 verification.
 
 ## Last Battles
 
@@ -24,14 +24,14 @@ ghost_ai is a Next.js AI canvas editor. Phase 1 (Foundation) is complete — all
 
 ## Active
 
-- [[specs/26-canvas-autosave]] — active (tasks 1–2 done, on `feat/26-canvas-autosave`)
+- [[specs/26-canvas-autosave]] — active (tasks 1–8 implemented on unmerged branch `worktree-spec+26-canvas-autosave`)
 
 ## Next
 
-1. [[specs/26-canvas-autosave]] — tasks 3–9: canvas API routes, autosave hook, load-on-empty-room, save indicator
+1. Human: review + merge `worktree-spec+26-canvas-autosave` (spec 26 tasks 1–8, commits `ae4cba2`…`d08b2a7`), then run Task 9 verification
 2. Human verification: edge-insert shows Pass in Meta Bind — confirm so it can move to Resolved
 3. Human verification: shape-rendering and minimap fixes pending since 2026-05-24
-4. Fix rangar skills install path (`.claude/skills/rangar/skills/*` is one level too deep — skills never load)
+4. Human: review + merge `chore/fix-rangar-skills-install` (skills now load as `rangar-*`)
 
 ## Open Questions
 
@@ -47,13 +47,16 @@ _None_
 
 **Done:**
 - Full vault audit: found close-out drift across specs 25/26, issue logs, and dashboards
-- Closed spec 25 (Canvas Presence) retroactively — status shipped, Shipped section written (had shipped in session 4 without `rangar:close-spec`)
-- Reconciled spec 26: status → active; tasks 3–5 unchecked (route.ts and use-canvas-autosave.ts were built ~2026-06-03 but lost uncommitted); recovered the lost rename migration — DB had `20260603202126` applied, file recreated and migration history reconciled without a reset
-- Unified issue-status vocabulary to lowercase (`open · in-progress · fix-implemented · resolved`) across README queries, active-issues.md, and ai-workflow-rules.md
+- Closed spec 25 (Canvas Presence) retroactively — status shipped, Shipped section written (had shipped in session 4 without the close ritual)
+- **Found the "missing" spec 26 implementation**: tasks 1–8 were fully built and committed on 2026-06-03 to `worktree-spec+26-canvas-autosave` (worktree at `.claude/worktrees/spec+26-canvas-autosave`) — the session ended without merging or logging, so main's vault claimed work that main's code didn't have
+- Reconciled Prisma migration history: DB had `20260603202126` applied but the file existed only on the unmerged branch; checksum re-recorded from the original file, no reset, no data loss
+- Spec 26 tasks re-marked to truth: 1–8 done (on branch), 9 blocked on merge
+- Unified issue-status vocabulary to lowercase (`open · in-progress · fix-implemented · resolved`) across README queries, active-issues.md, ai-workflow-rules.md, and the issues/ archive; added missing `spec_ref` to 11 archived issues
+- Downgraded shape-rendering + minimap archives from `Resolved` to `fix-implemented` (they were self-contradictory: resolved with verification still Pending)
 - Fixed dangling refs: `progress-tracker.md` → `progress.md` (AGENTS.md, ai-workflow-rules.md), `current-issues.md` → `active-issues.md`, `canvasJsonPath` → `canvasBlobUrl` in architecture-context.md
 - Renamed `05-prima.md` → `05-prisma.md`; fixed doubled broken wiki links in progress.md Completed log
 - Restored session log order (session 4 had been inserted mid-log)
-- Root cause identified: rangar skills installed at `.claude/skills/rangar/skills/*` — one directory too deep, so they never load and close rituals could not run
+- Root cause fixed: rangar skills were installed at `.claude/skills/rangar/skills/*` with colon names — undiscoverable, so no session could run a close ritual. Flattened to `rangar-*` (branch `chore/fix-rangar-skills-install`); skills now load.
 
 **Opened:**
 - _None_
@@ -62,7 +65,7 @@ _None_
 - Spec 25 — Canvas Presence (retroactive close)
 
 **Notes:**
-Spec 26 code (Prisma rename, lib refs, recovered migration) committed to `feat/26-canvas-autosave` for human review/merge. Vault reconciliation committed to `main` (editorial only). Awaiting human verification on edge-insert (Pass recorded), shape-rendering, and minimap issues.
+Two branches await human review/merge: `worktree-spec+26-canvas-autosave` (spec 26 implementation) and `chore/fix-rangar-skills-install`. Until the spec 26 branch merges, main's code references the old `canvasJsonPath` column while the DB has `canvasBlobUrl` — run the app from the worktree branch or merge first. Awaiting human verification on edge-insert (Pass recorded), shape-rendering, and minimap issues.
 
 ---
 

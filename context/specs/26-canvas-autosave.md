@@ -12,6 +12,9 @@ updated: 2026-07-05
 > [!abstract] Goal
 > Persist canvas state to Vercel Blob before AI generation is added — autosave debounces writes from the canvas, a GET/PUT API pair handles storage, and the editor loads saved state only into an empty Liveblocks room.
 
+> [!warning] Implementation location — recorded 2026-07-05
+> Tasks 1–8 are implemented on the **unmerged branch `worktree-spec+26-canvas-autosave`** (worktree at `.claude/worktrees/spec+26-canvas-autosave`, commits `ae4cba2`…`d08b2a7`, 2026-06-03). The 2026-06-03 session ended without merging or logging, so `main` does not have this code yet. Merge the branch, then run Task 9 verification.
+
 ## Scope Limits
 
 - Do not implement AI generation (that is a future spec)
@@ -47,12 +50,12 @@ Prisma is metadata-only — it never holds raw canvas JSON.
   1. Run `npm install @vercel/blob`
   2. Add `BLOB_READ_WRITE_TOKEN` to `.env.local` (document in spec notes below)
 
-- [x] #spec **Task 2: Rename Prisma field** _(migration file was lost uncommitted; recovered 2026-07-05 — DB had it applied 2026-06-03 as `20260603202126`, file recreated and history reconciled)_
+- [x] #spec **Task 2: Rename Prisma field** ✅ 2026-06-03 _(migration `20260603202126` applied to DB 2026-06-03; file lives on the unmerged branch — checksum history re-verified 2026-07-05)_
   1. In `prisma/models/project.prisma` rename `canvasJsonPath String?` → `canvasBlobUrl String?`
   2. Run `npx prisma migrate dev --name rename_canvas_json_path_to_canvas_blob_url`
   3. Search codebase for any existing reference to `canvasJsonPath` and update to `canvasBlobUrl`
 
-- [ ] #spec **Task 3: PUT /api/projects/[projectId]/canvas** _(unchecked 2026-07-05 — was marked done but `route.ts` does not exist on disk)_
+- [x] #spec **Task 3: PUT /api/projects/[projectId]/canvas** ✅ 2026-06-03 _(on unmerged branch, commits `e33c01b` + `9c6fe16`)_
   1. Create `app/api/projects/[projectId]/canvas/route.ts`
   2. Require auth via `getCurrentIdentity()` and ownership via `getProjectWithAccess()`
   3. Accept `{ nodes, edges }` JSON body
@@ -60,14 +63,14 @@ Prisma is metadata-only — it never holds raw canvas JSON.
   5. Upsert `project.canvasBlobUrl` with the returned blob URL via Prisma
   6. Return `{ url }` with 200
 
-- [ ] #spec **Task 4: GET /api/projects/[projectId]/canvas** _(unchecked 2026-07-05 — was marked done but `route.ts` does not exist on disk)_
+- [x] #spec **Task 4: GET /api/projects/[projectId]/canvas** ✅ 2026-06-03 _(on unmerged branch, commit `e33c01b`)_
   1. In the same route file, add a `GET` handler
   2. Require auth and project access (collaborators can read)
   3. Read `project.canvasBlobUrl` from Prisma
   4. If null, return `{ nodes: [], edges: [] }` with 200
   5. Fetch the blob URL and return its parsed JSON as-is
 
-- [ ] #spec **Task 5: useCanvasAutosave hook** _(unchecked 2026-07-05 — was marked done but `use-canvas-autosave.ts` does not exist on disk)_
+- [x] #spec **Task 5: useCanvasAutosave hook** ✅ 2026-06-03 _(on unmerged branch, commits `706e6db` + `1600753`)_
   1. Create `hooks/use-canvas-autosave.ts`
   2. Accept `{ projectId, nodes, edges }` as params
   3. Debounce saves at 1500ms using `useCallback` + `useRef` timer
@@ -75,25 +78,25 @@ Prisma is metadata-only — it never holds raw canvas JSON.
   5. Track `saveStatus: 'idle' | 'saving' | 'saved' | 'error'` in local state
   6. Return `{ saveStatus }` — no other side effects
 
-- [ ] #spec **Task 6: Load saved state into empty room**
+- [x] #spec **Task 6: Load saved state into empty room** ✅ 2026-06-03 _(on unmerged branch, commit `d08b2a7`)_
   1. In `components/editor/canvas/canvas.tsx`, after Liveblocks nodes/edges are available, check if both are empty (`nodes.length === 0 && edges.length === 0`)
   2. If empty, fetch `GET /api/projects/[projectId]/canvas`
   3. If the response contains nodes or edges, write them to Liveblocks storage via `useMutation`
   4. Guard with a `useRef` loaded flag so the load fires once per room session, not on every render
   5. If the room already has nodes or edges, skip the fetch entirely
 
-- [ ] #spec **Task 7: SaveStatusIndicator component**
+- [x] #spec **Task 7: SaveStatusIndicator component** ✅ 2026-06-03 _(on unmerged branch, commit `d08b2a7`)_
   1. Create `components/editor/canvas/save-status-indicator.tsx`
   2. Accept `saveStatus: 'idle' | 'saving' | 'saved' | 'error'`
   3. Render a small pill: hidden when idle, spinner + "Saving…" when saving, checkmark + "Saved" when saved, warning icon + "Error" when error
   4. Use existing CSS variables — no new color tokens
 
-- [ ] #spec **Task 8: Wire into WorkspaceNavbar**
+- [x] #spec **Task 8: Wire into WorkspaceNavbar** ✅ 2026-06-03 _(on unmerged branch, commit `d08b2a7`)_
   1. In `components/editor/shell/workspace-navbar.tsx`, accept `saveStatus` prop
   2. Mount `<SaveStatusIndicator saveStatus={saveStatus} />` adjacent to the Save button
   3. Pass `saveStatus` down from `canvas.tsx` via a shared prop or context
 
-- [ ] #spec **Task 9: Verify and build**
+- [ ] #spec **Task 9: Verify and build** _(blocked on merging `worktree-spec+26-canvas-autosave` to main)_
   1. Run `npm run build` — confirm zero errors
   2. Open editor in two tabs; make canvas changes in one tab
   3. Wait 1.5s — confirm "Saved" status appears
