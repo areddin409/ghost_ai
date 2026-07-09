@@ -2,7 +2,7 @@
 type: spec
 id: 27
 title: Topnav Cleanup
-status: planned
+status: active
 phase: 2
 updated: 2026-07-09
 ---
