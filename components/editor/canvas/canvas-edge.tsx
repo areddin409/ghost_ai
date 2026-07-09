@@ -16,6 +16,11 @@ import { useDragEdge } from "./drag-edge-context"
 
 const COLOR_REST = "rgba(248,250,252,0.35)"
 const COLOR_ACTIVE = "rgba(248,250,252,0.85)"
+// Opaque equivalents of the stroke colors over the canvas background —
+// the marker must not be translucent or the line underneath shows through
+// and the arrowhead tip reads as faded.
+const ARROW_REST = "#5c5d5e"
+const ARROW_ACTIVE = "#d4d6d7"
 const STROKE_WIDTH = 1.5
 
 type PathArgs = {
@@ -93,7 +98,10 @@ export function CanvasEdgeRenderer({
           orient="auto"
           markerUnits="userSpaceOnUse"
         >
-          <path d="M0,0 L0,7 L10,3.5 z" fill={edgeColor} />
+          <path
+            d="M0,0 L0,7 L10,3.5 z"
+            fill={isActive ? ARROW_ACTIVE : ARROW_REST}
+          />
         </marker>
       </defs>
 
