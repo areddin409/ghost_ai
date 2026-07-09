@@ -25,7 +25,9 @@ export async function POST(request: Request) {
 
   await liveblocks.getOrCreateRoom(room, { defaultAccesses: [] });
 
-  const user = await currentUser();
+  // A Clerk API failure here should degrade to a nameless session,
+  // not block the user from joining the room.
+  const user = await currentUser().catch(() => null);
   const name =
     user?.fullName ?? user?.firstName ?? identity.email ?? "Unknown";
   const avatar = user?.imageUrl ?? "";

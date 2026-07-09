@@ -1,5 +1,6 @@
-import { auth, currentUser } from "@clerk/nextjs/server"
+import { auth } from "@clerk/nextjs/server"
 import { prisma } from "@/lib/prisma"
+import { getCachedUserEmail } from "@/lib/project-access"
 import type { Project } from "@/hooks/use-project-actions"
 
 interface RawProject {
@@ -33,8 +34,7 @@ export async function getProjectsForUser(): Promise<{
   const { userId } = await auth()
   if (!userId) return { owned: [], shared: [] }
 
-  const user = await currentUser()
-  const email = user?.emailAddresses[0]?.emailAddress
+  const email = await getCachedUserEmail(userId)
 
   const [owned, sharedCollabs] = await Promise.all([
     prisma.project.findMany({

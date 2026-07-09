@@ -12,11 +12,13 @@ import type { SaveStatus } from "./save-status-indicator"
 interface CanvasWrapperProps {
   roomId: string
   onSaveStatusChange?: (status: SaveStatus) => void
+  onRegisterTriggerSave?: (fn: (() => void) | null) => void
 }
 
 export function CanvasWrapper({
   roomId,
   onSaveStatusChange,
+  onRegisterTriggerSave,
 }: CanvasWrapperProps) {
   return (
     <LiveblocksProvider authEndpoint="/api/liveblocks-auth">
@@ -31,7 +33,11 @@ export function CanvasWrapper({
           <ClientSideSuspense fallback={<CanvasLoading />}>
             <DragEdgeProvider>
               <ReactFlowProvider>
-                <Canvas projectId={roomId} onSaveStatusChange={onSaveStatusChange} />
+                <Canvas
+                  projectId={roomId}
+                  onSaveStatusChange={onSaveStatusChange}
+                  onRegisterTriggerSave={onRegisterTriggerSave}
+                />
               </ReactFlowProvider>
             </DragEdgeProvider>
           </ClientSideSuspense>

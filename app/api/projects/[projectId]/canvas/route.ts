@@ -1,10 +1,7 @@
-import { put } from "@vercel/blob"
+import { get, put } from "@vercel/blob"
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import {
-  getCurrentIdentity,
-  getProjectWithAccess
-} from "@/lib/project-access"
+import { getCurrentIdentity, getProjectWithAccess } from "@/lib/project-access"
 
 interface RouteContext {
   params: Promise<{ projectId: string }>
@@ -28,11 +25,16 @@ export async function GET(_request: Request, context: RouteContext) {
   }
 
   try {
-    const blobRes = await fetch(project.canvasBlobUrl)
-    if (!blobRes.ok) {
+    // useCache: false — the blob is overwritten in place on every save, so a
+    // CDN-cached copy could serve a stale canvas.
+    const result = await get(project.canvasBlobUrl, {
+      access: "private",
+      useCache: false
+    })
+    if (!result || result.stream === null) {
       return NextResponse.json({ nodes: [], edges: [] }, { status: 200 })
     }
-    const data: unknown = await blobRes.json()
+    const data: unknown = await new Response(result.stream).json()
     return NextResponse.json(data, { status: 200 })
   } catch {
     return NextResponse.json({ nodes: [], edges: [] }, { status: 200 })
@@ -61,11 +63,12 @@ export async function PUT(request: Request, context: RouteContext) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 })
   }
 
-  const blob = await put(
-    `canvas/${projectId}.json`,
-    JSON.stringify(body),
-    { access: "public", contentType: "application/json", allowOverwrite: true }
-  )
+  const blob = await put(`canvas/${projectId}.json`, JSON.stringify(body), {
+    access: "private",
+    contentType: "application/json",
+    allowOverwrite: true,
+    addRandomSuffix: false
+  })
 
   await prisma.project.update({
     where: { id: projectId },

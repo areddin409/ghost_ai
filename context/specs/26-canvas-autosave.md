@@ -13,7 +13,9 @@ updated: 2026-07-05
 > Persist canvas state to Vercel Blob before AI generation is added — autosave debounces writes from the canvas, a GET/PUT API pair handles storage, and the editor loads saved state only into an empty Liveblocks room.
 
 > [!warning] Implementation location — recorded 2026-07-05
-> Tasks 1–8 are implemented on the **unmerged branch `worktree-spec+26-canvas-autosave`** (worktree at `.claude/worktrees/spec+26-canvas-autosave`, commits `ae4cba2`…`d08b2a7`, 2026-06-03). The 2026-06-03 session ended without merging or logging, so `main` does not have this code yet. Merge the branch, then run Task 9 verification.
+> Tasks 1–8 were implemented on the branch `worktree-spec+26-canvas-autosave` (commits `ae4cba2`…`d08b2a7`, 2026-06-03). The 2026-06-03 session ended without merging or logging. **Merged to main 2026-07-05** (merge commit `11de6e0`) — Task 9 verification is now unblocked.
+>
+> Post-merge additions (2026-07-05, human-directed): manual Save button in `workspace-navbar.tsx` wired to a new `triggerSave` on the autosave hook (replaces the SaveStatusIndicator pill in the navbar); canvas route hardened — blobs now `access: "private"`, GET uses the Blob SDK `get()` instead of raw `fetch`.
 
 ## Scope Limits
 
@@ -96,7 +98,7 @@ Prisma is metadata-only — it never holds raw canvas JSON.
   2. Mount `<SaveStatusIndicator saveStatus={saveStatus} />` adjacent to the Save button
   3. Pass `saveStatus` down from `canvas.tsx` via a shared prop or context
 
-- [ ] #spec **Task 9: Verify and build** _(blocked on merging `worktree-spec+26-canvas-autosave` to main)_
+- [x] #spec **Task 9: Verify and build** _(unblocked — branch merged to main 2026-07-05)_ ✅ 2026-07-08
   1. Run `npm run build` — confirm zero errors
   2. Open editor in two tabs; make canvas changes in one tab
   3. Wait 1.5s — confirm "Saved" status appears

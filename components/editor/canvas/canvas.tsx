@@ -188,9 +188,10 @@ const connectionLineTypeMap = {
 interface CanvasProps {
   projectId: string
   onSaveStatusChange?: (status: SaveStatus) => void
+  onRegisterTriggerSave?: (fn: (() => void) | null) => void
 }
 
-export function Canvas({ projectId, onSaveStatusChange }: CanvasProps) {
+export function Canvas({ projectId, onSaveStatusChange, onRegisterTriggerSave }: CanvasProps) {
   const { settings } = useUserSettings()
 
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, onDelete } =
@@ -471,7 +472,7 @@ export function Canvas({ projectId, onSaveStatusChange }: CanvasProps) {
   }, [projectId])
 
   // --- Task 8: Wire autosave ---
-  const { saveStatus } = useCanvasAutosave({ projectId, nodes, edges })
+  const { saveStatus, triggerSave } = useCanvasAutosave({ projectId, nodes, edges })
 
   const onSaveStatusChangeRef = useRef(onSaveStatusChange)
   useEffect(() => {
@@ -481,6 +482,11 @@ export function Canvas({ projectId, onSaveStatusChange }: CanvasProps) {
   useEffect(() => {
     onSaveStatusChangeRef.current?.(saveStatus)
   }, [saveStatus])
+
+  useEffect(() => {
+    onRegisterTriggerSave?.(triggerSave)
+    return () => onRegisterTriggerSave?.(null)
+  }, [onRegisterTriggerSave, triggerSave])
 
   useEffect(() => {
     if (!domNode) return
