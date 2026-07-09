@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect, useRef } from "react"
 import { WorkspaceNavbar } from "./workspace-navbar"
 import { ProjectSidebar } from "@/components/editor/panels/project-sidebar"
 import { CanvasWrapper } from "@/components/editor/canvas/canvas-wrapper"
@@ -50,6 +50,28 @@ export function WorkspaceShell({
     setSaveStatus(status)
   }, [])
 
+  const triggerSaveRef = useRef<(() => void) | null>(null)
+
+  const handleRegisterTriggerSave = useCallback((fn: (() => void) | null) => {
+    triggerSaveRef.current = fn
+  }, [])
+
+  const handleManualSave = useCallback(() => {
+    triggerSaveRef.current?.()
+  }, [])
+
+  // Ctrl/Cmd+S — manual save instead of the browser's save-page dialog
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
+        e.preventDefault()
+        if (saveStatus !== "saving") triggerSaveRef.current?.()
+      }
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [saveStatus])
+
   return (
     <UserSettingsProvider initialSettings={initialSettings}>
       <ProjectDialogsContext.Provider value={actionsState}>
@@ -63,6 +85,7 @@ export function WorkspaceShell({
           onOpenSettings={onOpenSettings}
           onOpenTemplates={() => setTemplatesOpen(true)}
           saveStatus={saveStatus}
+          onSave={handleManualSave}
         />
         <ProjectSidebar
           isOpen={sidebarOpen}
@@ -77,7 +100,11 @@ export function WorkspaceShell({
           />
         )}
         <div className="fixed inset-0 top-14 z-0 bg-bg-base">
-          <CanvasWrapper roomId={project.id} onSaveStatusChange={handleSaveStatusChange} />
+          <CanvasWrapper
+            roomId={project.id}
+            onSaveStatusChange={handleSaveStatusChange}
+            onRegisterTriggerSave={handleRegisterTriggerSave}
+          />
         </div>
         <ShapePanel />
         <AiSidebar isOpen={aiOpen} />
