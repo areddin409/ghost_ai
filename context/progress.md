@@ -1,6 +1,6 @@
 ---
 type: progress
-updated: 2026-07-05
+updated: 2026-07-09
 ---
 
 # Progress Tracker
@@ -54,8 +54,11 @@ path includes specs
 
 ## In Progress
 
+> [!todo] Spec 27 — [[specs/27-topnav-cleanup|Topnav Cleanup]]
+> Tasks 1–5 implemented and human-verified (2026-07-09) on branch `spec/27-topnav-cleanup` — **PR #12 open, awaiting review/merge**. Share/Settings/Save collapsed into a ⋯ overflow dropdown (new shadcn `dropdown-menu`), manual Save button replaced by the `SaveStatusIndicator` chip (error state = clickable retry), AI button promoted to always-filled `accent-ai` (dims while panel open), `Ctrl/Cmd+S` manual-save shortcut in `workspace-shell`. Duplicate Clerk avatar removed from the navbar. Same branch carries the npm→pnpm 11 migration (`pnpm import` lockfile, `packageManager` pin, `allowBuilds` approvals), the opaque edge-arrowhead fix, and the previously uncommitted spec-26 post-merge drift. Close ritual runs after merge.
+
 > [!todo] Spec 26 — [[specs/26-canvas-autosave|Canvas Autosave]]
-> Tasks 1–8 implemented (2026-06-03) on the **unmerged branch** `worktree-spec+26-canvas-autosave` — GET/PUT canvas routes, debounced autosave hook with in-flight abort, load-on-empty-room, save status indicator, navbar wiring. Remaining: human review + merge, then Task 9 verification.
+> Tasks 1–8 implemented (2026-06-03) and **merged to main 2026-07-05** (merge commit `11de6e0`) — GET/PUT canvas routes, debounced autosave hook with in-flight abort, load-on-empty-room, navbar wiring. Post-merge (2026-07-05): manual Save button in workspace navbar (replaces status pill; flashes Saving/Saved/Error), hook exposes `triggerSave`, blobs switched to `access: "private"`, GET now uses Blob SDK `get()`. Two live bugs fixed same day: (1) autosave debounce self-looped because it keyed off array identity — now compares serialized content and aborts only on unmount; (2) `currentUser()` Clerk API calls on every request tripped dev-instance rate limits and crashed SSR — email is now TTL-cached per user (`getCachedUserEmail`) with graceful degradation. Remaining: Task 9 verification.
 
 ---
 

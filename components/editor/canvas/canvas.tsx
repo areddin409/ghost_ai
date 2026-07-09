@@ -36,6 +36,8 @@ import { LiveCursors } from "./live-cursors"
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts"
 import { useUserSettings } from "@/components/editor/dialogs/user-settings-context"
 import { useDragEdge } from "./drag-edge-context"
+import { useCanvasAutosave } from "@/hooks/use-canvas-autosave"
+import type { SaveStatus } from "./save-status-indicator"
 
 // Renders each node inside the MiniMap SVG at the correct shape.
 // Must be defined outside Canvas so the reference is stable across renders.
@@ -183,7 +185,13 @@ const connectionLineTypeMap = {
   bezier: ConnectionLineType.Bezier,
 } as const
 
-export function Canvas() {
+interface CanvasProps {
+  projectId: string
+  onSaveStatusChange?: (status: SaveStatus) => void
+  onRegisterTriggerSave?: (fn: (() => void) | null) => void
+}
+
+export function Canvas({ projectId, onSaveStatusChange, onRegisterTriggerSave }: CanvasProps) {
   const { settings } = useUserSettings()
 
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, onDelete } =
@@ -425,6 +433,60 @@ export function Canvas() {
   useEffect(() => {
     settingsRef.current = settings
   }, [settings])
+
+  // --- Task 6: Load saved state into empty room ---
+  // Guard fires once per room session, never on re-renders.
+  const roomLoadedRef = useRef(false)
+  useEffect(() => {
+    if (roomLoadedRef.current) return
+    if (nodes.length > 0 || edges.length > 0) {
+      // Room already has content — skip fetch
+      roomLoadedRef.current = true
+      return
+    }
+    roomLoadedRef.current = true
+
+    let cancelled = false
+    fetch(`/api/projects/${projectId}/canvas`)
+      .then((res) => {
+        if (!res.ok || cancelled) return
+        return res.json()
+      })
+      .then((data: { nodes?: CanvasNode[]; edges?: CanvasEdge[] } | undefined) => {
+        if (cancelled || !data) return
+        const savedNodes = data.nodes ?? []
+        const savedEdges = data.edges ?? []
+        if (savedNodes.length === 0 && savedEdges.length === 0) return
+        onNodesChangeRef.current(savedNodes.map((n) => ({ type: "add" as const, item: n })))
+        onEdgesChangeRef.current(savedEdges.map((e) => ({ type: "add" as const, item: e })))
+        setTimeout(() => instanceRef.current.fitView({ padding: 0.15, duration: 400 }), 150)
+      })
+      .catch(() => {
+        // Silently ignore load errors — canvas starts empty
+      })
+
+    return () => {
+      cancelled = true
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectId])
+
+  // --- Task 8: Wire autosave ---
+  const { saveStatus, triggerSave } = useCanvasAutosave({ projectId, nodes, edges })
+
+  const onSaveStatusChangeRef = useRef(onSaveStatusChange)
+  useEffect(() => {
+    onSaveStatusChangeRef.current = onSaveStatusChange
+  }, [onSaveStatusChange])
+
+  useEffect(() => {
+    onSaveStatusChangeRef.current?.(saveStatus)
+  }, [saveStatus])
+
+  useEffect(() => {
+    onRegisterTriggerSave?.(triggerSave)
+    return () => onRegisterTriggerSave?.(null)
+  }, [onRegisterTriggerSave, triggerSave])
 
   useEffect(() => {
     if (!domNode) return

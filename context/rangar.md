@@ -2,7 +2,7 @@
 type: rangar
 project: ghost_ai
 created: 2026-06-02
-updated: 2026-07-05 (session 5)
+updated: 2026-07-09 (session 6)
 thresholds:
   fix_implemented_lag_days: 7
   stale_active_days: 14
@@ -14,7 +14,7 @@ thresholds:
 
 ## Current State
 
-ghost_ai is a Next.js AI canvas editor. Phase 1 (Foundation) is complete — all canvas features shipped through spec 25 (Canvas Presence). Phase 2 is underway: spec 26 (Canvas Autosave) is active with tasks 1–8 **implemented on the unmerged branch `worktree-spec+26-canvas-autosave`** (2026-06-03). The implementing session ended without merging or logging, which a 2026-07-05 audit uncovered and reconciled. Remaining: human review + merge of that branch, then Task 9 verification.
+ghost_ai is a Next.js AI canvas editor. Phase 1 (Foundation) is complete — all canvas features shipped through spec 25 (Canvas Presence). Phase 2 is underway: spec 26 (Canvas Autosave) **merged to main 2026-07-05** (`11de6e0`); its leftover uncommitted post-merge work was committed 2026-07-09 on the spec 27 branch. Spec 27 (Topnav Cleanup) is implemented and human-verified — **PR #12 open, awaiting review/merge**; the same branch migrates the project from npm to pnpm 11. A spec 28 (canvas-grab-affordances) exists from a parallel session in `.claude/worktrees/` — not tracked by this session.
 
 ## Last Battles
 
@@ -24,20 +24,45 @@ ghost_ai is a Next.js AI canvas editor. Phase 1 (Foundation) is complete — all
 
 ## Active
 
-- [[specs/26-canvas-autosave]] — active (tasks 1–8 implemented on unmerged branch `worktree-spec+26-canvas-autosave`)
+- [[specs/27-topnav-cleanup]] — active (tasks 1–5 done, PR #12 awaiting review/merge)
+- [[specs/26-canvas-autosave]] — active (merged to main; Task 9 verification remaining)
 
 ## Next
 
-1. Human: review + merge `worktree-spec+26-canvas-autosave` (spec 26 tasks 1–8, commits `ae4cba2`…`d08b2a7`), then run Task 9 verification
-2. Human verification: edge-insert shows Pass in Meta Bind — confirm so it can move to Resolved
-3. Human verification: shape-rendering and minimap fixes pending since 2026-05-24
-4. Human: review + merge `chore/fix-rangar-skills-install` (skills now load as `rangar-*`)
+1. Human: review + merge PR #12 (`spec/27-topnav-cleanup`), then run `rangar-ship` to close spec 27
+2. Spec 26 Task 9 verification, then close spec 26
+3. Human verification: edge-insert shows Pass in Meta Bind — confirm so it can move to Resolved
+4. Human verification: shape-rendering and minimap fixes pending since 2026-05-24
+5. Human: review + merge `chore/fix-rangar-skills-install` (skills now load as `rangar-*`)
 
 ## Open Questions
 
 _None_
 
 ## Session Log
+
+---
+
+### 2026-07-09 (session 6)
+
+**Focus:** UI fixes + spec 27 (Topnav Cleanup) + pnpm migration
+
+**Done:**
+- Fixed duplicate avatar: removed Clerk `<UserButton>` from workspace navbar (Liveblocks presence stack on canvas is the only avatar now)
+- Fixed faded edge arrowhead: marker fill now uses opaque composites of the translucent stroke colors over the canvas bg, so the line no longer shows through
+- Brainstormed + spec'd + implemented spec 27 (Topnav Cleanup): Share/Settings/Save collapsed into ⋯ overflow dropdown, Save button → `SaveStatusIndicator` chip with clickable error-retry, AI button always-filled `accent-ai` (nav's single high-emphasis element), `Ctrl/Cmd+S` shortcut
+- Migrated npm → pnpm 11 (human-directed): `pnpm import` lockfile, `packageManager` pin, `allowBuilds` approvals in `pnpm-workspace.yaml`; corrected steward memory that claimed npm
+- Committed the spec-26 post-merge drift left uncommitted by the 2026-07-05 session (12 paths)
+- All human-verified live; pushed `spec/27-topnav-cleanup`, opened **PR #12**
+
+**Opened:**
+- Spec 27 — Topnav Cleanup
+
+**Closed:**
+- _None_ (spec 27 close ritual runs after PR #12 merges)
+
+**Notes:**
+Vault updates for this session ride on the spec 27 branch so main stays clean until merge. A parallel session created spec 28 (canvas-grab-affordances) in `.claude/worktrees/spec-28-canvas-grab-affordances` — its spec file sits untracked in this working tree; left for that session to manage. Full `pnpm lint` fails on vendored Obsidian plugin bundles under `context/.obsidian*` and the spec-28 worktree copy — pre-existing noise, worth adding ESLint ignores.
 
 ---
 

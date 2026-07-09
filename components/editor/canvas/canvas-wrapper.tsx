@@ -7,13 +7,18 @@ import { ClientSideSuspense } from "@liveblocks/react/suspense"
 import { ReactFlowProvider } from "@xyflow/react"
 import { Canvas } from "./canvas"
 import { DragEdgeProvider } from "./drag-edge-context"
+import type { SaveStatus } from "./save-status-indicator"
 
 interface CanvasWrapperProps {
   roomId: string
+  onSaveStatusChange?: (status: SaveStatus) => void
+  onRegisterTriggerSave?: (fn: (() => void) | null) => void
 }
 
 export function CanvasWrapper({
   roomId,
+  onSaveStatusChange,
+  onRegisterTriggerSave,
 }: CanvasWrapperProps) {
   return (
     <LiveblocksProvider authEndpoint="/api/liveblocks-auth">
@@ -28,7 +33,11 @@ export function CanvasWrapper({
           <ClientSideSuspense fallback={<CanvasLoading />}>
             <DragEdgeProvider>
               <ReactFlowProvider>
-                <Canvas />
+                <Canvas
+                  projectId={roomId}
+                  onSaveStatusChange={onSaveStatusChange}
+                  onRegisterTriggerSave={onRegisterTriggerSave}
+                />
               </ReactFlowProvider>
             </DragEdgeProvider>
           </ClientSideSuspense>

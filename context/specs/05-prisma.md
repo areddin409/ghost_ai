@@ -31,7 +31,7 @@ Add `Project`:
 - [x] name
 - [x] optional description
 - [x] status enum: `DRAFT`, `ARCHIVED`
-- [x] `canvasJsonPath` for future canvas blob storage
+- [x] `canvasBlobUrl` for canvas blob storage
 - [x] timestamps
 - [x] indexes on owner ID and creation date
 
